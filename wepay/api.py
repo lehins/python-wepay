@@ -1,9 +1,11 @@
 import urllib, urllib2, json, decimal, warnings
 
-from wepay.exceptions import WePayError, WePayWarning
+from wepay.exceptions import WePayError
 
 __all__ = ["WePay"]
 
+class WePayWarning(Warning):
+    pass
 
 class WePay(object):
 
