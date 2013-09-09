@@ -19,6 +19,13 @@ Requirements
 
 * Registered application with WePay `production <https://wepay.com>`_ site or it's `development <https://stage.wepay>`_ clone.
 
+Installation
+------------
+Can be install from pypi::
+
+    pip install python-wepay
+    
+
 Quickstart Guide
 ----------------
 
@@ -29,8 +36,7 @@ Just like with official SDK the core of this package is ``WePay`` class, which n
 **Important**:
 All methods accept optionall keyword argument ``access_token``, which will then be used to perform a call instead of one the ``WePay`` class was created with, and a ``batch_mode`` which instead of making a call will force it to return a dictionary, which can be used later on to perform a ``batch_create`` call. An unrecognized keyword passed to those functions will produce a warning and an actuall error from WePay, if it is in fact an unrecognized parameter.
 
-Quick Example:
-
+Quick Example::
     
     >>> WEPAY_ACCESS_TOKEN = 'STAGE_243b....'
     >>> WEPAY_CLIENT_ID = 123456
@@ -57,4 +63,4 @@ Anyways, you get the idea, just look through the ``api.py`` file for full list o
 Documentation
 -------------
 
-Soon to come.
+Soon to come. 

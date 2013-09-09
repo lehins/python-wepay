@@ -15,7 +15,7 @@ version_str = '%s.%s.%s' % (
 setup(
     name='python-wepay',
     version=version_str,
-    packages=['python-wepay'],
+    packages=['wepay'],
     description=short_description,
     long_description=long_description,
     author='lehins',
