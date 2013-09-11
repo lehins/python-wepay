@@ -619,6 +619,7 @@ class WePay(object):
             'account_id', 'state', 'reference_id', 'start', 'limit', 'sort_order', 
             'last_checkout_id', 'shipping_fee'
         ]
+        params = {}
         return self.make_call(
             '/preapproval/find', params=kwargs, allowed_params=allowed_params,
             **self._update_params(params, kwargs))
