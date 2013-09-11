@@ -559,7 +559,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout_capture(self, checkout_id, **kwargs):
-        """Call documentation: `/checkout/capture <https://www.wepay.com/developer/reference/checkout#capture>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/checkout/capture <https://www.wepay.com/developer/reference/checkout#capture>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
