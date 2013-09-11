@@ -522,7 +522,7 @@ class WePay(object):
             '/checkout/create', params=params, allowed_params=allowed_params,
             **self._update_params(params, kwargs))
 
-    def checkout_cancel(self, checkout_id, **kwargs):
+    def checkout_cancel(self, checkout_id, cancel_reason, **kwargs):
         """Call documentation: 
         `/checkout/cancel <https://www.wepay.com/developer/reference/checkout#cancel>`_, 
         plus extra keyword parameters:
@@ -532,7 +532,8 @@ class WePay(object):
         """
         allowed_params = ['checkout_id', 'cancel_reason']
         params = {
-            'checkout_id': checkout_id
+            'checkout_id': checkout_id,
+            'cancel_reason': cancel_reason
         }
         return self.make_call(
             '/checkout/cancel', params=params, allowed_params=allowed_params,
