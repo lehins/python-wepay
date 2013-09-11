@@ -1,7 +1,0 @@
-/usr/local/lib/python2.7/dist-packages/wepay/__init__.py
-/usr/local/lib/python2.7/dist-packages/wepay/api.py
-/usr/local/lib/python2.7/dist-packages/wepay/exceptions.py
-/usr/local/lib/python2.7/dist-packages/wepay/__init__.pyc
-/usr/local/lib/python2.7/dist-packages/wepay/api.pyc
-/usr/local/lib/python2.7/dist-packages/wepay/exceptions.pyc
-/usr/local/lib/python2.7/dist-packages/python_wepay-1.0.0.egg-info

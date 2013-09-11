@@ -1,4 +1,4 @@
-"""This module was designed to help making `WePay <https://wepay.com>`_ API calls. Before using :mod:`wepay` get yourself familiar with actual WePay `API Documentation <https://www.wepay.com/developer>`_.
+"""This module was designed to help making `WePay <https://wepay.com>`_ API calls. 
 
 .. moduleauthor:: lehins <lehins@yandex.ru>
    :platform: independent
