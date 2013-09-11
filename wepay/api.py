@@ -187,7 +187,8 @@ class WePay(object):
 
     def oauth2_authorize(self, client_id, redirect_uri, scope, 
                          state=None, user_name=None, user_email=None):
-        """Call documentation: `/oauth2/authorize <https://www.wepay.com/developer/reference/oauth2#authorize>`_.        
+        """Call documentation: 
+        `/oauth2/authorize <https://www.wepay.com/developer/reference/oauth2#authorize>`_.        
         """
         options = {
             'client_id': client_id,
@@ -204,7 +205,9 @@ class WePay(object):
             self.browser_endpoint, urllib.urlencode(options))
 
     def oauth2_token(self, client_id, redirect_uri, client_secret, code, **kwargs):
-        """Call documentation: `/oauth2/token <https://www.wepay.com/developer/reference/oauth2#token>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/oauth2/token <https://www.wepay.com/developer/reference/oauth2#token>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -222,7 +225,9 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def app(self, client_id, client_secret, **kwargs):
-        """Call documentation: `/app <https://www.wepay.com/developer/reference/app#lookup>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/app <https://www.wepay.com/developer/reference/app#lookup>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -236,7 +241,9 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def app_modify(self, client_id, client_secret, **kwargs):
-        """Call documentation: `/app/modify <https://www.wepay.com/developer/reference/app#modify>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/app/modify <https://www.wepay.com/developer/reference/app#modify>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -252,7 +259,9 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def user(self, **kwargs):
-        """Call documentation: `/user <https://www.wepay.com/developer/reference/user#lookup>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/user <https://www.wepay.com/developer/reference/user#lookup>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -262,7 +271,9 @@ class WePay(object):
                               **self._update_params(params, kwargs))
 
     def user_modify(self, **kwargs):
-        """Call documentation: `/user/modify <https://www.wepay.com/developer/reference/user#modify>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/user/modify <https://www.wepay.com/developer/reference/user#modify>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -274,7 +285,8 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def user_register(self, *args, **kwargs):
-        """Call documentation: `/user/register <https://www.wepay.com/developer/reference/user#register>`_.
+        """Call documentation: 
+        `/user/register <https://www.wepay.com/developer/reference/user#register>`_.
 
         :raises: `NotImplementedError`
 
@@ -286,7 +298,8 @@ class WePay(object):
             "'/user/register' call is depricated and is not supported by this app")
 
     def user_resend_confirmation(self, *args, **kwargs):
-        """Call documentation: `/user/resend_confirmation <https://www.wepay.com/developer/reference/user#resend_confirmation>`_.
+        """Call documentation: `/user/resend_confirmation 
+        <https://www.wepay.com/developer/reference/user#resend_confirmation>`_.
 
         :raises: `NotImplementedError`
 
@@ -299,7 +312,9 @@ class WePay(object):
             "this app")
 
     def account(self, account_id, **kwargs):
-        """Call documentation: `/account <https://www.wepay.com/developer/reference/account#lookup>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account <https://www.wepay.com/developer/reference/account#lookup>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -313,7 +328,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def account_find(self, **kwargs):
-        """Call documentation: `/account/find <https://www.wepay.com/developer/reference/account#find>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/find <https://www.wepay.com/developer/reference/account#find>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -325,7 +342,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def account_create(self, name, description, **kwargs):
-        """Call documentation: `/account/create <https://www.wepay.com/developer/reference/account#create>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/create <https://www.wepay.com/developer/reference/account#create>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -343,7 +362,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def account_modify(self, account_id, **kwargs):
-        """Call documentation: `/account/modify <https://www.wepay.com/developer/reference/account#modify>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/modify <https://www.wepay.com/developer/reference/account#modify>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -360,7 +381,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def account_delete(self, account_id, **kwargs):
-        """Call documentation: `/account/delete <https://www.wepay.com/developer/reference/account#delete>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/delete <https://www.wepay.com/developer/reference/account#delete>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -374,7 +397,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def account_balance(self, account_id, **kwargs):
-        """Call documentation: `/account/balance <https://www.wepay.com/developer/reference/account#balance>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/balance <https://www.wepay.com/developer/reference/account#balance>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -388,7 +413,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
         
     def account_add_bank(self, account_id, **kwargs):
-        """Call documentation: `/account/add_bank <https://www.wepay.com/developer/reference/account#add_bank>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/add_bank <https://www.wepay.com/developer/reference/account#add_bank>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -402,7 +429,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
         
     def account_set_tax(self, account_id, taxes, **kwargs):
-        """Call documentation: `/account/set_tax <https://www.wepay.com/developer/reference/account#set_tax>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/set_tax <https://www.wepay.com/developer/reference/account#set_tax>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -417,7 +446,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def account_get_tax(self, account_id, **kwargs):
-        """Call documentation: `/account/get_tax <https://www.wepay.com/developer/reference/account#get_tax>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/account/get_tax <https://www.wepay.com/developer/reference/account#get_tax>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -431,7 +462,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout(self, checkout_id, **kwargs):
-        """Call documentation: `/checkout <https://www.wepay.com/developer/reference/checkout#lookup>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/checkout <https://www.wepay.com/developer/reference/checkout#lookup>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -445,7 +478,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout_find(self, account_id, **kwargs):
-        """Call documentation: `/checkout/find <https://www.wepay.com/developer/reference/checkout#find>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/checkout/find <https://www.wepay.com/developer/reference/checkout#find>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -462,7 +497,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout_create(self, account_id, short_description, type, amount, **kwargs):
-        """Call documentation: `/checkout/create <https://www.wepay.com/developer/reference/checkout#create>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/checkout/create <https://www.wepay.com/developer/reference/checkout#create>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -486,7 +523,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout_cancel(self, checkout_id, **kwargs):
-        """Call documentation: `/checkout/cancel <https://www.wepay.com/developer/reference/checkout#cancel>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/checkout/cancel <https://www.wepay.com/developer/reference/checkout#cancel>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -500,7 +539,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout_refund(self, checkout_id, refund_reason, **kwargs):
-        """Call documentation: `/checkout/refund <https://www.wepay.com/developer/reference/checkout#refund>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/checkout/refund <https://www.wepay.com/developer/reference/checkout#refund>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -532,7 +573,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout_modify(self, checkout_id, **kwargs):
-        """Call documentation: `/checkout/modify <https://www.wepay.com/developer/reference/checkout#modify>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/checkout/modify <https://www.wepay.com/developer/reference/checkout#modify>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -547,7 +590,9 @@ class WePay(object):
 
 
     def preapproval(self, preapproval_id, **kwargs):
-        """Call documentation: `/preapproval <https://www.wepay.com/developer/reference/preapproval#lookup>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/preapproval <https://www.wepay.com/developer/reference/preapproval#lookup>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -561,7 +606,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def preapproval_find(self, **kwargs):
-        """Call documentation: `/preapproval/find <https://www.wepay.com/developer/reference/preapproval#find>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/preapproval/find <https://www.wepay.com/developer/reference/preapproval#find>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -575,7 +622,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def preapproval_create(self, short_description, period, **kwargs):
-        """Call documentation: `/preapproval/create <https://www.wepay.com/developer/reference/preapproval#create>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/preapproval/create <https://www.wepay.com/developer/reference/preapproval#create>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -597,7 +646,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def preapproval_cancel(self, preapproval_id, **kwargs):
-        """Call documentation: `/preapproval/cancel <https://www.wepay.com/developer/reference/preapproval#cancel>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/preapproval/cancel <https://www.wepay.com/developer/reference/preapproval#cancel>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -611,7 +662,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def preapproval_modify(self, preapproval_id, **kwargs):
-        """Call documentation: `/preapproval/modify <https://www.wepay.com/developer/reference/preapproval#modify>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/preapproval/modify <https://www.wepay.com/developer/reference/preapproval#modify>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -625,7 +678,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def withdrawal(self, withdrawal_id, **kwargs):
-        """Call documentation: `/withdrawal <https://www.wepay.com/developer/reference/withdrawal#lookup>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/withdrawal <https://www.wepay.com/developer/reference/withdrawal#lookup>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -639,7 +694,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def withdrawal_find(self, account_id, **kwargs):
-        """Call documentation: `/withdrawal/find <https://www.wepay.com/developer/reference/withdrawal#find>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/withdrawal/find <https://www.wepay.com/developer/reference/withdrawal#find>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -653,7 +710,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def withdrawal_create(self, account_id, **kwargs):
-        """Call documentation: `/withdrawal/create <https://www.wepay.com/developer/reference/withdrawal#create>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/withdrawal/create <https://www.wepay.com/developer/reference/withdrawal#create>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -669,7 +728,9 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def withdrawal_modify(self, withdrawal_id, **kwargs):
-        """Call documentation: `/withdrawal/modify <https://www.wepay.com/developer/reference/withdrawal#modify>`_, plus extra keyword parameters:
+        """Call documentation: 
+        `/withdrawal/modify <https://www.wepay.com/developer/reference/withdrawal#modify>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
@@ -684,7 +745,9 @@ class WePay(object):
 
 
     def credit_card(self, client_id, client_secret, credit_card_id, **kwargs):
-        """Call documentation: `/credit_card <https://www.wepay.com/developer/reference/credit_card#lookup>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/credit_card <https://www.wepay.com/developer/reference/credit_card#lookup>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -700,7 +763,9 @@ class WePay(object):
 
     def credit_card_create(self, client_id, cc_number, cvv, expiration_month, 
                            expiration_year, user_name, email, address, **kwargs):
-        """Call documentation: `/credit_card/create <https://www.wepay.com/developer/reference/credit_card#create>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/credit_card/create <https://www.wepay.com/developer/reference/credit_card#create>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -723,7 +788,9 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def credit_card_authorize(self, client_id, client_secret, credit_card_id, **kwargs):
-        """Call documentation: `/credit_card/authorize <https://www.wepay.com/developer/reference/credit_card#authorize>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/credit_card/authorize <https://www.wepay.com/developer/reference/credit_card#authorize>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -738,7 +805,9 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def credit_card_find(self, client_id, client_secret, **kwargs):
-        """Call documentation: `/credit_card/find <https://www.wepay.com/developer/reference/credit_card#find>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/credit_card/find <https://www.wepay.com/developer/reference/credit_card#find>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -755,7 +824,9 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def credit_card_delete(self, client_id, client_secret, credit_card_id, **kwargs):
-        """Call documentation: `/credit_card/delete <https://www.wepay.com/developer/reference/credit_card#delete>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/credit_card/delete <https://www.wepay.com/developer/reference/credit_card#delete>`_, 
+        plus extra keyword parameter:
         
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
         """
@@ -770,7 +841,9 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def batch_create(self, client_id, client_secret, calls, **kwargs):
-        """Call documentation: `/batch/create <https://www.wepay.com/developer/reference/batch#create>`_, plus extra keyword parameter:
+        """Call documentation: 
+        `/batch/create <https://www.wepay.com/developer/reference/batch#create>`_, 
+        plus extra keyword parameter:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         """
