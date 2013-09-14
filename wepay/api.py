@@ -7,7 +7,7 @@ import urllib, urllib2, json, decimal, warnings
 
 from wepay.exceptions import WePayError
 
-__all__ = ["WePay"]
+__all__ = ["WePay", "WePayWarning"]
 
 class WePayWarning(Warning):
     pass
