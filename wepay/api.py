@@ -13,7 +13,7 @@ __all__ = ["WePay"]
 class WePay(object):
     """A full client for the WePay API.
     """
-    class WePayWarning(Warning):
+    class WePayWarning(UserWarning):
         pass
     
     def __init__(self, production=True, access_token=None, timeout=30):
