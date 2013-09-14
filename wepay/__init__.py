@@ -1,7 +1,7 @@
 from api import WePay
 
 # Major, minor, revision
-VERSION = (1, 0, 3)
+VERSION = (1, 0, 4)
 
 def get_version():
     return "%s.%s.%s" % VERSION
