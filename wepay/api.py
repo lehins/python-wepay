@@ -19,11 +19,11 @@ class WePay(object):
     def __init__(self, production=True, access_token=None, timeout=30):
         """The main class for making calls
 
-        :param bool production: When ``False``, the ``stage.wepay.com`` API
+        :keyword bool production: When ``False``, the ``stage.wepay.com`` API
             server will be used instead of the default production.
-        :param str access_token: The access token associated with your
+        :keyword str access_token: The access token associated with your
             application.
-
+        :keyword int timeout: time in seconds before HTTPS call request will timeout
         """
         self.access_token = access_token
         self._timeout = timeout
@@ -174,7 +174,7 @@ class WePay(object):
                 "unrecognized. Allowed parameters are: '%s'. Unrecognized "
                 "parameters are: '%s'." % 
                 (uri, ', '.join(allowed_params), ', '.join(unrecognized_params)), 
-                WePayWarning)
+                self.WePayWarning)
         if batch_mode:
             call = {
                 'call': uri
