@@ -805,7 +805,7 @@ class WePay(object):
             'credit_card_id': credit_card_id
         }
         return self.make_call(
-            '/credit_card/autorize', params=params, allowed_params=allowed_params,
+            '/credit_card/authorize', params=params, allowed_params=allowed_params,
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def credit_card_find(self, client_id, client_secret, **kwargs):

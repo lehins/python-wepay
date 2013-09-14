@@ -4,9 +4,22 @@ class WePayError(Exception):
     `WePay API Errors Documantation <https://www.wepay.com/developer/reference/errors>`_
     """
     def __init__(self, error_type, message, error_code=None):
-        self.error = error_type
-        self.code = error_code
-        super(WePayError, self).__init__(message)
+        self._error = error_type
+        self._code = error_code
+        self._message = message
+        super(WePayError, self).__init__()
+
+    @property
+    def error(self):
+        return self._error
+
+    @property
+    def code(self):
+        return self._code
+
+    @property
+    def message(self):
+        return self._message
 
     def __str__(self):
         return "%s (%s): %s" % (self.error, self.code, self.message)

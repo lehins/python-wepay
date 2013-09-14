@@ -6,15 +6,9 @@ short_description = 'Unofficial Python SDK for WePay API.'
 long_description = open('README.rst').read() if os.path.isfile('README.rst') \
                    else short_description
 
-version_str = '%s.%s.%s' % (
-    wepay.VERSION[0],
-    wepay.VERSION[1],
-    wepay.VERSION[2]
-)
-
 setup(
     name='python-wepay',
-    version=version_str,
+    version=wepay.get_version(),
     packages=['wepay'],
     description=short_description,
     long_description=long_description,

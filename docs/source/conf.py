@@ -17,7 +17,7 @@ import sys, os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('../..'))
-from wepay import VERSION as wepay_version
+from wepay import get_version()
 
 # -- General configuration -----------------------------------------------------
 
@@ -49,7 +49,7 @@ copyright = u'2013, lehins'
 # built documents.
 #
 # The short X.Y version.
-version = '.'.join(map(str, wepay_version))
+version = get_version()
 # The full version, including alpha/beta/rc tags.
 release = '%s.beta' % version
 
