@@ -7,14 +7,14 @@ import urllib, urllib2, json, decimal, warnings
 
 from wepay.exceptions import WePayError
 
-__all__ = ["WePay", "WePayWarning"]
+__all__ = ["WePay"]
 
-class WePayWarning(Warning):
-    pass
 
 class WePay(object):
     """A full client for the WePay API.
     """
+    class WePayWarning(Warning):
+        pass
     
     def __init__(self, production=True, access_token=None, timeout=30):
         """The main class for making calls
