@@ -16,7 +16,7 @@ class WePay(object):
     """A full client for the WePay API.
     """
     
-    def __init__(self, production=True, access_token=None):
+    def __init__(self, production=True, access_token=None, timeout=30):
         """The main class for making calls
 
         :param bool production: When ``False``, the ``stage.wepay.com`` API
@@ -26,6 +26,7 @@ class WePay(object):
 
         """
         self.access_token = access_token
+        self._timeout = timeout
         if production:
             self.api_endpoint = "https://wepayapi.com/v2"
             self.browser_endpoint = "https://www.wepay.com/v2"
@@ -81,7 +82,7 @@ class WePay(object):
 
         request = urllib2.Request(url, params, headers)
         try:
-            response = urllib2.urlopen(request, timeout=30).read()
+            response = urllib2.urlopen(request, timeout=self._timeout).read()
             return json.loads(response)
         except urllib2.HTTPError as e:
             response = json.loads(e.read())
