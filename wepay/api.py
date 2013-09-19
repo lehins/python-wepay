@@ -25,14 +25,20 @@ class WePay(object):
             application.
         :keyword int timeout: time in seconds before HTTPS call request will timeout
         """
+        self.production = production
         self.access_token = access_token
         self._timeout = timeout
         if production:
             self.api_endpoint = "https://wepayapi.com/v2"
-            self.browser_endpoint = "https://www.wepay.com/v2"
+            self.browser_uri = "https://www.wepay.com"
+            self.browser_js = self.browser_uri + "/min/js/wepay.v2.js"
+            self.browser_iframe_js = self.browser_uri + "/min/js/iframe.wepay.js"
         else:
             self.api_endpoint = "https://stage.wepayapi.com/v2"
-            self.browser_endpoint = "https://stage.wepay.com/v2"
+            self.browser_uri = "https://stage.wepay.com"
+            self.browser_js = self.browser_uri + "/js/wepay.v2.js"
+            self.browser_iframe_js = self.browser_uri + "/js/iframe.wepay.js"
+        self.browser_endpoint = self.browser_uri + "/v2"
     
 
     def _update_params(self, params, kwargs, 
@@ -640,7 +646,7 @@ class WePay(object):
             'require_shipping', 'shipping_fee', 'charge_tax', 'payer_email_message',
             'long_description', 'frequency', 'start_time','end_time', 'auto_recur',
             'mode', 'prefill_info', 'funding_sources', 'payment_method_id',
-            'payment_method_type'
+            'payment_method_type', 'client_id', 'client_secret'
         ]
         params = {
             'short_description': short_description,
