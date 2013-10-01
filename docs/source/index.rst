@@ -71,9 +71,9 @@ Quick Example::
     {u'account_id': 1371765417, u'account_uri': u'https://stage.wepay.com/account/1371765417'}
     >>> api.checkout_create(1371765417, "Short description.....
 
--------
-Changes in Releases
--------
+---------------
+Release History
+---------------
 
 
 1.1

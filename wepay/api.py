@@ -3,7 +3,7 @@
 .. moduleauthor:: lehins <lehins@yandex.ru>
    :platform: independent
 """
-import urllib, urllib2, json, decimal, warnings
+import urllib, urllib2, json, warnings
 
 from wepay.exceptions import WePayError
 
@@ -12,6 +12,8 @@ __all__ = ["WePay"]
 
 class WePay(object):
     """A full client for the WePay API. """
+
+    floating = ['amount', 'app_fee', 'shipping_fee', 'setup_fee']
 
     class WePayWarning(UserWarning):
         pass
@@ -51,12 +53,12 @@ class WePay(object):
         return optional_kwargs
 
     def call(self, uri, params=None, access_token=None, token=None):
-        """Calls wepay.com/v2/``uri`` with ``params`` and returns the JSON response as
-        a python dict. The optional ``access_token`` parameter will override the
+        """Calls wepay.com/v2/``uri`` with ``params`` and returns the JSON response as a
+        python dict. The optional ``access_token`` parameter will override the
         instance's ``access_token`` if it is set. Basically the same call
-        function as in Python-SDK WePay API with some minor changes.  Decimal
-        numbers are casted to float, header is changed to 'Python WePay SDK
-        (third party)'.  Essentially this is the place for all api calls.
+        function as in Python-SDK WePay API with a minor change, header was
+        changed to 'Python WePay SDK (third party)'.  Essentially this is the
+        place for all api calls.
 
         :param str uri: API uri to call
         :keyword dict params: parameters to include in the call
@@ -79,10 +81,7 @@ class WePay(object):
         access_token = access_token or token or self.access_token
         headers['Authorization'] = 'Bearer %s' % access_token
             
-        if params:
-            for key, value in params.iteritems():
-                if isinstance(params[key], decimal.Decimal):
-                    params[key] = float(params[key])
+        if not params is None:
             params = json.dumps(params)
 
         request = urllib2.Request(url, params, headers)
@@ -179,6 +178,9 @@ class WePay(object):
                 "parameters are: '%s'." % 
                 (uri, ', '.join(allowed_params), ', '.join(unrecognized_params)), 
                 self.WePayWarning)
+        for name in self.floating:
+            if name in params:
+                params[name] = float(params[name])
         if batch_mode:
             call = {
                 'call': uri
