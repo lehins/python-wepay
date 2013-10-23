@@ -12,7 +12,7 @@ This package started as a part of `Django WePay Application <https://github.com/
 Status
 ------
 
-Beta version, but fully functional. Also currently undergoing extensive testing as a part of other application. (there is no reason for me to write separate tests for this package, since all of it's functionality will be tested anyways)
+Production. Calls that have not been tested are marked with the notice in the documentation.
 
 Requirements
 ------------

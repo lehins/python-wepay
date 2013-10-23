@@ -1046,7 +1046,7 @@ class WePay(object):
         allowed_params = [
             'subscription_plan_id', 'name', 'short_description', 'amount', 
             'app_fee', 'callback_uri', 'trial_length', 'setup_fee', 
-            'update_subscriptions', 'transition_expire_time', 'reference_id'
+            'update_subscriptions', 'transition_expire_days', 'reference_id'
         ]
         params = {
             'subscription_plan_id': subscription_plan_id
@@ -1191,7 +1191,7 @@ class WePay(object):
         allowed_params = [
             'subscription_id', 'redirect_uri', 'callback_uri', 
             'payment_method_id', 'payment_method_type', 'quantity', 'reference_id',
-            'transition_expire_time', 'extend_trial_days'
+            'transition_expire_days', 'extend_trial_days', 'prorate'
         ]
         params = {
             'subscription_id': subscription_id
