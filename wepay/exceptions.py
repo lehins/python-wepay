@@ -1,7 +1,8 @@
 
 class WePayError(Exception):
-    """Raised in case API call was not successfull.
-    `WePay API Errors Documantation <https://www.wepay.com/developer/reference/errors>`_
+    """Raised in case API call was not successfull.  `WePay API Errors Documantation
+    <https://www.wepay.com/developer/reference/errors>`_
+
     """
     def __init__(self, error_type, message, error_code=None):
         self._error = error_type
@@ -11,14 +12,25 @@ class WePayError(Exception):
 
     @property
     def error(self):
+        """Error parameter return from WePay: `possible values
+        <https://www.wepay.com/developer/reference/errors>`_
+        
+        """
         return self._error
 
     @property
     def code(self):
+        """Error code parameter return from WePay: `possible values
+        <https://www.wepay.com/developer/reference/errors>`_
+        
+        """
         return self._code
 
     @property
     def message(self):
+        """Error mesage that corresspond to the error_code parameter.
+
+        """
         return self._message
 
     def __str__(self):
