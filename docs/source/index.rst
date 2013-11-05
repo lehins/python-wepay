@@ -75,15 +75,21 @@ Quick Example::
 Release History
 ---------------
 
+1.1.2
+^^^^^
+* Added required arguments to ``/credit_card/create`` call:
+
+  * original_ip
+  * original_device
 
 1.1
 ^^^
 
 * Added subscription calls:
 
-  * /subscription_plan
-  * /subscription
-  * /subscription_charge
+  * ``/subscription_plan``
+  * ``/subscription``
+  * ``/subscription_charge``
 
 * Few bug and spelling fixes.
 

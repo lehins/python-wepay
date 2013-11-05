@@ -589,12 +589,13 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def checkout_capture(self, checkout_id, **kwargs):
-        """Call documentation: 
-        `/checkout/capture <https://www.wepay.com/developer/reference/checkout#capture>`_, 
-        plus extra keyword parameters:
+        """Call documentation: `/checkout/capture
+        <https://www.wepay.com/developer/reference/checkout#capture>`_, plus
+        extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
+
         """
         allowed_params = ['checkout_id']
         params = {
@@ -640,12 +641,13 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def preapproval_find(self, **kwargs):
-        """Call documentation: 
-        `/preapproval/find <https://www.wepay.com/developer/reference/preapproval#find>`_, 
-        plus extra keyword parameters:
+        """Call documentation: `/preapproval/find
+        <https://www.wepay.com/developer/reference/preapproval#find>`_, plus
+        extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
+
         """
         allowed_params = [
             'account_id', 'state', 'reference_id', 'start', 'limit', 'sort_order', 
@@ -699,11 +701,13 @@ class WePay(object):
             **self._update_params(params, kwargs))
 
     def preapproval_modify(self, preapproval_id, **kwargs):
-        """Call documentation: 
-        `/preapproval/modify <https://www.wepay.com/developer/reference/preapproval#modify>`_, plus extra keyword parameters:
+        """Call documentation: `/preapproval/modify
+        <https://www.wepay.com/developer/reference/preapproval#modify>`_, plus
+        extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's ``access_token``
         :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
+
         """
         allowed_params = ['preapproval_id', 'callback_uri']
         params = {
@@ -803,7 +807,8 @@ class WePay(object):
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def credit_card_create(self, client_id, cc_number, cvv, expiration_month, 
-                           expiration_year, user_name, email, address, **kwargs):
+                           expiration_year, user_name, email, address, 
+                           original_ip, original_device, **kwargs):
         """Call documentation: `/credit_card/create
         <https://www.wepay.com/developer/reference/credit_card#create>`_, plus
         extra keyword parameter:
@@ -813,7 +818,7 @@ class WePay(object):
         """
         allowed_params = [
             'client_id', 'cc_number', 'cvv', 'expiration_month', 'expiration_year',
-            'user_name', 'email', 'address'
+            'user_name', 'email', 'address', 'original_ip', 'original_device'
         ]
         params = {
             'client_id': client_id,
@@ -823,13 +828,16 @@ class WePay(object):
             'expiration_year': expiration_year,
             'user_name': user_name,
             'email': email,
-            'address': address
+            'address': address,
+            'original_ip': original_ip,
+            'original_device': original_device
         }
         return self.make_call(
             '/credit_card/create', params=params, allowed_params=allowed_params,
             **self._update_params(params, kwargs, keywords=['batch_mode']))
 
-    def credit_card_authorize(self, client_id, client_secret, credit_card_id, **kwargs):
+    def credit_card_authorize(self, client_id, client_secret, credit_card_id, 
+                              **kwargs):
         """Call documentation: `/credit_card/authorize
         <https://www.wepay.com/developer/reference/credit_card#authorize>`_,
         plus extra keyword parameter:
