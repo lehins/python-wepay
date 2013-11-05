@@ -12,7 +12,7 @@ class WePayError(Exception):
 
     @property
     def error(self):
-        """Error parameter return from WePay: `possible values
+        """``error`` parameter return from WePay: `possible values
         <https://www.wepay.com/developer/reference/errors>`_
         
         """
@@ -20,7 +20,7 @@ class WePayError(Exception):
 
     @property
     def code(self):
-        """Error code parameter return from WePay: `possible values
+        """``error_code`` parameter return from WePay: `possible values
         <https://www.wepay.com/developer/reference/errors>`_
         
         """
@@ -28,7 +28,7 @@ class WePayError(Exception):
 
     @property
     def message(self):
-        """Error mesage that corresspond to the error_code parameter.
+        """``error_description`` that corresspond to the ``error_code`` parameter.
 
         """
         return self._message
