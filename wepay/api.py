@@ -761,7 +761,8 @@ class WePay(object):
 
         """
         allowed_params = [
-            'account_id', 'redirect_uri', 'callback_uri', 'note', 'mode'
+            'account_id', 'redirect_uri', 'callback_uri', 'fallback_uri', 'note', 
+            'mode'            
         ]
         params = {
             'account_id': account_id
