@@ -18,7 +18,8 @@ class WePay(object):
     class WePayWarning(UserWarning):
         pass
     
-    def __init__(self, production=True, access_token=None, timeout=30):
+    def __init__(self, production=True, access_token=None, api_version=None,
+                 timeout=30):
         """The main class for making calls
 
         :keyword bool production: When ``False``, the ``stage.wepay.com`` API
@@ -29,6 +30,7 @@ class WePay(object):
         """
         self.production = production
         self.access_token = access_token
+        self.api_version = api_version
         self._timeout = timeout
         if production:
             self.api_endpoint = "https://wepayapi.com/v2"
@@ -80,6 +82,9 @@ class WePay(object):
                           "Use 'access_token' instead.", DeprecationWarning)
         access_token = access_token or token or self.access_token
         headers['Authorization'] = 'Bearer %s' % access_token
+
+        if not self.api_version is None:
+            headers['Api-Version'] = self.api_version
             
         if not params is None:
             params = json.dumps(params)
@@ -297,34 +302,55 @@ class WePay(object):
             '/user/modify', params=params, allowed_params=allowed_params,
             **self._update_params(params, kwargs))
 
-    def user_register(self, *args, **kwargs):
+    def user_register(self, client_id, client_secret, email, scope, first_name,
+                      last_name, original_ip, original_device, **kwargs):
         """Call documentation: `/user/register
-        <https://www.wepay.com/developer/reference/user#register>`_.
+        <https://www.wepay.com/developer/reference/user#register>`_, plus
+        extra keyword parameter:
+        
+        :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
 
-        :raises: `NotImplementedError`
+        .. note ::
 
-        .. warning ::
-
-            This API call is depricated, therefore is not implemented.
+            This call is NOT supported by API versions older then 2014-01-08.
 
         """
-        raise NotImplementedError(
-            "'/user/register' call is depricated and is not supported by this app")
+        allowed_params = [
+            'client_id', 'client_secret', 'email', 'scope', 'first_name', 'last_name', 
+            'original_ip', 'original_device', 'redirect_uri', 'callback_uri'
+        ]
+        params = {
+            'client_id': client_id, 
+            'client_secret': client_secret, 
+            'email': email, 
+            'scope': scope, 
+            'first_name': first_name,
+            'last_name': last_name, 
+            'original_ip': original_ip, 
+            'original_device': original_device
+        }
+        return self.make_call(
+            '/user/register', params=params, allowed_params=allowed_params,
+            **self._update_params(params, kwargs, keywords=['batch_mode']))
 
-    def user_resend_confirmation(self, *args, **kwargs):
+    def user_resend_confirmation(self, **kwargs):
         """Call documentation: `/user/resend_confirmation
-        <https://www.wepay.com/developer/reference/user#resend_confirmation>`_.
+        <https://www.wepay.com/developer/reference/user#resend_confirmation>`_, plus
+        extra keyword parameter:
+        
+        :keyword bool batch_mode: turn on/off the batch_mode, see :func:`make_call`
 
-        :raises: `NotImplementedError`
 
-        .. warning ::
+        .. note ::
 
-            This API call is depricated, therefore is not implemented.
+            This call is NOT supported by API versions older then 2014-01-08.
 
         """
-        raise NotImplementedError(
-            "'/user/resend_confirmation' call is depricated and is not supported by "
-            "this app")
+        allowed_params = ['email_message']
+        params = {}
+        return self.make_call(
+            '/user/register', params=params, allowed_params=allowed_params,
+            **self._update_params(params, kwargs, keywords=['batch_mode']))
 
     def account(self, account_id, **kwargs):
         """Call documentation: `/account
