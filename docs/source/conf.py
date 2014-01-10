@@ -67,6 +67,10 @@ release = version
 # directories to ignore when looking for source files.
 exclude_patterns = []
 
+autoclass_content = 'both'
+autodoc_member_order = 'bysource'
+
+
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
 

@@ -15,7 +15,6 @@ Before using this package get yourself familiar with actual WePay `API Documenta
 `WePay <https://wepay.com>`_ is a great service, highly recommend it.
 
 
-
 .. automodule:: wepay
    :members:
 
@@ -24,8 +23,9 @@ Contents:
 ---------
 
 .. toctree::
-   wepay.api
-   wepay.exceptions
+   :glob:
+
+   wepay*
 
 ------------
 Installation
@@ -44,11 +44,27 @@ Forkme on Github: `python-wepay <https://github.com/lehins/python-wepay>`_
 Quickstart Guide
 ----------------
 
-This package suppose to make it easier to construct and send API calls in more Pythonic way rather than building dictionary with parameters and simply sending it to WePay servers.
+This package suppose to make it easier to construct and send API calls in more
+Pythonic way rather than building dictionary with parameters and simply sending
+it to WePay servers.
 
-Just like with official SDK the core of this package is :class:`wepay.WePay` class, which needs to be instantiated with valid ``access_token`` and ``production`` arguments of your WePay Application, after which API calls can be made. All methods within ``WePay`` object mimic API calls from official `Documentation <https://www.wepay.com/developer>`_ in the way that normally would be expected, call names are directly mapped into functions with same names moreover all required parameters are passed to functions as ``args`` and optional ones as ``kwargs``. 
+Just like with official SDK the core of this package is :class:`wepay.WePay`
+class, which needs to be instantiated with valid ``access_token`` and
+``production`` arguments of your WePay Application, after which API calls can be
+made. All methods within ``WePay`` object mimic API calls from official
+`Documentation <https://www.wepay.com/developer>`_ in the way that normally
+would be expected, call names are directly mapped into functions with same names
+moreover all required parameters are passed to functions as ``args`` and
+optional ones as ``kwargs``.
 
-Methods that can perform calls on behalf of WePay User accept optionall keyword argument ``access_token``, which will then be used to perform a call instead of one the :class:`wepay.WePay` class was instantiated with. Methods that can be used in a '/batch/create' call also accept ``batch_mode`` keyword argument, which instead of making a call will force it to return a dictionary, which can be used later on to perform a :func:`wepay.WePay.batch_create` call. An unrecognized keyword passed to those functions will produce a warning and an actuall error from WePay, if it is in fact an unrecognized parameter.
+Methods that can perform calls on behalf of WePay User accept optionall keyword
+argument ``access_token``, which will then be used to perform a call instead of
+one the :class:`wepay.WePay` class was instantiated with. Methods that can be
+used in a '/batch/create' call also accept ``batch_mode`` keyword argument,
+which instead of making a call will force it to return a dictionary, which can
+be used later on to perform a :func:`wepay.WePay.batch_create` call. An
+unrecognized keyword passed to those functions will produce a warning and an
+actuall error from WePay, if it is in fact an unrecognized parameter.
 
 Quick Example::
     
@@ -60,20 +76,46 @@ Quick Example::
     >>> api = WePay(production=False, access_token=WEPAY_ACCESS_TOKEN)
     >>> api.app(WEPAY_CLIENT_ID, WEPAY_CLIENT_SECRET)
     {u'status': u'approved', u'theme_object': .....}
-    >>> api.oauth2_authorize(WEPAY_CLIENT_ID, REDIRECT_URI, WEPAY_DEFAULT_SCOPE, user_email='lehins@.....ru')
+    >>> redirect_uri = api.oauth2.authorize(WEPAY_CLIENT_ID, REDIRECT_URI, WEPAY_DEFAULT_SCOPE, user_email='lehins@.....ru')
+    >>> redirect_uri
     'https://stage.wepay.com/v2/oauth2/authorize?scope=manage_accounts%2C........'
     >>> # Get the 'code' from url... (for detailed instructions on how to do it follow WePay documentation)
-    >>> response = api.oauth2_token(WEPAY_CLIENT_ID, REDIRECT_URI, WEPAY_CLIENT_SECRET, '8c3e4aca23e1ed7.....', callback_uri='https://example.com/wepay/ipn/user')
+    >>> response = api.oauth2.token(WEPAY_CLIENT_ID, redirect_uri, WEPAY_CLIENT_SECRET, '8c3e4aca23e1ed7.....', callback_uri='https://example.com/wepay/ipn/user')
     >>> response
     {u'access_token': u'STAGE_f87....', u'token_type': u'BEARER', u'user_id': 87654321}
     >>> access_token = response['access_token']
-    >>> api.account_create("Test Account", "Account will be used to make a lot of money", access_token=access_token)
+    >>> api.account.create("Test Account", "Account will be used to make a lot of money", access_token=access_token)
     {u'account_id': 1371765417, u'account_uri': u'https://stage.wepay.com/account/1371765417'}
-    >>> api.checkout_create(1371765417, "Short description.....
+    >>> api.checkout.create(1371765417, "Short description.....
 
 ---------------
 Release History
 ---------------
+
+1.2.0
+^^^^^
+* New API version 2014-01-08 changes are reflected in this SDK version:
+
+  * implemented ``/user/register`` and ``user/resend_confirmation`` calls.
+  * added ``/account/get_update_uri`` and ``/account/get_reserve_details``
+  * depricated ``/account/add_bank``, ``/account/balance``, ``/account/get_tax``
+    and ``/account/set_tax`` calls.
+
+* restructured SDK in such a way that all API objects are separate classes, so
+  as an example, if we have a WePay instance ``api = WePay()`` and we want to
+  make a `/account/find` call, it will look like this ``api.account.find()``
+  instead of ``api.account_find()`` (notice **.** instead of **_**), although in
+  this version both are equivalent, latter one is depricated and will be removed
+  in version 1.3. Despite these changes lookup calls will be the same, ex.
+  ``api.account(12345)``.
+
+* Added flexibility to use different API version per call basis. So it is now
+  possible to make a depricated call like this: ``api.account.balance(1234,
+  api_version='2011-01-15')``
+
+* added ``batch_reference_id`` keyword argument to each call that accepts
+  ``batch_mode``
+
 
 1.1.2
 ^^^^^
