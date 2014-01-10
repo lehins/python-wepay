@@ -1,6 +1,4 @@
-""".. module:: wepay.calls.subscription
-      :synopsis: All subscription related calls.
-
+"""
 .. note:: 
 
    This module contains API calls that are in Beta mode at WePay. Moreover they
