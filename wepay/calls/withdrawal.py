@@ -31,7 +31,7 @@ class Withdrawal(Call):
     allowed_params = ['withdrawal_id']
 
 
-    def find(self, account_id, **kwargs):
+    def __find(self, account_id, **kwargs):
         """Call documentation: `/withdrawal/find
         <https://www.wepay.com/developer/reference/withdrawal#find>`_, plus
         extra keyword parameters:
@@ -53,11 +53,12 @@ class Withdrawal(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.find, params, kwargs)
-    find.allowed_params = ['account_id', 'limit', 'start', 'sort_order']
+        return self.make_call(self.__find, params, kwargs)
+    __find.allowed_params = ['account_id', 'limit', 'start', 'sort_order']
+    find = __find
 
 
-    def create(self, account_id, **kwargs):
+    def __create(self, account_id, **kwargs):
         """Call documentation: `/withdrawal/create
         <https://www.wepay.com/developer/reference/withdrawal#create>`_, plus
         extra keyword parameters:
@@ -79,14 +80,15 @@ class Withdrawal(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.create, params, kwargs)
-    create.allowed_params = [
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = [
         'account_id', 'currency', 'redirect_uri', 'callback_uri',
         'fallback_uri', 'note', 'mode'
     ]
+    create = __create
 
 
-    def modify(self, withdrawal_id, **kwargs):
+    def __modify(self, withdrawal_id, **kwargs):
         """Call documentation: `/withdrawal/modify
         <https://www.wepay.com/developer/reference/withdrawal#modify>`_, plus
         extra keyword parameters:
@@ -108,7 +110,7 @@ class Withdrawal(Call):
         params = {
             'withdrawal_id': withdrawal_id
         }
-        return self.make_call(self.modify, params, kwargs)
-    modify.allowed_params = ['withdrawal_id', 'callback_uri']
-
+        return self.make_call(self.__modify, params, kwargs)
+    __modify.allowed_params = ['withdrawal_id', 'callback_uri']
+    modify = __modify
 

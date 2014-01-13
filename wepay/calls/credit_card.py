@@ -30,9 +30,9 @@ class CreditCard(Call):
     control_keywords = ['batch_mode']
 
 
-    def create(self, client_id, cc_number, cvv, expiration_month,
-               expiration_year, user_name, email, address, original_ip,
-               original_device, **kwargs):
+    def __create(self, client_id, cc_number, cvv, expiration_month,
+                 expiration_year, user_name, email, address, original_ip,
+                 original_device, **kwargs):
         """Call documentation: `/credit_card/create
         <https://www.wepay.com/developer/reference/credit_card#create>`_, plus
         extra keyword parameter:
@@ -59,15 +59,16 @@ class CreditCard(Call):
             'original_ip': original_ip,
             'original_device': original_device
         }
-        return self.make_call(self.create, params, kwargs)
-    create.allowed_params = [
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = [
         'client_id', 'cc_number', 'cvv', 'expiration_month', 'expiration_year',
         'user_name', 'email', 'address', 'original_ip', 'original_device'
     ]
-    create.control_keywords = ['batch_mode']
+    __create.control_keywords = ['batch_mode']
+    create = __create
 
 
-    def authorize(self, client_id, client_secret, credit_card_id, **kwargs):
+    def __authorize(self, client_id, client_secret, credit_card_id, **kwargs):
         """Call documentation: `/credit_card/authorize
         <https://www.wepay.com/developer/reference/credit_card#authorize>`_,
         plus extra keyword parameter:
@@ -87,12 +88,13 @@ class CreditCard(Call):
             'client_secret': client_secret,
             'credit_card_id': credit_card_id
         }
-        return self.make_call(self.authorize, params, kwargs)
-    authorize.allowed_params = ['client_id', 'client_secret', 'credit_card_id']
-    authorize.control_keywords = ['batch_mode']
+        return self.make_call(self.__authorize, params, kwargs)
+    __authorize.allowed_params = ['client_id', 'client_secret', 'credit_card_id']
+    __authorize.control_keywords = ['batch_mode']
+    authorize = __authorize
 
 
-    def find(self, client_id, client_secret, **kwargs):
+    def __find(self, client_id, client_secret, **kwargs):
         """Call documentation: `/credit_card/find
         <https://www.wepay.com/developer/reference/credit_card#find>`_, plus
         extra keyword parameter:
@@ -111,15 +113,16 @@ class CreditCard(Call):
             'client_id': client_id,
             'client_secret': client_secret
         }
-        return self.make_call(self.find, params, kwargs)
-    find.allowed_params = [
+        return self.make_call(self.__find, params, kwargs)
+    __find.allowed_params = [
         'client_id', 'client_secret', 'reference_id', 'limit', 'start',
         'sort_order'
     ]
-    find.control_keywords = ['batch_mode']
+    __find.control_keywords = ['batch_mode']
+    find = __find
 
 
-    def delete(self, client_id, client_secret, credit_card_id, **kwargs):
+    def __delete(self, client_id, client_secret, credit_card_id, **kwargs):
         """Call documentation: `/credit_card/delete
         <https://www.wepay.com/developer/reference/credit_card#delete>`_, plus
         extra keyword parameter:
@@ -139,6 +142,7 @@ class CreditCard(Call):
             'client_secret': client_secret,
             'credit_card_id': credit_card_id
         }
-        return self.make_call(self.delete, params, kwargs)
-    delete.allowed_params = ['client_id', 'client_secret', 'credit_card_id']
-    delete.control_keywords = ['batch_mode']
+        return self.make_call(self.__delete, params, kwargs)
+    __delete.allowed_params = ['client_id', 'client_secret', 'credit_card_id']
+    __delete.control_keywords = ['batch_mode']
+    delete = __delete

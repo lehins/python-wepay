@@ -29,7 +29,7 @@ class App(Call):
     control_keywords = ['batch_mode']
 
 
-    def modify(self, client_id, client_secret, **kwargs):
+    def __modify(self, client_id, client_secret, **kwargs):
         """Call documentation: `/app/modify
         <https://www.wepay.com/developer/reference/app#modify>`_, plus extra
         keyword parameter:
@@ -48,8 +48,9 @@ class App(Call):
             'client_id': client_id,
             'client_secret': client_secret
         }
-        return self.make_call(self.modify, params, kwargs)
-    modify.allowed_params = [
+        return self.make_call(self.__modify, params, kwargs)
+    __modify.allowed_params = [
         'client_id', 'client_secret', 'theme_object', 'gaq_domains'
     ]
-    modify.control_keywords = ['batch_mode']
+    __modify.control_keywords = ['batch_mode']
+    modify = __modify

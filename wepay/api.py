@@ -92,6 +92,10 @@ class WePay(object):
    
        :class:`Withdrawal<wepay.calls.withdrawal.Withdrawal>` call instance
 
+    .. attribute:: credit_card =
+   
+       :class:`CreditCard<wepay.calls.credit_card.CreditCard>` call instance
+
     .. attribute:: subscription_plan =
    
        :class:`SubscriptionPlan<wepay.calls.subscription.SubscriptionPlan>` call instance
@@ -142,7 +146,7 @@ class WePay(object):
             self.browser_iframe_js = self.browser_uri + "/js/iframe.wepay.js"
         self.browser_endpoint = self.browser_uri + "/v2"
         for call_cls in self.supported_calls:
-            setattr(self, call_cls.call_name, call_cls(api=self))
+            setattr(self, call_cls.call_name, call_cls(self))
         self._backwards()
     
     def call(self, uri, params=None, access_token=None, token=None, api_version=None):

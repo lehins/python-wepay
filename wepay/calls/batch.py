@@ -5,7 +5,7 @@ class Batch(Call):
 
     call_name = 'batch'
 
-    def create(self, client_id, client_secret, calls, **kwargs):
+    def __create(self, client_id, client_secret, calls, **kwargs):
         """Call documentation: `/batch/create
         <https://www.wepay.com/developer/reference/batch#create>`_, plus extra
         keyword parameter:
@@ -19,6 +19,7 @@ class Batch(Call):
             'client_secret': client_secret,
             'calls': calls
         }
-        return self.make_call(self.create, params, kwargs)
-    create.allowed_params = ['client_id', 'client_secret', 'calls']
-    create.control_kwargs = ['access_token']
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = ['client_id', 'client_secret', 'calls']
+    __create.control_kwargs = ['access_token']
+    create = __create

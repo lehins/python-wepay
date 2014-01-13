@@ -31,7 +31,7 @@ class Account(Call):
     allowed_params = ['account_id']
 
 
-    def find(self, **kwargs):
+    def __find(self, **kwargs):
         """Call documentation: `/account/find
         <https://www.wepay.com/developer/reference/account#find>`_, plus extra
         keyword parameters:
@@ -51,11 +51,11 @@ class Account(Call):
 
         """
         params = {}
-        return self.make_call(self.find, params, kwargs)
-    find.allowed_params = ['name', 'reference_id', 'sort_order']
+        return self.make_call(self.__find, params, kwargs)
+    __find.allowed_params = ['name', 'reference_id', 'sort_order']
+    find = __find
 
-
-    def create(self, name, description, **kwargs):
+    def __create(self, name, description, **kwargs):
         """Call documentation: `/account/create
         <https://www.wepay.com/developer/reference/account#create>`_, plus extra
         keyword parameters:
@@ -78,14 +78,14 @@ class Account(Call):
             'name': name,
             'description': description
         }
-        return self.make_call(self.create, params, kwargs)
-    create.allowed_params = [
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = [
         'name', 'description', 'reference_id', 'type', 'image_uri', 'gaq_domains', 
         'theme_object', 'mcc', 'callback_uri', 'country', 'currencies'
     ]
+    create = __create
 
-
-    def modify(self, account_id, **kwargs):
+    def __modify(self, account_id, **kwargs):
         """Call documentation: `/account/modify
         <https://www.wepay.com/developer/reference/account#modify>`_, plus extra
         keyword parameters:
@@ -107,14 +107,14 @@ class Account(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.modify, params, kwargs)
-    modify.allowed_params = [
+        return self.make_call(self.__modify, params, kwargs)
+    __modify.allowed_params = [
         'account_id', 'name', 'description', 'reference_id', 'image_uri', 
         'gaq_domains', 'theme_object', 'callback_uri'
     ]
+    modify = __modify
 
-
-    def delete(self, account_id, **kwargs):
+    def __delete(self, account_id, **kwargs):
         """Call documentation: `/account/delete
         <https://www.wepay.com/developer/reference/account#delete>`_, plus extra
         keyword parameters:
@@ -136,11 +136,12 @@ class Account(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.delete, params, kwargs)
-    delete.allowed_params = ['account_id', 'reason']
+        return self.make_call(self.__delete, params, kwargs)
+    __delete.allowed_params = ['account_id', 'reason']
+    delete = __delete
 
 
-    def get_update_uri(self, account_id, **kwargs):
+    def __get_update_uri(self, account_id, **kwargs):
         """Call documentation: `/account/get_update_uri
         <https://www.wepay.com/developer/reference/account#update_uri>`_, plus extra
         keyword parameters:
@@ -162,11 +163,12 @@ class Account(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.get_update_uri, params, kwargs)
-    get_update_uri.allowed_params = ['account_id', 'mode', 'redirect_uri']
+        return self.make_call(self.__get_update_uri, params, kwargs)
+    __get_update_uri.allowed_params = ['account_id', 'mode', 'redirect_uri']
+    get_update_uri = __get_update_uri
     
 
-    def get_reserve_details(self, account_id, **kwargs):
+    def __get_reserve_details(self, account_id, **kwargs):
         """Call documentation: `/account/get_reserve_details
         <https://www.wepay.com/developer/reference/account#reserve>`_, plus extra
         keyword parameters:
@@ -188,13 +190,14 @@ class Account(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.get_reserve_details, params, kwargs)
-    get_reserve_details.allowed_params = ['account_id', 'currency']
+        return self.make_call(self.__get_reserve_details, params, kwargs)
+    __get_reserve_details.allowed_params = ['account_id', 'currency']
+    get_reserve_details = __get_reserve_details
 
 
     # deprecated calls
 
-    def balance(self, account_id, **kwargs):
+    def __balance(self, account_id, **kwargs):
         """Call documentation: `/account/balance
         <https://www.wepay.com/developer/reference/account#balance>`_, plus
         extra keyword parameters:
@@ -220,11 +223,12 @@ class Account(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.balance, params, kwargs)
-    balance.allowed_params = ['account_id']
+        return self.make_call(self.__balance, params, kwargs)
+    __balance.allowed_params = ['account_id']
+    balance = __balance
 
         
-    def add_bank(self, account_id, **kwargs):
+    def __add_bank(self, account_id, **kwargs):
         """Call documentation: `/account/add_bank
         <https://www.wepay.com/developer/reference/account#add_bank>`_, plus
         extra keyword parameters:
@@ -250,11 +254,12 @@ class Account(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.add_bank, params, kwargs)
-    add_bank.allowed_params = ['account_id', 'mode', 'redirect_uri']
+        return self.make_call(self.__add_bank, params, kwargs)
+    __add_bank.allowed_params = ['account_id', 'mode', 'redirect_uri']
+    add_bank = __add_bank
 
         
-    def set_tax(self, account_id, taxes, **kwargs):
+    def __set_tax(self, account_id, taxes, **kwargs):
         """Call documentation: `/account/set_tax
         <https://www.wepay.com/developer/reference/account#set_tax>`_, plus
         extra keyword parameters:
@@ -281,11 +286,12 @@ class Account(Call):
             'account_id': account_id,
             'taxes': taxes
         }
-        return self.make_call(self.set_tax, params, kwargs)
-    set_tax.allowed_params = ['account_id', 'taxes']
+        return self.make_call(self.__set_tax, params, kwargs)
+    __set_tax.allowed_params = ['account_id', 'taxes']
+    set_tax = __set_tax
 
 
-    def get_tax(self, account_id, **kwargs):
+    def __get_tax(self, account_id, **kwargs):
         """Call documentation: `/account/get_tax
         <https://www.wepay.com/developer/reference/account#get_tax>`_, plus
         extra keyword parameters:
@@ -311,5 +317,6 @@ class Account(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.get_tax, params, kwargs)
-    get_tax.allowed_params = ['account_id']
+        return self.make_call(self.__get_tax, params, kwargs)
+    __get_tax.allowed_params = ['account_id']
+    get_tax = __get_tax

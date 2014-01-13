@@ -28,7 +28,7 @@ class User(Call):
     allowed_params = []
 
 
-    def modify(self, **kwargs):
+    def __modify(self, **kwargs):
         """Call documentation: `/user/modify
         <https://www.wepay.com/developer/reference/user#modify>`_, plus extra
         keyword parameters:
@@ -47,12 +47,13 @@ class User(Call):
            :class:`wepay.api.WePay`
 
         """
-        return self.make_call(self.modify, {}, kwargs)
-    modify.allowed_params = ['callback_uri']
+        return self.make_call(self.__modify, {}, kwargs)
+    __modify.allowed_params = ['callback_uri']
+    modify = __modify
 
 
-    def register(self, client_id, client_secret, email, scope, first_name,
-                 last_name, original_ip, original_device, **kwargs):
+    def __register(self, client_id, client_secret, email, scope, first_name,
+                   last_name, original_ip, original_device, **kwargs):
         """Call documentation: `/user/register
         <https://www.wepay.com/developer/reference/user#register>`_, plus
         extra keyword parameter:
@@ -81,15 +82,16 @@ class User(Call):
             'original_ip': original_ip, 
             'original_device': original_device
         }
-        return self.make_call(self.register, params, kwargs)
-    register.allowed_params = [
+        return self.make_call(self.__register, params, kwargs)
+    __register.allowed_params = [
         'client_id', 'client_secret', 'email', 'scope', 'first_name', 'last_name', 
         'original_ip', 'original_device', 'redirect_uri', 'callback_uri'
     ]
-    register.control_keywords = ['batch_mode']
+    __register.control_keywords = ['batch_mode']
+    register = __register
 
 
-    def resend_confirmation(self, **kwargs):
+    def __resend_confirmation(self, **kwargs):
         """Call documentation: `/user/resend_confirmation
         <https://www.wepay.com/developer/reference/user#resend_confirmation>`_, plus
         extra keyword parameter:
@@ -108,8 +110,9 @@ class User(Call):
             This call is NOT supported by API versions older then '2014-01-08'.
 
         """
-        return self.make_call(self.resend_confirmation, {}, kwargs)
-    resend_confirmation.allowed_params = ['email_message']
-    resend_confirmation.control_keywords = ['batch_mode']
+        return self.make_call(self.__resend_confirmation, {}, kwargs)
+    __resend_confirmation.allowed_params = ['email_message']
+    __resend_confirmation.control_keywords = ['batch_mode']
+    resend_confirmation = __resend_confirmation
 
 

@@ -31,7 +31,7 @@ class Checkout(Call):
     allowed_params = ['checkout_id']
 
 
-    def find(self, account_id, **kwargs):
+    def __find(self, account_id, **kwargs):
         """Call documentation: `/checkout/find
         <https://www.wepay.com/developer/reference/checkout#find>`_, plus extra
         keyword parameters:
@@ -53,14 +53,14 @@ class Checkout(Call):
         params = {
             'account_id': account_id
         }
-        return self.make_call(self.find, params, kwargs)
-    find.allowed_params = [
+        return self.make_call(self.__find, params, kwargs)
+    __find.allowed_params = [
         'account_id', 'start', 'limit', 'reference_id', 'state', 
         'preapproval_id', 'start_time', 'end_time', 'sort_order', 'shipping_fee'
     ]
+    find = __find
 
-
-    def create(self, account_id, short_description, type, amount, **kwargs):
+    def __create(self, account_id, short_description, type, amount, **kwargs):
         """Call documentation: `/checkout/create
         <https://www.wepay.com/developer/reference/checkout#create>`_, plus
         extra keyword parameters:
@@ -85,8 +85,8 @@ class Checkout(Call):
             'type': type,
             'amount': amount
         }
-        return self.make_call(self.create, params, kwargs)
-    create.allowed_params = [
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = [
         'account_id', 'short_description', 'type', 'currency', 'amount', 
         'long_description', 'payer_email_message', 'payee_email_message', 'reference_id', 
         'app_fee', 'fee_payer', 'redirect_uri', 'callback_uri', 'fallback_uri', 
@@ -94,9 +94,10 @@ class Checkout(Call):
         'preapproval_id', 'prefill_info', 'funding_sources', 'payment_method_id', 
         'payment_method_type'
     ]
+    create = __create
 
 
-    def cancel(self, checkout_id, cancel_reason, **kwargs):
+    def __cancel(self, checkout_id, cancel_reason, **kwargs):
         """Call documentation: `/checkout/cancel
         <https://www.wepay.com/developer/reference/checkout#cancel>`_, plus
         extra keyword parameters:
@@ -119,11 +120,11 @@ class Checkout(Call):
             'checkout_id': checkout_id,
             'cancel_reason': cancel_reason
         }
-        return self.make_call(self.cancel, params, kwargs)
-    cancel.allowed_params = ['checkout_id', 'cancel_reason']
+        return self.make_call(self.__cancel, params, kwargs)
+    __cancel.allowed_params = ['checkout_id', 'cancel_reason']
+    cancel = __cancel
 
-
-    def refund(self, checkout_id, refund_reason, **kwargs):
+    def __refund(self, checkout_id, refund_reason, **kwargs):
         """Call documentation: `/checkout/refund
         <https://www.wepay.com/developer/reference/checkout#refund>`_, plus
         extra keyword parameters:
@@ -146,14 +147,14 @@ class Checkout(Call):
             'checkout_id': checkout_id,
             'refund_reason': refund_reason
         }
-        return self.make_call(self.refund, params, kwargs)
-    refund.allowed_params = [
+        return self.make_call(self.__refund, params, kwargs)
+    __refund.allowed_params = [
         'checkout_id', 'refund_reason', 'amount', 'app_fee', 'payer_email_message', 
         'payee_email_message'
     ]
+    refund = __refund
 
-
-    def capture(self, checkout_id, **kwargs):
+    def __capture(self, checkout_id, **kwargs):
         """Call documentation: `/checkout/capture
         <https://www.wepay.com/developer/reference/checkout#capture>`_, plus
         extra keyword parameters:
@@ -175,11 +176,11 @@ class Checkout(Call):
         params = {
             'checkout_id': checkout_id
         }
-        return self.make_call(self.capture, params, kwargs)
-    capture.allowed_params = ['checkout_id']
+        return self.make_call(self.__capture, params, kwargs)
+    __capture.allowed_params = ['checkout_id']
+    capture = __capture
 
-
-    def modify(self, checkout_id, **kwargs):
+    def __modify(self, checkout_id, **kwargs):
         """Call documentation: `/checkout/modify
         <https://www.wepay.com/developer/reference/checkout#modify>`_, plus
         extra keyword parameters:
@@ -201,6 +202,6 @@ class Checkout(Call):
         params = {
             'checkout_id': checkout_id
         }
-        return self.make_call(self.modify, params, kwargs)
-    modify.allowed_params = ['checkout_id', 'callback_uri']
-
+        return self.make_call(self.__modify, params, kwargs)
+    __modify.allowed_params = ['checkout_id', 'callback_uri']
+    modify = __modify

@@ -31,7 +31,7 @@ class OAuth2(Call):
             self.api.browser_endpoint, urllib.urlencode(options))
 
 
-    def token(self, client_id, redirect_uri, client_secret, code, **kwargs):
+    def __token(self, client_id, redirect_uri, client_secret, code, **kwargs):
         """Call documentation: `/oauth2/token
         <https://www.wepay.com/developer/reference/oauth2#token>`_, plus extra
         keyword parameter:
@@ -52,8 +52,9 @@ class OAuth2(Call):
             'client_secret': client_secret,
             'code': code
         }
-        return self.make_call(self.token, params, kwargs)
-    token.allowed_params = [
+        return self.make_call(self.__token, params, kwargs)
+    __token.allowed_params = [
         'client_id', 'redirect_uri', 'client_secret', 'code', 'callback_uri',
     ]
-    token.control_keywords = ['batch_mode']
+    __token.control_keywords = ['batch_mode']
+    token = __token

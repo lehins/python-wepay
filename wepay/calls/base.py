@@ -21,7 +21,8 @@ class Call(object):
                 'batch_reference_id', None)
         control_kwargs['api_version'] = extra_kwargs.pop('api_version', None)
         assert not (
-            'api_version' in control_kwargs and 'batch_mode' in control_kwargs), \
+            control_kwargs.get('api_version', None) and 
+            control_kwargs.get('batch_mode', False)), \
             "Cannot use 'api_version' and 'batch_mode' in the same call."
         params.update(extra_kwargs)
         return control_kwargs
@@ -49,7 +50,7 @@ class Call(object):
 
         """
         if hasattr(func, '__name__'):
-            uri = '/%s/%s' % (self.call_name, func.__name__)
+            uri = '/%s/%s' % (self.call_name, func.__name__[2:])
         else:
             uri = '/%s' % self.call_name
         control_kwargs = self._update_params(

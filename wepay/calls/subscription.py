@@ -41,7 +41,7 @@ class SubscriptionPlan(Call):
     allowed_params = ['subscription_plan_id']
 
 
-    def find(self, **kwargs):
+    def __find(self, **kwargs):
         """Call documentation: `/subscription_plan/find
         <https://www.wepay.com/developer/reference/subscription_plan#find>`_,
         plus extra keyword parameters:
@@ -60,12 +60,13 @@ class SubscriptionPlan(Call):
            :class:`wepay.api.WePay`
 
         """
-        return self.make_call(self.find, {}, kwargs)
-    find.allowed_params = ['account_id', 'start', 'limit', 'state', 'reference_id']
+        return self.make_call(self.__find, {}, kwargs)
+    __find.allowed_params = ['account_id', 'start', 'limit', 'state', 'reference_id']
+    find = __find
 
 
-    def create(self, account_id, name, short_description, amount, period,
-               **kwargs):
+    def __create(self, account_id, name, short_description, amount, period,
+                 **kwargs):
         """Call documentation: `/subscription_plan/create
         <https://www.wepay.com/developer/reference/subscription_plan#create>`_,
         plus extra keyword parameters:
@@ -91,15 +92,16 @@ class SubscriptionPlan(Call):
             'amount': amount,
             'period': period
         }
-        return self.make_call(self.create, params, kwargs)
-    create.allowed_params = [
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = [
         'account_id', 'name', 'short_description', 'amount', 'currency',
         'period', 'app_fee', 'callback_uri', 'trial_length', 'setup_fee',
         'reference_id'
     ]
+    create = __create
 
 
-    def delete(self, subscription_plan_id, **kwargs):
+    def __delete(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription_plan/delete
         <https://www.wepay.com/developer/reference/subscription_plan#delete>`_,
         plus extra keyword parameters:
@@ -121,11 +123,12 @@ class SubscriptionPlan(Call):
         params = {
             'subscription_plan_id': subscription_plan_id
         }
-        return self.make_call(self.delete, params, kwargs)
-    delete.allowed_params = ['subscription_plan_id', 'reason']
+        return self.make_call(self.__delete, params, kwargs)
+    __delete.allowed_params = ['subscription_plan_id', 'reason']
+    delete = __delete
 
 
-    def get_button(self, account_id, button_type, **kwargs):
+    def __get_button(self, account_id, button_type, **kwargs):
         """Call documentation: `/subscription_plan/get_button
         <https://www.wepay.com/developer/reference/subscription_plan#get_button>`_,
         plus extra keyword parameters:
@@ -148,14 +151,15 @@ class SubscriptionPlan(Call):
             'account_id': account_id,
             'button_type': button_type
         }
-        return self.make_call(self.get_button, params, kwargs)
-    get_button.allowed_params = [
+        return self.make_call(self.__get_button, params, kwargs)
+    __get_button.allowed_params = [
         'account_id', 'button_type', 'subscription_plan_id', 'button_text',
         'button_options'
     ]
+    get_button = __get_button
 
 
-    def modify(self, subscription_plan_id, **kwargs):
+    def __modify(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription_plan/modify
         <https://www.wepay.com/developer/reference/subscription_plan#modify>`_,
         plus extra keyword parameters:
@@ -177,12 +181,13 @@ class SubscriptionPlan(Call):
         params = {
             'subscription_plan_id': subscription_plan_id
         }
-        return self.make_call(self.modify, params, kwargs)
-    modify.allowed_params = [
+        return self.make_call(self.__modify, params, kwargs)
+    __modify.allowed_params = [
         'subscription_plan_id', 'name', 'short_description', 'amount',
         'app_fee', 'callback_uri', 'trial_length', 'setup_fee',
         'update_subscriptions', 'transition_expire_days', 'reference_id'
     ]
+    modify = __modify
 
 
 class Subscription(Call):
@@ -216,7 +221,7 @@ class Subscription(Call):
     allowed_params = ['subscription_id']
 
 
-    def find(self, subscription_plan_id, **kwargs):
+    def __find(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription/find
         <https://www.wepay.com/developer/reference/subscription#find>`_, plus
         extra keyword parameters:
@@ -238,14 +243,15 @@ class Subscription(Call):
         params = {
             'subscription_plan_id': subscription_plan_id
         }
-        return self.make_call(self.find, params, kwargs)
-    find.allowed_params = [
+        return self.make_call(self.__find, params, kwargs)
+    __find.allowed_params = [
         'subscription_plan_id', 'start', 'limit', 'start_time', 'end_time',
         'state', 'reference_id'
     ]
+    find = __find
         
         
-    def create(self, subscription_plan_id, **kwargs):
+    def __create(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription/create
         <https://www.wepay.com/developer/reference/subscription#create>`_, plus
         extra keyword parameters:
@@ -267,15 +273,16 @@ class Subscription(Call):
         params = {
             'subscription_plan_id': subscription_plan_id
         }
-        return self.make_call(self.create, params, kwargs)
-    create.allowed_params = [
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = [
         'subscription_plan_id', 'redirect_uri', 'callback_uri',
         'payment_method_id', 'payment_method_type', 'mode', 'quantity',
         'reference_id', 'prefill_info'
     ]
+    create = __create
 
 
-    def cancel(self, subscription_id, **kwargs):
+    def __cancel(self, subscription_id, **kwargs):
         """Call documentation: `/subscription/cancel
         <https://www.wepay.com/developer/reference/subscription#cancel>`_, plus
         extra keyword parameters:
@@ -297,11 +304,12 @@ class Subscription(Call):
         params = {
             'subscription_id': subscription_id
         }
-        return self.make_call(self.cancel, params, kwargs)
-    cancel.allowed_params = ['subscription_id', 'reason']
+        return self.make_call(self.__cancel, params, kwargs)
+    __cancel.allowed_params = ['subscription_id', 'reason']
+    cancel = __cancel
 
 
-    def modify(self, subscription_id, **kwargs):
+    def __modify(self, subscription_id, **kwargs):
         """Call documentation: `/subscription/modify
         <https://www.wepay.com/developer/reference/subscription#modify>`_, plus
         extra keyword parameters:
@@ -323,13 +331,14 @@ class Subscription(Call):
         params = {
             'subscription_id': subscription_id
         }
-        return self.make_call(self.modify, params, kwargs)
-    modify.allowed_params = [
+        return self.make_call(self.__modify, params, kwargs)
+    __modify.allowed_params = [
         'subscription_id', 'subscription_plan_id', 'quantity', 'prorate',
         'transition_expire_days', 'redirect_uri', 'callback_uri',
         'payment_method_id', 'payment_method_type', 'reference_id',
         'extend_trial_days',
     ]
+    modify = __modify
 
 
 class SubscriptionCharge(Call):
@@ -363,7 +372,7 @@ class SubscriptionCharge(Call):
     allowed_params = ['subscription_charge_id']
     
 
-    def find(self, subscription_id, **kwargs):
+    def __find(self, subscription_id, **kwargs):
         """Call documentation: `/subscription_charge/find
         <https://www.wepay.com/developer/reference/subscription_charge#find>`_,
         plus extra keyword parameters:
@@ -385,14 +394,15 @@ class SubscriptionCharge(Call):
         params = {
             'subscription_id': subscription_id
         }
-        return self.make_call(self.find, params, kwargs)
-    find.allowed_params = [
+        return self.make_call(self.__find, params, kwargs)
+    __find.allowed_params = [
         'subscription_id', 'start', 'limit', 'start_time', 'end_time', 'type',
         'amount', 'state'
     ]
+    find = __find
+    
 
-
-    def refund(self, subscription_charge_id, **kwargs):
+    def __refund(self, subscription_charge_id, **kwargs):
         """Call documentation: `/subscription_charge/refund
         <https://www.wepay.com/developer/reference/subscription_charge#refund>`_,
         plus extra keyword parameters:
@@ -414,5 +424,6 @@ class SubscriptionCharge(Call):
         params = {
             'subscription_charge_id': subscription_charge_id
         }
-        return self.make_call(self.refund, params, kwargs)
-    refund.allowed_params = ['subscription_charge_id', 'refund_reason']
+        return self.make_call(self.__refund, params, kwargs)
+    __refund.allowed_params = ['subscription_charge_id', 'refund_reason']
+    refund = __refund
