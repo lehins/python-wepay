@@ -238,7 +238,7 @@ class WePay(object):
            only, use :func:`WePay.oauth2.token` instead.
 
         :param str redirect_uri: The same URI specified in the
-            :py:meth:`get_authorization_url` call that preceeded this.
+            :py:meth:`get_authorization_url` call that preceded this.
         :param str client_id: The client ID issued by WePay to your app.
         :param str client_secret: The client secret issued by WePay
             to your app.
