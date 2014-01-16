@@ -9,7 +9,7 @@ long_description = open('README.rst').read() if os.path.isfile('README.rst') \
 setup(
     name='python-wepay',
     version=wepay.get_version(),
-    packages=['wepay'],
+    packages=['wepay', 'wepay.calls'],
     description=short_description,
     long_description=long_description,
     author='lehins',
