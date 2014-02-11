@@ -85,7 +85,8 @@ class User(Call):
         return self.make_call(self.__register, params, kwargs)
     __register.allowed_params = [
         'client_id', 'client_secret', 'email', 'scope', 'first_name', 'last_name', 
-        'original_ip', 'original_device', 'redirect_uri', 'callback_uri'
+        'original_ip', 'original_device', 'redirect_uri', 'callback_uri', 
+        'tos_acceptance_time'
     ]
     __register.control_keywords = ['batch_mode']
     register = __register
