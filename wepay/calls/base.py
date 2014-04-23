@@ -1,4 +1,5 @@
 import warnings
+from wepay.exceptions import WePayWarning
 
 class Call(object):
     """ Base class for all API calls """
@@ -7,7 +8,7 @@ class Call(object):
     floating = ['amount', 'app_fee', 'shipping_fee', 'setup_fee']
 
     def __init__(self, api):
-        self.api = api
+        self._api = api
 
     def _update_params(self, params, extra_kwargs, control_keywords):
         if control_keywords is None:
@@ -31,13 +32,14 @@ class Call(object):
     def make_call(self, func, params, extra_kwargs):
         """This is a helper function that checks the validity of ``params``
         dictionary by matching it with ``allowed_params`` of a ``func``
-        attribute, and then performs a call.  Will issue a `WePayWarning` in
-        case of unrecognized parameter, and raise a `WePayError` after making a
-        call, in case if it is in fact unrecognized.  If ``batch_mode`` is set
-        to ``True`` instead of making a call it will construct a dictionary that
-        is ready to be used in :func:`WePay.batch.create` later on, while
-        ``refernce_id`` can also be added to it later, as specified by WePay
-        Documentation, see :meth:`batch.create<wepay.calls.batch.Batch.create>`
+        attribute, and then performs a call.  Will issue a
+        ``wepay.exceptions.WePayWarning`` in case of unrecognized parameter, and
+        raise a `WePayError` after making a call, in case if it is in fact
+        unrecognized.  If ``batch_mode`` is set to ``True`` instead of making a
+        call it will construct a dictionary that is ready to be used in
+        :func:`WePay.batch.create` later on, while ``refernce_id`` can also be
+        added to it later, as specified by WePay Documentation, see
+        :meth:`batch.create<wepay.calls.batch.Batch.create>`
 
         :param func callable: function making the call
         :param dict params: parameters to include in the call
@@ -46,7 +48,7 @@ class Call(object):
             through calling :func:`call` or a dictionary that is ready 
             to be appended to ``calls`` list that is passed to 
             :meth:`batch.create<wepay.calls.batch.Batch.create`>
-        :raises: :mod:`wepay.exceptions.WePayError`
+        :raises: :exception:`wepay.exceptions.WePayError`
 
         """
         if hasattr(func, '__name__'):
@@ -57,7 +59,7 @@ class Call(object):
             params, extra_kwargs, getattr(func, 'control_keywords', None))
         access_token = control_kwargs.get('access_token', None)
         api_version = control_kwargs.get('api_version', None)
-        if not self.api.silent:
+        if not self._api.silent:
             unrecognized_params = set(params) - set(func.allowed_params)
             if unrecognized_params:
                 err_msg = (
@@ -65,10 +67,10 @@ class Call(object):
                     "unrecognized. Allowed parameters are: '%s'. Unrecognized "
                     "parameters are: '%s'." % (uri, ', '.join(func.allowed_params), 
                                                ', '.join(unrecognized_params)))
-                if self.api.production:
-                    warnings.warn(err_msg, self.api.WePayWarning)
+                if self._api.production and self._api.silent is None:
+                    warnings.warn(err_msg, WePayWarning)
                 else:
-                    raise self.api.WePayWarning(err_msg)
+                    raise WePayWarning(err_msg)
         
         # in case if param is Decimal
         for name in self.floating:
@@ -85,5 +87,5 @@ class Call(object):
             if not control_kwargs['reference_id'] is None:
                 call['reference_id'] = control_kwargs['reference_id']
             return call
-        return self.api.call(
+        return self._api.call(
             uri, params=params, access_token=access_token, api_version=api_version)

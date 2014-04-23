@@ -31,8 +31,7 @@ class CreditCard(Call):
 
 
     def __create(self, client_id, cc_number, cvv, expiration_month,
-                 expiration_year, user_name, email, address, original_ip,
-                 original_device, **kwargs):
+                 expiration_year, user_name, email, address, **kwargs):
         """Call documentation: `/credit_card/create
         <https://www.wepay.com/developer/reference/credit_card#create>`_, plus
         extra keyword parameter:
@@ -55,9 +54,7 @@ class CreditCard(Call):
             'expiration_year': expiration_year,
             'user_name': user_name,
             'email': email,
-            'address': address,
-            'original_ip': original_ip,
-            'original_device': original_device
+            'address': address
         }
         return self.make_call(self.__create, params, kwargs)
     __create.allowed_params = [

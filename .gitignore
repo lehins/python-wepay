@@ -1,0 +1,7 @@
+*.pyc
+*.pyo
+
+/docs/build
+
+.coverage
+__pycache__

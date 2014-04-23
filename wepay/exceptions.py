@@ -1,4 +1,9 @@
 
+class WePayWarning(UserWarning):
+    pass
+    
+
+
 class WePayError(Exception):
     """Raised in case API call was not successfull.  `WePay API Errors Documantation
     <https://www.wepay.com/developer/reference/errors>`_
@@ -35,3 +40,25 @@ class WePayError(Exception):
 
     def __str__(self):
         return "%s (%s): %s" % (self.error, self.code, self.message)
+
+
+
+class WePayConnectionError(Exception):
+    def __init__(self, error, message):
+        self._error = error
+        self._message = message
+
+    @property
+    def error(self):
+        """Original exception that caused an error."""
+        return self._error
+
+    @property
+    def message(self):
+        """Message explaining the nature of the error.
+
+        """
+        return self._message
+
+    def __str__(self):
+        return "%s: %s" % (type(self.error), self.message)

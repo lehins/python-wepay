@@ -1,4 +1,4 @@
-import urllib
+from six.moves import urllib
 from wepay.calls.base import Call
 
 class OAuth2(Call):
@@ -16,19 +16,19 @@ class OAuth2(Call):
            This is not an API call but an actual uri that you send the user to.
 
         """
-        options = {
-            'client_id': client_id,
-            'redirect_uri': redirect_uri,
-            'scope': scope
-        }
-        if not user_name is None:
-            options['user_name'] = user_name
-        if not user_email is None:
-            options['user_email'] = user_email
-        if not state is None:
-            options['state'] = state
+        query = [
+            ('client_id', client_id),
+            ('redirect_uri', redirect_uri),
+            ('scope', scope)
+        ]
+        if user_name is not None:
+            query.append(('user_name', user_name))
+        if user_email is not None:
+            query.append(('user_email', user_email))
+        if state is not None:
+            query.append(('state', state))
         return '%s/oauth2/authorize?%s' % (
-            self.api.browser_endpoint, urllib.urlencode(options))
+            self._api.browser_endpoint, urllib.parse.urlencode(query))
 
 
     def __token(self, client_id, redirect_uri, client_secret, code, **kwargs):

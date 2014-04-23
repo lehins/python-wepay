@@ -6,7 +6,9 @@ from wepay.calls.checkout import Checkout
 from wepay.calls.preapproval import Preapproval
 from wepay.calls.withdrawal import Withdrawal
 from wepay.calls.credit_card import CreditCard
-from wepay.calls.subscription import SubscriptionPlan, Subscription, SubscriptionCharge
+from wepay.calls.subscription_plan import SubscriptionPlan
+from wepay.calls.subscription import Subscription
+from wepay.calls.subscription_charge import SubscriptionCharge
 from wepay.calls.batch import Batch
 
 __all__ = [
@@ -14,3 +16,5 @@ __all__ = [
     'CreditCard', 'SubscriptionPlan', 'Subscription', 'SubscriptionCharge',
     'Batch'
 ]
+
+

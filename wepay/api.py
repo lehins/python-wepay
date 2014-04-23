@@ -3,10 +3,10 @@
 .. moduleauthor:: lehins <lehins@yandex.ru>
    :platform: independent
 """
-import urllib, urllib2, json, warnings
+import warnings
 
 from wepay.calls import *
-from wepay.exceptions import WePayError
+from wepay.utils import Post
 
 __all__ = ['WePay']
 
@@ -23,8 +23,15 @@ class WePay(object):
        per API call, since all calls accept a keyword argument
        `api_version` as well. `More on API versioning
        <https://stage.wepay.com/developer/tutorial/versioning>`_.
-    :keyword int timeout: time in seconds before HTTPS call request will timeout
-    :keyword bool silent: set to `True` to suppress warnings.
+    :keyword int timeout: time in seconds before HTTPS call request will timeout.
+    :keyword bool silent: if set to `None` (default) will print
+       :exc:`WePayWarning<wepay.exceptions.WePayWarning>` if `production=True` and
+       raise them otherwise. Set it to `True` to stop parameter validation and
+       suppress all warnings, or `False` to raise all warnings.
+
+    :keyword bool use_requests: set to `False` in order to explicitly turn off
+       `requests<http://docs.python-requests.org/en/latest/>`_ library usage and
+       fallback to `urllib<https://docs.python.org/3/library/urllib.html#module-urllib>`_
 
     Instance of this class contains attributes, which correspond to WePay
     objects and should be used to perform API calls. If a WePay object has a
@@ -98,7 +105,7 @@ class WePay(object):
 
     .. attribute:: subscription_plan =
    
-       :class:`SubscriptionPlan<wepay.calls.subscription.SubscriptionPlan>` call instance
+       :class:`SubscriptionPlan<wepay.calls.subscription_plan.SubscriptionPlan>` call instance
 
     .. attribute:: subscription =
    
@@ -106,7 +113,8 @@ class WePay(object):
 
     .. attribute:: subscription_charge =
    
-       :class:`SubscriptionCharge<wepay.calls.subscription.SubscriptionCharge>` call instance
+       :class:`SubscriptionCharge<wepay.calls.subscription_charge.SubscriptionCharge>`
+       call instance
 
     .. attribute:: batch =
    
@@ -114,26 +122,24 @@ class WePay(object):
 
     """
 
-    class WePayWarning(UserWarning):
-        pass
-    
     supported_calls = [
         OAuth2, App, User, Account, Checkout, Preapproval, Withdrawal, CreditCard,
         SubscriptionPlan, Subscription, SubscriptionCharge, Batch
     ]
-    """List of supported objects. Override these in case custom behavior is
-    required (for instance supplying default values to particular calls or
+    """List of supported objects. Override this list in case custom behavior is
+    required (for instance supplying default values to a particular call or
     turning off support for certain objects)
 
     """
 
     def __init__(self, production=True, access_token=None, api_version=None,
-                 timeout=30, silent=False):
+                 timeout=30, silent=None, use_requests=None):
         self.production = production
         self.access_token = access_token
         self.api_version = api_version
         self._timeout = timeout
         self.silent = silent
+        self._post = Post(timeout=timeout, use_requests=use_requests, silent=silent)
         if production:
             self.api_endpoint = "https://wepayapi.com/v2"
             self.browser_uri = "https://www.wepay.com"
@@ -166,7 +172,8 @@ class WePay(object):
         :keyword str api_version: allows to create a call to specific version of API
         :return: WePay response as documented per call
         :rtype: dict
-        :raises: :mod:`wepay.exceptions.WePayError`
+        :raises: :exc:`WePayError<wepay.exceptions.WePayError>`
+        :raises: :exc:`WePayConnectionError<wepay.exceptions.WePayConnectionError>`
 
         """
         headers = {
@@ -174,7 +181,7 @@ class WePay(object):
             'User-Agent': 'Python WePay SDK (third party)'
         }
         url = self.api_endpoint + uri
-        if not token is None:
+        if token is not None:
             warnings.warn("'token' parameter is deprecated and is here only "
                           "for compatibility with official Python WePay SDK. "
                           "Use 'access_token' instead.", DeprecationWarning)
@@ -184,18 +191,9 @@ class WePay(object):
         api_version = api_version or self.api_version
         if not api_version is None:
             headers['Api-Version'] = api_version
-            
-        if not params is None:
-            params = json.dumps(params)
+        
+        return self._post(url, params, headers)
 
-        request = urllib2.Request(url, params, headers)
-        try:
-            response = urllib2.urlopen(request, timeout=self._timeout).read()
-            return json.loads(response)
-        except urllib2.HTTPError as e:
-            response = json.loads(e.read())
-            raise WePayError(response['error'], response['error_description'], 
-                             response['error_code'])
        
     def get_authorization_url(self, redirect_uri, client_id, options=None,
                               scope=None):
@@ -261,8 +259,13 @@ class WePay(object):
                     if not f_name.startswith('_'):
                         c_name = "%s_%s" % (cls.call_name, f_name)
                         setattr(self, c_name, getattr(inst, f_name))
-                except AttributeError: print f_name
+                except AttributeError: pass
 
 
 
+    def _backward_wepay_warning_getter(self):
+        warnings.warn(
+            "WePayWarning was moved to wepay.exeptions module.", DeprecationWarning)
+        return WePayWarning
 
+    WePayWarning = property(_backward_wepay_warning_getter)

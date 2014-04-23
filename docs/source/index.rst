@@ -92,6 +92,25 @@ Quick Example::
 Release History
 ---------------
 
+1.3.0
+^^^^^
+* Python 3 compatible
+* Calls are made using `requests <http://docs.python-requests.org/en/latest/>`_
+  library by default (if installed), falls back to `urllib
+  <https://docs.python.org/3/library/urllib.html#module-urllib>`_ if `requests`
+  are not installed or if :class:`WePay<wepay.api.WePay>` is initialized with
+  `use_requests=False`.
+* :exc:`WePayConnectionError<wepay.exceptions.WePayConnectionError>` is raised
+  in case there is a problem connecting to WePay server, ex. timeout.
+* Addition of a full test suit.
+* Minor:
+
+  * 'original_ip' and 'original_device' params are now optional in
+    `/credit_card/create`.
+  * `silent` mode is more flexible.
+  * Moved `SubscriptionPlan` and `SubscriptionCharge` to their own modules.
+  * Moved `WePayWarning` over to `exceptions` module.
+
 1.2.0
 ^^^^^
 * New API version 2014-01-08 changes are reflected in this SDK version:
