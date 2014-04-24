@@ -6,9 +6,16 @@ python-wepay
 
 .. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
    :target: https://travis-ci.org/lehins/python-wepay
+   :alt: Travis-CI
 
 .. image:: https://coveralls.io/repos/lehins/python-wepay/badge.png?branch=master 
    :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
+   :alt: Tests Coverage
+
+.. image:: https://pypip.in/d/python-wepay/badge.png
+    :target: https://crate.io/packages/python-wepay/
+    :alt: Number of PyPI downloads
+
 
 Features
 --------
@@ -52,6 +59,7 @@ Production.
 Requirements
 ------------
 
+* Python >= 2.7 or >= 3.2
 * Registered Application with WePay `production <https://wepay.com>`_ site or
   it's `development <https://stage.wepay>`_ clone.
 * `six <https://pypi.python.org/pypi/six>`_.
@@ -69,4 +77,3 @@ Documentation
 -------------
 
 http://python-wepay.readthedocs.org/en/latest/index.html
-

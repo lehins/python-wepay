@@ -1,9 +1,8 @@
-Release History
----------------
+Changelog
+=========
 
 1.3.0
-^^^^^
-
+-----
 * Python 3 compatible
 * Calls are made using `requests <http://docs.python-requests.org/en/latest/>`_
   library by default (if installed), falls back to `urllib
@@ -22,7 +21,7 @@ Release History
   * Moved `WePayWarning` over to `exceptions` module.
 
 1.2.0
-^^^^^
+-----
 * New API version 2014-01-08 changes are reflected in this SDK version:
 
   * implemented ``/user/register`` and ``user/resend_confirmation`` calls.
@@ -47,15 +46,14 @@ Release History
 
 
 1.1.2
-^^^^^
+-----
 * Added required arguments to ``/credit_card/create`` call:
 
   * original_ip
   * original_device
 
 1.1.0
-^^^^^
-
+-----
 * Added subscription calls:
 
   * ``/subscription_plan``
@@ -65,6 +63,5 @@ Release History
 * Few bug and spelling fixes.
 
 1.0.0
-^^^^^
-
+-----
 * Initial release

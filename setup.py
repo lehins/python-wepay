@@ -14,7 +14,7 @@ setup(
     version=wepay.get_version(),
     packages=find_packages(),
     description="Python SDK for WePay API (third party).",
-    long_description='\n'.join([read('README.rst'), read('CHANGES.rst')]),
+    long_description='%s\n\n%s' % (read('README.rst'), read('CHANGELOG.rst')),
     author='Alexey Kuleshevich',
     author_email='lehins@yandex.ru',
     license='MIT License',
