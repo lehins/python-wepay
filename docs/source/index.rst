@@ -91,7 +91,16 @@ Quick Example
     {u'account_id': 1371765417, u'account_uri': u'https://stage.wepay.com/account/1371765417'}
     >>> api.checkout.create(1371765417, "Short description.....
 
-.. include:: ../../CHANGELOG.rst
+------------
+Project Info
+------------
+
+.. toctree::
+   :maxdepth: 1
+
+   changelog
+   authors
+   license
 
 Indices and tables
 ==================
