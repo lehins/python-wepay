@@ -6,7 +6,7 @@
 Welcome to python-wepay's documentation!
 ========================================
 
-**Unofficial, but the most complete Python WePay SDK**
+**Python WePay SDK (third party)**
 
 Based on official `Python Wepay SDK <https://github.com/wepay/Python-SDK>`_, and designed to be completely compatible with it.
 
