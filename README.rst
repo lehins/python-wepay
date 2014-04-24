@@ -1,8 +1,6 @@
-######################################################################
-python-wepay
-######################################################################
 
-**Python WePay SDK (third party)**
+python-wepay: Python WePay SDK (third party)
+============================================
 
 .. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
    :target: https://travis-ci.org/lehins/python-wepay
@@ -77,3 +75,8 @@ Documentation
 -------------
 
 http://python-wepay.readthedocs.org/en/latest/index.html
+
+License
+-------
+
+MIT licensed. See the bundled `LICENSE <https://github.com/lehins/python-wepay/blob/master/LICENSE>`_ file for more details.
