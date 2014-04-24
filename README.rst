@@ -22,7 +22,7 @@ Features
     >>> api.credit_card.authorize(client_id, client_secret, response['credit_card_id'])
 
 * Validation of all required and optional parameters to each one of the calls.
-* Very easy construction of batch calls, simply by passing `batch_mode=True` to
+* Very easy construction of batch calls, simply by passing ``batch_mode=True`` to
   a call, ex:
 
 ::
