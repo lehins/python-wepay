@@ -30,8 +30,8 @@ class WePay(object):
        suppress all warnings, or `False` to raise all warnings.
 
     :keyword bool use_requests: set to `False` in order to explicitly turn off
-       `requests<http://docs.python-requests.org/en/latest/>`_ library usage and
-       fallback to `urllib<https://docs.python.org/3/library/urllib.html#module-urllib>`_
+       `requests <http://docs.python-requests.org/en/latest/>`_ library usage and
+       fallback to `urllib <https://docs.python.org/3/library/urllib.html#module-urllib>`_
 
     Instance of this class contains attributes, which correspond to WePay
     objects and should be used to perform API calls. If a WePay object has a

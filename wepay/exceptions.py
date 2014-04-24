@@ -44,20 +44,23 @@ class WePayError(Exception):
 
 
 class WePayConnectionError(Exception):
+    """Raised in case there is a problem connecting to WePay servers"""
+
     def __init__(self, error, message):
         self._error = error
         self._message = message
 
     @property
     def error(self):
-        """Original exception that caused an error."""
+        """Original exception that caused an error. Either `requests` or `urllib`
+        exception. See their corresponding documentation if necessary.
+
+        """
         return self._error
 
     @property
     def message(self):
-        """Message explaining the nature of the error.
-
-        """
+        """Message explaining the nature of the error."""
         return self._message
 
     def __str__(self):
