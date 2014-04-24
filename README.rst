@@ -13,6 +13,7 @@ Features
 --------
 
 * Make API calls in a very natural pythonic way, ex:
+::
 
     >>> api = WePay(production=False, access_token='STAGE_243...')
     >>> response = api.credit_card.create(client_id, cc_number, ..., original_ip='127...')
@@ -21,6 +22,7 @@ Features
 * Validation of all required and optional parameters to each one of the calls.
 * Very easy construction of batch calls, simply by passing `batch_mode=True` to
   a call, ex:
+::
 
     >>> calls = []
     >>> calls.append(api.credit_card.authorize(client_id, client_secret, 
