@@ -67,7 +67,9 @@ be used later on to perform a :func:`wepay.WePay.batch_create` call. An
 unrecognized keyword passed to those functions will produce a warning and an
 actuall error from WePay, if it is in fact an unrecognized parameter.
 
-Quick Example::
+Quick Example
+
+.. code-block:: python
     
     >>> WEPAY_ACCESS_TOKEN = 'STAGE_243b....'
     >>> WEPAY_CLIENT_ID = 123456

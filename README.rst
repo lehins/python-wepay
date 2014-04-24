@@ -15,7 +15,7 @@ Features
 
 * Make API calls in a very natural pythonic way, ex:
 
-::
+.. code-block:: python
 
     >>> api = WePay(production=False, access_token='STAGE_243...')
     >>> response = api.credit_card.create(client_id, cc_number, ..., original_ip='127...')
@@ -25,7 +25,7 @@ Features
 * Very easy construction of batch calls, simply by passing ``batch_mode=True`` to
   a call, ex:
 
-::
+.. code-block:: python
 
     >>> calls = []
     >>> calls.append(api.credit_card.authorize(client_id, client_secret, response['credit_card_id'],
