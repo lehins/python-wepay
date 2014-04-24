@@ -1,9 +1,9 @@
----------------
 Release History
 ---------------
 
 1.3.0
 ^^^^^
+
 * Python 3 compatible
 * Calls are made using `requests <http://docs.python-requests.org/en/latest/>`_
   library by default (if installed), falls back to `urllib
@@ -53,8 +53,8 @@ Release History
   * original_ip
   * original_device
 
-1.1
-^^^
+1.1.0
+^^^^^
 
 * Added subscription calls:
 
@@ -64,7 +64,7 @@ Release History
 
 * Few bug and spelling fixes.
 
-1.0
-^^^
+1.0.0
+^^^^^
 
-Initial release
+* Initial release

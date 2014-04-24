@@ -10,11 +10,11 @@ python-wepay
 .. image:: https://coveralls.io/repos/lehins/python-wepay/badge.png?branch=master 
    :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
 
---------
 Features
 --------
 
 * Make API calls in a very natural pythonic way, ex:
+
 ::
 
     >>> api = WePay(production=False, access_token='STAGE_243...')
@@ -24,6 +24,7 @@ Features
 * Validation of all required and optional parameters to each one of the calls.
 * Very easy construction of batch calls, simply by passing `batch_mode=True` to
   a call, ex:
+
 ::
 
     >>> calls = []
@@ -33,7 +34,6 @@ Features
     >>> response = api.batch.create(client_id, client_secret, calls)
 
 
------
 About
 -----
 
@@ -44,7 +44,6 @@ useful to other developers in Python community that do not use `Django
 official `Python WePay SDK <https://github.com/wepay/Python-SDK>`_, but instead
 it became a replacement with full compatibilty with official WePay version.
 
-------
 Status
 ------
 
@@ -59,7 +58,6 @@ Requirements
 * `requests <http://docs.python-requests.org/en/latest/>`_ (optional):
 * `mock <https://pypi.python.org/pypi/mock>`_ (optional, for tests only)
 
-------------
 Installation
 ------------
 ::
@@ -67,7 +65,6 @@ Installation
     pip install python-wepay
 
 
--------------
 Documentation
 -------------
 
