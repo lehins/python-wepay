@@ -1,18 +1,21 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import wepay
-import os.path
+import os, sys
 
-short_description = 'Third party Python SDK for WePay API.'
-long_description = open('README.rst').read() if os.path.isfile('README.rst') \
-                   else short_description
+def read(fname):
+    path = os.path.join(os.path.dirname(__file__), fname)
+    if sys.version < '3':
+        return open(path).read()
+    return open(path, encoding="utf-8").read()
+
 
 setup(
     name='python-wepay',
     version=wepay.get_version(),
-    packages=['wepay', 'wepay.calls'],
-    description=short_description,
-    long_description=long_description,
-    author='lehins',
+    packages=find_packages(),
+    description="Python SDK for WePay API (third party).",
+    long_description='\n\n'.join([read('README.rst'), read('CHANGES.rst')]),
+    author='Alexey Kuleshevich',
     author_email='lehins@yandex.ru',
     license='MIT License',
     url='https://github.com/lehins/python-wepay',
@@ -26,9 +29,12 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    install_requires=['six=>1.6.1']
+    keywords=["wepay", "payment", "credit card"],
+    install_requires=['six'],
+    tests_require=["mock"]    
 )

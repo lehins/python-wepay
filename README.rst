@@ -4,6 +4,11 @@ python-wepay
 
 **Python WePay SDK (third party)**
 
+.. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   :target: https://travis-ci.org/lehins/python-wepay
+
+.. image:: https://coveralls.io/repos/lehins/python-wepay/badge.png?branch=master :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
+
+--------
 Features
 --------
 
@@ -25,7 +30,7 @@ Features
     >>> response = api.batch.create(client_id, client_secret, calls)
 
 
-
+-----
 About
 -----
 
@@ -36,6 +41,7 @@ useful to other developers in Python community that do not use `Django
 official `Python WePay SDK <https://github.com/wepay/Python-SDK>`_, but instead
 it became a replacement with full compatibilty with official WePay version.
 
+------
 Status
 ------
 
@@ -50,6 +56,7 @@ Requirements
 * `requests <http://docs.python-requests.org/en/latest/>`_ (optional):
 * `mock <https://pypi.python.org/pypi/mock>`_ (optional, for tests only)
 
+------------
 Installation
 ------------
 ::
@@ -57,7 +64,9 @@ Installation
     pip install python-wepay
 
 
+-------------
 Documentation
 -------------
 
 http://python-wepay.readthedocs.org/en/latest/index.html
+
