@@ -34,7 +34,7 @@ class Credit_CardTestCase(CallBaseTestCase):
             })
         ]
         kwargs = {
-            # 'reference_id': "credit_card_reference_id_765", # UNDOCUMENTED
+            'reference_id': "credit_card_reference_id_765", # UNDOCUMENTED
             'original_ip': '74.125.224.84',
             'original_device': ("Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6;"
                                 "en-US) AppleWebKit/534.13 (KHTML, like Gecko)"

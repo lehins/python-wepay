@@ -1,18 +1,12 @@
-import unittest
-from mock import MagicMock
-from wepay import WePay
+from wepay.tests import CallBaseTestCase
 
-class OAuth2TestCase(unittest.TestCase):
-
-    def setUp(self):
-        self.api = WePay(production=False)
-        self.api.call = MagicMock()
+class OAuth2TestCase(CallBaseTestCase):
 
     def test_authorize(self):
         self.assertEqual(self.api.oauth2.authorize(
             12345, 'https://example.com/wepay', "manage_accounts,collect_payments",
             state='stateless', user_name='foo', user_email='foo@example.com'),
-                         "https://stage.wepay.com/v2/oauth2/authorize"
+                         "https://www.wepay.com/v2/oauth2/authorize"
                          "?client_id=12345"
                          "&redirect_uri=https%3A%2F%2Fexample.com%2Fwepay"
                          "&scope=manage_accounts%2Ccollect_payments"
@@ -31,13 +25,7 @@ class OAuth2TestCase(unittest.TestCase):
         kwargs = {
             'callback_uri': 'https://example.com/wepay/callback/'
         }
-        self.api.oauth2.token(*[x[1] for x in args])
-        self.api.call.assert_called_once_with(
-            '/oauth2/token', access_token=None, params=dict(args), api_version=None)
-        self.api.oauth2.token(*[x[1] for x in args], **kwargs)
-        self.api.call.assert_called_oncewith(
-            '/oauth2/token', access_token=None, params=dict(args, **kwargs), api_version=None)
-
+        self._test_call('/oauth2/token', args, kwargs)
 
     def test_token_batch_mode(self):
         kwargs = {

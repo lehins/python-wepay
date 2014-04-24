@@ -59,7 +59,7 @@ class CreditCard(Call):
         return self.make_call(self.__create, params, kwargs)
     __create.allowed_params = [
         'client_id', 'cc_number', 'cvv', 'expiration_month', 'expiration_year',
-        'user_name', 'email', 'address', 'original_ip', 'original_device'
+        'user_name', 'email', 'address', 'original_ip', 'original_device', 'reference_id'
     ]
     __create.control_keywords = ['batch_mode']
     create = __create

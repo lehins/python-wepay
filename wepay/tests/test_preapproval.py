@@ -17,8 +17,8 @@ class PreapprovalTestCase(CallBaseTestCase):
             'reference_id': 'ref_preapproval_123',
             'start': 10,
             'limit': 17,
-            'last_checkout_id': 221651,
             'sort_order': 'ASC',
+            'last_checkout_id': 221651,
             'shipping_fee': 34.05
         }
         self._test_call('/preapproval/find', args, kwargs)

@@ -1,30 +1,16 @@
-import unittest
-from mock import MagicMock
-from wepay import WePay
+from wepay.tests import CallBaseTestCase
 
-class UserTestCase(unittest.TestCase):
+class UserTestCase(CallBaseTestCase):
 
-    def setUp(self):
-        self.api = WePay(production=False)
-        self.api.call = MagicMock()
-        
     def test_user(self):
-        self.api.user()
-        self.api.call.assert_called_once_with(
-            '/user', access_token=None, params={}, api_version=None)
-
+        self._test_call('/user', [], {})
 
     def test_user_modify(self):
-        self.api.user.modify()
-        self.api.call.assert_called_once_with(
-            '/user/modify', access_token=None, params={}, api_version=None)
+        args = []
         kwargs = {
             'callback_uri': 'https://example.com/callback'
         }
-        self.api.user.modify(**kwargs)
-        self.api.call.assert_called_oncewith(
-            '/user/modify', access_token=None, params=kwargs, api_version=None)
-
+        self._test_call('/user/modify', args, kwargs)
 
     def test_user_register(self):
         args = [
@@ -39,24 +25,16 @@ class UserTestCase(unittest.TestCase):
                                  "en-US) AppleWebKit/534.13 (KHTML, like Gecko)"
                                  "Chrome/9.0.597.102 Safari/534.13"))
         ]
-        self.api.user.register(*[x[1] for x in args])
-        self.api.call.assert_called_once_with(
-            '/user/register', access_token=None, params=dict(args), api_version=None)
         kwargs = {
             'redirect_uri': 'https://example.com/redirect',
-            'callback_uri': 'https://example.com/callback'
+            'callback_uri': 'https://example.com/callback',
+            'tos_acceptance_time': 1398211651
         }
-        self.api.user.register(*[x[1] for x in args], **kwargs)
-        self.api.call.assert_called_oncewith(
-            '/user/register', access_token=None, params=dict(args, **kwargs), api_version=None)
+        self._test_call('/user/register', args, kwargs)
 
     def test_user_resend_confirmation(self):
-        self.api.user.resend_confirmation()
-        self.api.call.assert_called_once_with(
-            '/user/resend_confirmation', access_token=None, params={}, api_version=None)
+        args = []
         kwargs = {
             'email_message': "Welcome to my <strong>application</strong>"
         }
-        self.api.user.resend_confirmation(**kwargs)
-        self.api.call.assert_called_oncewith(
-            '/user/resend_confirmation', access_token=None, params=kwargs, api_version=None)
+        self._test_call('/user/resend_confirmation', args, kwargs)
