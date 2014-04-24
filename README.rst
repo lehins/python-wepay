@@ -4,9 +4,11 @@ python-wepay
 
 **Python WePay SDK (third party)**
 
-.. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   :target: https://travis-ci.org/lehins/python-wepay
+.. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
+   :target: https://travis-ci.org/lehins/python-wepay
 
-.. image:: https://coveralls.io/repos/lehins/python-wepay/badge.png?branch=master :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
+.. image:: https://coveralls.io/repos/lehins/python-wepay/badge.png?branch=master 
+   :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
 
 --------
 Features
