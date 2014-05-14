@@ -216,13 +216,15 @@ class WePay(object):
         """
         warnings.warn("'get_authorization_url' is deprecated and is here only "
                       "for compatibility with official Python WePay SDK. "
-                      "Use 'WePay.oauth2_authorize' instead.", DeprecationWarning)
+                      "Use 'WePay.oauth2.authorize' instead.", DeprecationWarning)
         if not options:
             options = {}
         if not scope:
-            scope = "manage_accounts,collect_payments,view_balance,view_user," \
-                    "refund_payments"
+            scope = "manage_accounts,collect_payments," \
+                    "view_user,preapprove_payments," \
+                    "manage_subscriptions,send_money"
         return self.oauth2.authorize(client_id, redirect_uri, scope, **options)
+
     
     def get_token(self, *args, **kwargs):
         """Calls wepay.com/v2/oauth2/token to get an access token. Sets the
@@ -245,7 +247,7 @@ class WePay(object):
         """
         warnings.warn("'get_token' is deprecated and is here only "
                       "for compatibility with official Python WePay SDK. "
-                      "Use 'WePay.oauth2_token' instead.", DeprecationWarning)
+                      "Use 'WePay.oauth2.token' instead.", DeprecationWarning)
         response = self.oauth2.token(*args, **kwargs)
         self.access_token = response['access_token']
         return response
