@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.4
+-----
+
+* Connection `timeout` can be specified on per call basis.
+
 1.3.0
 -----
 

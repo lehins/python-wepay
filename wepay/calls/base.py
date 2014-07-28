@@ -14,17 +14,17 @@ class Call(object):
         if control_keywords is None:
             control_keywords = ['access_token', 'batch_mode']
         control_kwargs = {}
-        for key in control_keywords:
+        for key in control_keywords + ['api_version', 'timeout']:
             if key in extra_kwargs:
                 control_kwargs[key] = extra_kwargs.pop(key)
         if control_kwargs.get('batch_mode', False):
             control_kwargs['reference_id'] = extra_kwargs.pop(
                 'batch_reference_id', None)
-        control_kwargs['api_version'] = extra_kwargs.pop('api_version', None)
-        assert not (
-            control_kwargs.get('api_version', None) and 
-            control_kwargs.get('batch_mode', False)), \
-            "Cannot use 'api_version' and 'batch_mode' in the same call."
+        for batch_conflict in ['api_version', 'timeout']:
+            assert not (
+                control_kwargs.get(batch_conflict, None) is not None and 
+                control_kwargs.get('batch_mode', False)), \
+                "Cannot use '%s' and 'batch_mode' in the same call." % batch_conflict
         params.update(extra_kwargs)
         return control_kwargs
 
@@ -57,8 +57,6 @@ class Call(object):
             uri = '/%s' % self.call_name
         control_kwargs = self._update_params(
             params, extra_kwargs, getattr(func, 'control_keywords', None))
-        access_token = control_kwargs.get('access_token', None)
-        api_version = control_kwargs.get('api_version', None)
         if not self._api.silent:
             unrecognized_params = set(params) - set(func.allowed_params)
             if unrecognized_params:
@@ -76,10 +74,11 @@ class Call(object):
         for name in self.floating:
             if name in params:
                 params[name] = float(params[name])
-        if control_kwargs.get('batch_mode', False):
+        if control_kwargs.pop('batch_mode', False):
             call = {
                 'call': uri
             }
+            access_token = control_kwargs.get('access_token', None)
             if not access_token is None:
                 call['authorization'] = access_token
             if params:
@@ -87,5 +86,4 @@ class Call(object):
             if not control_kwargs['reference_id'] is None:
                 call['reference_id'] = control_kwargs['reference_id']
             return call
-        return self._api.call(
-            uri, params=params, access_token=access_token, api_version=api_version)
+        return self._api.call(uri, params=params, **control_kwargs)

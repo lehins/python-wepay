@@ -10,7 +10,7 @@ from wepay.exceptions import WePayWarning, WePayError, WePayConnectionError
 
 class Post(object):
     
-    def __init__(self, timeout=None, use_requests=None, silent=None):
+    def __init__(self, use_requests=None, silent=None):
         self._use_requests = HAS_REQUESTS and (
             True if use_requests is None else use_requests)
         if not silent and use_requests and not self._use_requests:
@@ -19,22 +19,21 @@ class Post(object):
             if silent is not None:
                 raise WePayWarning(message)
             warnings.warn(message, WePayWarning)
-        self._timeout = timeout
 
 
-    def __call__(self, url, params, headers):
+    def __call__(self, url, params, headers, timeout):
         params = params or {}
         if self._use_requests:
             data = json.dumps(params)
-            return self._post_requests(url, data, headers)
-        return self._post_urllib(url, params, headers)
+            return self._post_requests(url, data, headers, timeout)
+        return self._post_urllib(url, params, headers, timeout)
 
 
-    def _post_urllib(self, url, data, headers):
+    def _post_urllib(self, url, data, headers, timeout):
         data = urllib.parse.urlencode(data).encode('utf-8')
         request = urllib.request.Request(url, data=data, headers=headers)
         try:
-            response = urllib.request.urlopen(request, timeout=self._timeout)
+            response = urllib.request.urlopen(request, timeout=timeout)
             return json.loads(response.read().decode('utf-8'))
         except urllib.error.HTTPError as e:
             response = json.loads(e.read().decode('utf-8'))
@@ -44,10 +43,10 @@ class Post(object):
             raise WePayConnectionError(e, str(e))
 
 
-    def _post_requests(self, url, data, headers):
+    def _post_requests(self, url, data, headers, timeout):
         try:
             response = requests.post(
-                url, data=data, headers=headers, timeout=self._timeout)
+                url, data=data, headers=headers, timeout=timeout)
         except requests.exceptions.RequestException as e:
             raise WePayConnectionError(e, str(e))
         response_json = response.json()

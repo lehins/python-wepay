@@ -26,14 +26,14 @@ class CheckoutTestCase(CallBaseTestCase):
             'shipping_fee': decimal.Decimal('34.05')
         }
         self.api.checkout.find(*[x[1] for x in args])
-        self.api.call.assert_called_once_with(
-            '/checkout/find', access_token=None, params=dict(args), api_version=None)
+        self.api.call.assert_called_once_with('/checkout/find', params=dict(args))
         # test conversion from decimal
+        self.api.call.reset_mock()
         self.api.checkout.find(*[x[1] for x in args], **kwargs)
         kwargs = kwargs.copy()
         kwargs['shipping_fee'] = float(kwargs['shipping_fee'])
-        self.api.call.assert_called_oncewith(
-            '/checkout/find', access_token=None, params=dict(args, **kwargs), api_version=None)
+        self.api.call.assert_called_once_with(
+            '/checkout/find', params=dict(args, **kwargs))
 
 
     def test_checkout_create(self):

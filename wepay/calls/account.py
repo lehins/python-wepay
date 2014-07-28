@@ -199,7 +199,7 @@ class Account(Call):
 
     def __balance(self, account_id, **kwargs):
         """Call documentation: `/account/balance
-        <https://www.wepay.com/developer/reference/account#balance>`_, plus
+        <https://www.wepay.com/developer/reference/account-2011-01-15#balance>`_, plus
         extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's
@@ -230,7 +230,7 @@ class Account(Call):
         
     def __add_bank(self, account_id, **kwargs):
         """Call documentation: `/account/add_bank
-        <https://www.wepay.com/developer/reference/account#add_bank>`_, plus
+        <https://www.wepay.com/developer/reference/account-2011-01-15#add_bank>`_, plus
         extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's
@@ -261,8 +261,8 @@ class Account(Call):
         
     def __set_tax(self, account_id, taxes, **kwargs):
         """Call documentation: `/account/set_tax
-        <https://www.wepay.com/developer/reference/account#set_tax>`_, plus
-        extra keyword parameters:
+        <https://www.wepay.com/developer/reference/account-2011-01-15#set_tax>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's
            ``access_token``, with ``batch_mode=True`` will set `authorization`
@@ -293,8 +293,8 @@ class Account(Call):
 
     def __get_tax(self, account_id, **kwargs):
         """Call documentation: `/account/get_tax
-        <https://www.wepay.com/developer/reference/account#get_tax>`_, plus
-        extra keyword parameters:
+        <https://www.wepay.com/developer/reference/account-2011-01-15#get_tax>`_, 
+        plus extra keyword parameters:
         
         :keyword str access_token: will be used instead of instance's
            ``access_token``, with ``batch_mode=True`` will set `authorization`

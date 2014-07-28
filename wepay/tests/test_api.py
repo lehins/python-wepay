@@ -99,8 +99,7 @@ class ApiTestCase(unittest.TestCase):
             str(e) # test string conversion.
                           
     def test_requests_connection_error(self):
-        api = WePay(production=False, timeout=0.001)
-        self.assertRaises(WePayConnectionError, api.call, '/app')
+        self.assertRaises(WePayConnectionError, self.api.call, '/app', timeout=0.001)
 
 
     def test_headers(self):
@@ -116,5 +115,17 @@ class ApiTestCase(unittest.TestCase):
           }
         api.call('/user', access_token=access_token, api_version=api_version)
         api._post.assert_called_once_with(
-            'https://stage.wepayapi.com/v2/user', None, expected_headers)
-        
+            'https://stage.wepayapi.com/v2/user', None, expected_headers, 30)
+
+
+    def test_deprecated(self):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            WePayWarningInner = self.api.WePayWarning
+            self.assertIs(WePayWarningInner, WePayWarning)
+
+            self.assertEqual(len(w), 1)
+            self.assertIs(w[-1].category, DeprecationWarning)
+
+
+    

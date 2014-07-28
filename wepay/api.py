@@ -24,6 +24,7 @@ class WePay(object):
        `api_version` as well. `More on API versioning
        <https://stage.wepay.com/developer/tutorial/versioning>`_.
     :keyword int timeout: time in seconds before HTTPS call request will timeout.
+       Also can be changed on per call basis.
     :keyword bool silent: if set to `None` (default) will print
        :exc:`WePayWarning<wepay.exceptions.WePayWarning>` if `production=True` and
        raise them otherwise. Set it to `True` to stop parameter validation and
@@ -44,11 +45,14 @@ class WePay(object):
     Each method that performs an API call accepts all required parameters as
     positional arguments, optional parameters as keyword arguments, as well as
     one or more keyword arguments that are used to control behavior of a
-    call. All these methods accept keyword argument ``api_version``, and if
-    documented also possible keyword arguments ``batch_mode``,
-    ``batch_reference_id`` and ``access_token``:
+    call. All these methods accept keyword arguments ``api_version``,
+    ``timeout`` and if documented also possible keyword arguments
+    ``batch_mode``, ``batch_reference_id`` and ``access_token``:
 
        * ``api_version`` will make sure the call is made to a specified API version
+         (cannot be used together with ``batch_mode``)
+
+       * ``timeout`` specifies a connection timeout in seconds for the call
          (cannot be used together with ``batch_mode``)
 
        * ``access_token`` will make sure the call is made with this
@@ -137,9 +141,9 @@ class WePay(object):
         self.production = production
         self.access_token = access_token
         self.api_version = api_version
-        self._timeout = timeout
         self.silent = silent
-        self._post = Post(timeout=timeout, use_requests=use_requests, silent=silent)
+        self._timeout = timeout
+        self._post = Post(use_requests=use_requests, silent=silent)
         if production:
             self.api_endpoint = "https://wepayapi.com/v2"
             self.browser_uri = "https://www.wepay.com"
@@ -155,21 +159,22 @@ class WePay(object):
             setattr(self, call_cls.call_name, call_cls(self))
         self._backwards()
     
-    def call(self, uri, params=None, access_token=None, token=None, api_version=None):
+    def call(self, uri, params=None, access_token=None, api_version=None, timeout=None,
+             token=None):
 
         """Calls wepay.com/v2/``uri`` with ``params`` and returns the JSON
-        response as a python dict. The optional ``access_token`` parameter will
-        override the instance's ``access_token`` if it is set. Basically the
-        same call function as in Python-SDK WePay API with a minor change,
-        header was changed to 'Python WePay SDK (third party)'.  Essentially
-        this is the place for all api calls.
+        response as a python `dict`. The optional ``access_token`` parameter
+        takes precedence over instance's ``access_token`` if it is
+        set. Essentially this is the place for all api calls.
 
         :param str uri: API uri to call
         :keyword dict params: parameters to include in the call
         :keyword str access_token: access_token to use for the call.
+        :keyword str api_version: allows to create a call to specific version of API
+        :keyword int timeout: a way to specify a call timeout in seconds. If `None`
+            will use `WePay.timeout`.
         :keyword str token: only here for compatibility with official Python WePay 
             SDK. Use ``access_token`` instead.
-        :keyword str api_version: allows to create a call to specific version of API
         :return: WePay response as documented per call
         :rtype: dict
         :raises: :exc:`WePayError<wepay.exceptions.WePayError>`
@@ -191,8 +196,7 @@ class WePay(object):
         api_version = api_version or self.api_version
         if not api_version is None:
             headers['Api-Version'] = api_version
-        
-        return self._post(url, params, headers)
+        return self._post(url, params, headers, timeout or self._timeout)
 
        
     def get_authorization_url(self, redirect_uri, client_id, options=None,
@@ -264,8 +268,8 @@ class WePay(object):
                 except AttributeError: pass
 
 
-
     def _backward_wepay_warning_getter(self):
+        from wepay.exceptions import WePayWarning
         warnings.warn(
             "WePayWarning was moved to wepay.exeptions module.", DeprecationWarning)
         return WePayWarning

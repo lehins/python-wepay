@@ -58,14 +58,16 @@ would be expected, call names are directly mapped into functions with same names
 moreover all required parameters are passed to functions as ``args`` and
 optional ones as ``kwargs``.
 
-Methods that can perform calls on behalf of WePay User accept optionall keyword
+Methods that can perform calls on behalf of WePay User accept optional keyword
 argument ``access_token``, which will then be used to perform a call instead of
 one the :class:`wepay.WePay` class was instantiated with. Methods that can be
 used in a '/batch/create' call also accept ``batch_mode`` keyword argument,
-which instead of making a call will force it to return a dictionary, which can
-be used later on to perform a :func:`wepay.WePay.batch_create` call. An
-unrecognized keyword passed to those functions will produce a warning and an
-actuall error from WePay, if it is in fact an unrecognized parameter.
+which instead of making a call will force it to return a dictionary, that can be
+used later on to perform a :func:`wepay.WePay.batch_create` call. Additionally
+each call accepts ``api_version`` and ``timeout`` keyword arguments, which
+specify a WePay API version and connection timeout respectively. An unrecognized
+keyword passed to those functions will produce a warning and an actuall error
+from WePay, if it is in fact an unrecognized parameter.
 
 Quick Example
 
@@ -79,7 +81,7 @@ Quick Example
     >>> api = WePay(production=False, access_token=WEPAY_ACCESS_TOKEN)
     >>> api.app(WEPAY_CLIENT_ID, WEPAY_CLIENT_SECRET)
     {u'status': u'approved', u'theme_object': .....}
-    >>> redirect_uri = api.oauth2.authorize(WEPAY_CLIENT_ID, REDIRECT_URI, WEPAY_DEFAULT_SCOPE, user_email='lehins@.....ru')
+    >>> redirect_uri = api.oauth2.authorize(WEPAY_CLIENT_ID, REDIRECT_URI, WEPAY_DEFAULT_SCOPE, user_email="user@example.com")
     >>> redirect_uri
     'https://stage.wepay.com/v2/oauth2/authorize?scope=manage_accounts%2C........'
     >>> # Get the 'code' from url... (for detailed instructions on how to do it follow WePay documentation)

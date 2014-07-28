@@ -93,3 +93,44 @@ class AccountTestCase(CallBaseTestCase):
             'currency': 'USD',
         }
         self._test_call('/account/get_reserve_details', args, kwargs)
+
+    # deprecated calls:
+
+    def test_account_balance(self):
+        args = [
+            ('account_id', 1234),
+        ]
+        kwargs = {}
+        self._test_call('/account/balance', args, kwargs, api_version='2011-01-15')
+
+
+    def test_account_add_bank(self):
+        args = [
+            ('account_id', 1234),
+        ]
+        kwargs = {
+            'mode': 'iframe',
+            'redirect_uri': "https://example.com/redirect"
+        }
+        self._test_call('/account/add_bank', args, kwargs, api_version='2011-01-15')
+
+
+    def test_account_set_tax(self):
+        args = [
+            ('account_id', 1234),
+            ('taxes', [
+                {"percent":10,"country":"US","state":"CA","zip":"94025"},
+                {"percent":7, "country":"US","state":"CA"},
+                {"percent":5, "country":"US"}
+            ])
+        ]
+        kwargs = {}
+        self._test_call('/account/set_tax', args, kwargs, api_version='2011-01-15')
+
+
+    def test_account_get_tax(self):
+        args = [
+            ('account_id', 1234),
+        ]
+        kwargs = {}
+        self._test_call('/account/get_tax', args, kwargs, api_version='2011-01-15')

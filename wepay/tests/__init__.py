@@ -8,7 +8,7 @@ class CallBaseTestCase(unittest.TestCase):
         self.api = WePay(silent=False)
         self.api.call = MagicMock()
 
-    def _test_call(self, call, args, kwargs):
+    def _test_call(self, call, args, kwargs, **control_kwargs):
         path = call.split('/')[1:]
         fn = self.api
         for p in path:
@@ -16,14 +16,17 @@ class CallBaseTestCase(unittest.TestCase):
         allowed_params = {x[0] for x in args}
 
         # test required params:
-        fn(*[x[1] for x in args])
+        fn(*[x[1] for x in args], **control_kwargs)
         self.api.call.assert_called_once_with(
-            call, access_token=None, params=dict(args), api_version=None)
+            call, params=dict(args), **control_kwargs)
         if kwargs:
+            self.api.call.reset_mock()
             # test with all optional params
-            fn(*[x[1] for x in args], **kwargs)
-            self.api.call.assert_called_oncewith(
-                call, access_token=None, params=dict(args, **kwargs), api_version=None)
+            ks = kwargs.copy()
+            ks.update(control_kwargs)
+            fn(*[x[1] for x in args], **ks)
+            self.api.call.assert_called_once_with(
+                call, params=dict(args, **kwargs), **control_kwargs)
             allowed_params = allowed_params.union(kwargs)
         self.assertEqual(allowed_params, set(fn.allowed_params))
 
