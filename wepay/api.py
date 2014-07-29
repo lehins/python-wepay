@@ -23,7 +23,7 @@ class WePay(object):
        per API call, since all calls accept a keyword argument
        `api_version` as well. `More on API versioning
        <https://stage.wepay.com/developer/tutorial/versioning>`_.
-    :keyword int timeout: time in seconds before HTTPS call request will timeout.
+    :keyword float timeout: time in seconds before HTTPS call request will timeout.
        Also can be changed on per call basis.
     :keyword bool silent: if set to `None` (default) will print
        :exc:`WePayWarning<wepay.exceptions.WePayWarning>` if `production=True` and
@@ -171,7 +171,7 @@ class WePay(object):
         :keyword dict params: parameters to include in the call
         :keyword str access_token: access_token to use for the call.
         :keyword str api_version: allows to create a call to specific version of API
-        :keyword int timeout: a way to specify a call timeout in seconds. If `None`
+        :keyword float timeout: a way to specify a call timeout in seconds. If `None`
             will use `WePay.timeout`.
         :keyword str token: only here for compatibility with official Python WePay 
             SDK. Use ``access_token`` instead.
