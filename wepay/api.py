@@ -64,7 +64,7 @@ class WePay(object):
          namely to calls list parameter. :meth:`batch.create<wepay.calls.batch.Batch.create>`
 
        * ``batch_reference_id`` will set `reference_id` param in a batch call,
-         disregarded if used without ``batch_mode`` set to ``True``
+         it is an error to use it without ``batch_mode`` set to ``True``
 
     Batch mode usage example:
         >>> api = WePay(production=False, access_token=WEPAY_ACCESS_TOKEN)
@@ -177,7 +177,8 @@ class WePay(object):
             SDK. Use ``access_token`` instead.
         :return: WePay response as documented per call
         :rtype: dict
-        :raises: :exc:`WePayError<wepay.exceptions.WePayError>`
+        :raises: :exc:`WePayClientError<wepay.exceptions.WePayClientError>`
+        :raises: :exc:`WePayServerError<wepay.exceptions.WePayServerError>`
         :raises: :exc:`WePayConnectionError<wepay.exceptions.WePayConnectionError>`
 
         """
@@ -196,6 +197,7 @@ class WePay(object):
         api_version = api_version or self.api_version
         if not api_version is None:
             headers['Api-Version'] = api_version
+        params = params or {}
         return self._post(url, params, headers, timeout or self._timeout)
 
        

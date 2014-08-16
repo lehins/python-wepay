@@ -1,7 +1,8 @@
 import unittest, warnings
 from mock import MagicMock
+from six.moves import urllib
 from wepay import WePay
-from wepay.exceptions import WePayWarning, WePayError, WePayConnectionError
+from wepay.exceptions import *
 
 class ApiTestCase(unittest.TestCase):
 
@@ -39,10 +40,14 @@ class ApiTestCase(unittest.TestCase):
     def test_error(self):
         try:
             self.api.call('/foo')
-        except WePayError as e:
+        except WePayServerError as e:
+            self.assertEqual(e.status_code, 501)
             self.assertEqual(e.error, "invalid_request")
-            self.assertEqual(e.code, 1001)
-            self.assertEqual(e.message, "that is not a recognized WePay API call")
+            self.assertEqual(e.error_code, 1001)
+            self.assertEqual(e.error_description, "that is not a recognized WePay API call")
+            # test deprecated properties
+            self.assertEqual(e.error_code, e.code)
+            self.assertEqual(e.error_description, e.message)
 
     def test_silent_and_warnings(self):
         # production=False, silent=None or False -> raises WePayWarning
@@ -68,23 +73,22 @@ class ApiTestCase(unittest.TestCase):
         self.assertRaises(WePayError, api.call, '/app')
         try:
             api.call('/app')
-        except WePayError as e:
-            self.assertEqual(str(e),
-                             "invalid_request (1004): client_id parameter is required")
+        except WePayClientError as e:
+            self.assertEqual(e.status_code, 400)
+            self.assertEqual(e.error, "invalid_request")
+            self.assertEqual(e.error_code, 1004)
+            self.assertEqual(e.error_description, "client_id parameter is required")
 
     def test_requests_missing(self):
         from wepay import utils
         has_requests = utils.HAS_REQUESTS
-        try:
-            import requests
-            utils.HAS_REQUESTS = False
-        except ImportError: pass
+        utils.HAS_REQUESTS = False
         # test the warning, if requests are misiing
         self.assertRaises(WePayWarning, WePay, 
                           production=False, use_requests=True, silent=False)
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            WePay(production=False, use_requests=True) 
+            WePay(production=False, use_requests=True)
             self.assertEqual(len(w), 1)
             self.assertIs(w[-1].category, WePayWarning)
         utils.HAS_REQUESTS = has_requests
@@ -96,7 +100,8 @@ class ApiTestCase(unittest.TestCase):
         try:
             api.call('/app')
         except WePayConnectionError as e:
-            str(e) # test string conversion.
+            self.assertIsInstance(e.error, urllib.error.URLError)
+            self.assertEqual(str(e), "URLError - <urlopen error timed out>")
                           
     def test_requests_connection_error(self):
         self.assertRaises(WePayConnectionError, self.api.call, '/app', timeout=0.001)
@@ -115,17 +120,23 @@ class ApiTestCase(unittest.TestCase):
           }
         api.call('/user', access_token=access_token, api_version=api_version)
         api._post.assert_called_once_with(
-            'https://stage.wepayapi.com/v2/user', None, expected_headers, 30)
+            'https://stage.wepayapi.com/v2/user', {}, expected_headers, 30)
 
 
     def test_deprecated(self):
-        with warnings.catch_warnings(record=True) as w:
+        api = WePay(production=False)
+        api._post = MagicMock()
+        api._post.configure_mock(**{'__call__': {'result': 'fake_success'}})
+        access_token = 'dummy_access_token'
+        with warnings.catch_warnings(record=True) as warns:
             warnings.simplefilter("always")
             WePayWarningInner = self.api.WePayWarning
             self.assertIs(WePayWarningInner, WePayWarning)
 
-            self.assertEqual(len(w), 1)
-            self.assertIs(w[-1].category, DeprecationWarning)
+            api.call('/user', token=access_token)
+            self.assertEqual(len(warns), 2)
+            for w in warns:
+                self.assertIs(w.category, DeprecationWarning)
 
 
     

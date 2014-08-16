@@ -1,6 +1,6 @@
 
-python-wepay: Python WePay SDK (third party)
-============================================
+Python WePay SDK (third party)
+==============================
 
 .. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
    :target: https://travis-ci.org/lehins/python-wepay
@@ -33,8 +33,9 @@ Features
 .. code-block:: python
 
     >>> calls = []
-    >>> calls.append(api.credit_card.authorize(client_id, client_secret, response['credit_card_id'],
-    ...              batch_mode=True, batch_reference_id='ref_id_1234'))
+    >>> calls.append(api.credit_card.authorize(
+		...                  client_id, client_secret, response['credit_card_id'],
+    ...                  batch_mode=True, batch_reference_id='ref_id_1234'))
     >>> # append more calls ...
     >>> response = api.batch.create(client_id, client_secret, calls)
 
@@ -48,6 +49,8 @@ useful to other developers in Python community that do not use `Django
 <https://djangoproject.com>`_. Originally it meant to be an extension of an
 official `Python WePay SDK <https://github.com/wepay/Python-SDK>`_, but instead
 it became a replacement with full compatibilty with official WePay version.
+This package is also listed as a `third party Python SDK on WePay
+<https://www.wepay.com/developer/resources/sdks>`_.
 
 Status
 ------

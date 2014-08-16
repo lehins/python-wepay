@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.5
+-----
+
+* Fixed and improved error handling, new exceptions: :exc:`WePayClientError<wepay.exceptions.WePayClientError>` and :exc:`WePayServerError<wepay.exceptions.WePayServerError>`
+
 1.3.4
 -----
 

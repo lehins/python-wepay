@@ -6,13 +6,17 @@ try:
 except ImportError:
     HAS_REQUESTS = False
 
-from wepay.exceptions import WePayWarning, WePayError, WePayConnectionError
+from wepay.exceptions import *
 
 class Post(object):
+    """This is a helper class that uses either `urllib` or `requests` library to
+    perform POST requests.
+
+    """
     
     def __init__(self, use_requests=None, silent=None):
         self._use_requests = HAS_REQUESTS and (
-            True if use_requests is None else use_requests)
+            use_requests is None or use_requests)
         if not silent and use_requests and not self._use_requests:
             message = "Using requests library was specified, but there was a problem " \
                       "importing it. Falling back to urllib."
@@ -22,36 +26,54 @@ class Post(object):
 
 
     def __call__(self, url, params, headers, timeout):
-        params = params or {}
         if self._use_requests:
-            data = json.dumps(params)
-            return self._post_requests(url, data, headers, timeout)
+            return self._post_requests(url, params, headers, timeout)
         return self._post_urllib(url, params, headers, timeout)
 
 
-    def _post_urllib(self, url, data, headers, timeout):
-        data = urllib.parse.urlencode(data).encode('utf-8')
+    def _post_urllib(self, url, params, headers, timeout):
+        data = urllib.parse.urlencode(params).encode('utf-8')
         request = urllib.request.Request(url, data=data, headers=headers)
         try:
             response = urllib.request.urlopen(request, timeout=timeout)
-            return json.loads(response.read().decode('utf-8'))
-        except urllib.error.HTTPError as e:
-            response = json.loads(e.read().decode('utf-8'))
-            raise WePayError(response['error'], response['error_description'], 
-                             response['error_code'])
-        except urllib.error.URLError as e:
-            raise WePayConnectionError(e, str(e))
+        except urllib.error.HTTPError as exc:
+            content = exc.read().decode('utf-8')
+            try:
+                kwargs = json.loads(content)
+            except ValueError as e:
+                kwargs = {
+                    'error': "malformed_json_response",
+                    'error_description': content
+                }
+            self._raise_error(exc, exc.code, **kwargs)
+        except urllib.error.URLError as exc:
+            raise WePayConnectionError(exc)
+        return json.loads(response.read().decode('utf-8'))
 
 
-    def _post_requests(self, url, data, headers, timeout):
+    def _post_requests(self, url, params, headers, timeout):
+        data = json.dumps(params)
         try:
             response = requests.post(
                 url, data=data, headers=headers, timeout=timeout)
-        except requests.exceptions.RequestException as e:
-            raise WePayConnectionError(e, str(e))
-        response_json = response.json()
-        if 400 <= response.status_code <= 599:
-            raise WePayError(
-                response_json['error'], response_json['error_description'],
-                response_json['error_code'])
-        return response_json
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as exc:
+            try:
+                kwargs = exc.response.json()
+            except ValueError as e: # JSONDecodeError is a subclass of ValueError
+                kwargs = {
+                    'error': "malformed_json_response",
+                    'error_description': exc.response.text
+                }
+            self._raise_error(exc, exc.response.status_code, **kwargs)
+        except requests.exceptions.RequestException as exc:
+            raise WePayConnectionError(exc)
+        return response.json()
+
+
+    def _raise_error(self, exc, status_code, **kwargs):
+        if status_code >= 500:
+            raise WePayServerError(exc, status_code, **kwargs)
+        if status_code >= 400:
+            raise WePayClientError(exc, status_code, **kwargs)
+        raise WePayError(exc, status_code, **kwargs)
