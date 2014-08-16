@@ -34,7 +34,7 @@ Features
 
     >>> calls = []
     >>> calls.append(api.credit_card.authorize(
-		...                  client_id, client_secret, response['credit_card_id'],
+    ...                  client_id, client_secret, response['credit_card_id'],
     ...                  batch_mode=True, batch_reference_id='ref_id_1234'))
     >>> # append more calls ...
     >>> response = api.batch.create(client_id, client_secret, calls)
