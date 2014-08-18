@@ -6,7 +6,7 @@
 import warnings
 
 from wepay.calls import *
-from wepay.utils import Post
+from wepay.utils import Post, cached_property
 
 __all__ = ['WePay']
 
@@ -72,70 +72,8 @@ class WePay(object):
         >>> calls.append(api.account.create('Test Account', 'Short Description', batch_mode=True, access_token='STAGE_...', batch_reference_id='c1'))
         >>> calls.append(api.checkout(12345, batch_mode=True))
         >>> api.batch.create(CLIENT_ID, CLIENT_SECRET, calls)
-
-    API Call objects:
-
-    .. attribute:: oauth2 =
-   
-       :class:`OAuth2<wepay.calls.oauth2.OAuth2>` call instance
- 
-    .. attribute:: app =
-   
-       :class:`App<wepay.calls.app.App>` call instance
-
-    .. attribute:: user =
-   
-       :class:`User<wepay.calls.user.User>` call instance
-
-    .. attribute:: account =
-   
-       :class:`Account<wepay.calls.account.Account>` call instance
-
-    .. attribute:: checkout =
-   
-       :class:`Checkout<wepay.calls.checkout.Checkout>` call instance
-
-    .. attribute:: preapproval =
-   
-       :class:`Preapproval<wepay.calls.preapproval.Preapproval>` call instance
-
-    .. attribute:: withdrawal =
-   
-       :class:`Withdrawal<wepay.calls.withdrawal.Withdrawal>` call instance
-
-    .. attribute:: credit_card =
-   
-       :class:`CreditCard<wepay.calls.credit_card.CreditCard>` call instance
-
-    .. attribute:: subscription_plan =
-   
-       :class:`SubscriptionPlan<wepay.calls.subscription_plan.SubscriptionPlan>` call instance
-
-    .. attribute:: subscription =
-   
-       :class:`Subscription<wepay.calls.subscription.Subscription>` call instance
-
-    .. attribute:: subscription_charge =
-   
-       :class:`SubscriptionCharge<wepay.calls.subscription_charge.SubscriptionCharge>`
-       call instance
-
-    .. attribute:: batch =
-   
-       :class:`Batch<wepay.calls.batch.Batch>` call instance
-
     """
-
-    supported_calls = [
-        OAuth2, App, User, Account, Checkout, Preapproval, Withdrawal, CreditCard,
-        SubscriptionPlan, Subscription, SubscriptionCharge, Batch
-    ]
-    """List of supported objects. Override this list in case custom behavior is
-    required (for instance supplying default values to a particular call or
-    turning off support for certain objects)
-
-    """
-
+    
     def __init__(self, production=True, access_token=None, api_version=None,
                  timeout=30, silent=None, use_requests=None):
         self.production = production
@@ -155,13 +93,87 @@ class WePay(object):
             self.browser_js = self.browser_uri + "/js/wepay.v2.js"
             self.browser_iframe_js = self.browser_uri + "/js/iframe.wepay.js"
         self.browser_endpoint = self.browser_uri + "/v2"
-        for call_cls in self.supported_calls:
-            setattr(self, call_cls.call_name, call_cls(self))
-        self._backwards()
-    
-    def call(self, uri, params=None, access_token=None, api_version=None, timeout=None,
-             token=None):
 
+    
+    @cached_property
+    def oauth2(self):
+        """:class:`OAuth2<wepay.calls.oauth2.OAuth2>` call instance."""
+        return OAuth2(self)
+ 
+
+    @cached_property
+    def app(self):
+        """:class:`App<wepay.calls.app.App>` call instance"""
+        return App(self)
+
+
+    @cached_property
+    def user(self):
+        """:class:`User<wepay.calls.user.User>` call instance"""
+        return User(self)
+        
+
+    @cached_property
+    def account(self):
+       """:class:`Account<wepay.calls.account.Account>` call instance"""
+       return Account(self)
+
+
+    @cached_property
+    def checkout(self):
+        """:class:`Checkout<wepay.calls.checkout.Checkout>` call instance"""
+        return Checkout(self)
+
+
+    @cached_property
+    def preapproval(self):
+        """:class:`Preapproval<wepay.calls.preapproval.Preapproval>` call instance"""
+        return Preapproval(self)
+
+
+    @cached_property
+    def withdrawal(self):
+        """:class:`Withdrawal<wepay.calls.withdrawal.Withdrawal>` call instance"""
+        return Withdrawal(self)
+
+
+    @cached_property
+    def credit_card(self):
+        """:class:`CreditCard<wepay.calls.credit_card.CreditCard>` call instance"""
+        return CreditCard(self)
+
+
+    @cached_property
+    def subscription_plan(self):
+        """:class:`SubscriptionPlan<wepay.calls.subscription_plan.SubscriptionPlan>`
+        call instance
+
+        """
+        return SubscriptionPlan(self)
+
+
+    @cached_property
+    def subscription(self):
+       """:class:`Subscription<wepay.calls.subscription.Subscription>` call instance"""
+       return Subscription(self)
+
+
+    @cached_property
+    def subscription_charge(self):
+        """:class:`SubscriptionCharge<wepay.calls.subscription_charge.SubscriptionCharge>`
+        call instance
+
+        """
+        return SubscriptionCharge(self)
+
+
+    @cached_property
+    def batch(self):
+        """:class:`Batch<wepay.calls.batch.Batch>` call instance """
+        return Batch(self)
+
+
+    def call(self, uri, params=None, access_token=None, api_version=None, timeout=None):
         """Calls wepay.com/v2/``uri`` with ``params`` and returns the JSON
         response as a python `dict`. The optional ``access_token`` parameter
         takes precedence over instance's ``access_token`` if it is
@@ -173,8 +185,6 @@ class WePay(object):
         :keyword str api_version: allows to create a call to specific version of API
         :keyword float timeout: a way to specify a call timeout in seconds. If `None`
             will use `WePay.timeout`.
-        :keyword str token: only here for compatibility with official Python WePay 
-            SDK. Use ``access_token`` instead.
         :return: WePay response as documented per call
         :rtype: dict
         :raises: :exc:`WePayClientError<wepay.exceptions.WePayClientError>`
@@ -182,98 +192,18 @@ class WePay(object):
         :raises: :exc:`WePayConnectionError<wepay.exceptions.WePayConnectionError>`
 
         """
+        url = self.api_endpoint + uri
+        params = params or {}
+
         headers = {
             'Content-Type': 'application/json', 
             'User-Agent': 'Python WePay SDK (third party)'
         }
-        url = self.api_endpoint + uri
-        if token is not None:
-            warnings.warn("'token' parameter is deprecated and is here only "
-                          "for compatibility with official Python WePay SDK. "
-                          "Use 'access_token' instead.", DeprecationWarning)
-        access_token = access_token or token or self.access_token
+        access_token = access_token or self.access_token
         headers['Authorization'] = 'Bearer %s' % access_token
-
         api_version = api_version or self.api_version
         if not api_version is None:
             headers['Api-Version'] = api_version
-        params = params or {}
-        return self._post(url, params, headers, timeout or self._timeout)
 
-       
-    def get_authorization_url(self, redirect_uri, client_id, options=None,
-                              scope=None):
-        """Returns a URL to send the user to in order to get authorization.  After
-        getting authorization the user will return to redirect_uri.  Optionally,
-        scope can be set to limit permissions, and the options dict can be
-        loaded with any combination of state, user_name or user_email.
-
-        .. note::
-
-           This function is here for compatibilty with official Python WePay SDK 
-           only, use :func:`WePay.oauth2.authorize` instead.           
-        
-        :param str redirect_uri: The URI to redirect to after a authorization.
-        :param str client_id: The client ID issued by WePay to your app.
-        :keyword dict options: Allows for passing additional values to the
-            authorize call, aside from scope, redirect_uri, and etc.
-        :keyword str scope: A comma-separated string of permissions.
-
-        """
-        warnings.warn("'get_authorization_url' is deprecated and is here only "
-                      "for compatibility with official Python WePay SDK. "
-                      "Use 'WePay.oauth2.authorize' instead.", DeprecationWarning)
-        if not options:
-            options = {}
-        if not scope:
-            scope = "manage_accounts,collect_payments," \
-                    "view_user,preapprove_payments," \
-                    "manage_subscriptions,send_money"
-        return self.oauth2.authorize(client_id, redirect_uri, scope, **options)
-
-    
-    def get_token(self, *args, **kwargs):
-        """Calls wepay.com/v2/oauth2/token to get an access token. Sets the
-        access_token for the WePay instance and returns the entire response as a
-        dict. Should only be called after the user returns from being sent to
-        get_authorization_url.
-
-        .. note::
-
-           This function is here for compatibilty with official Python WePay SDK
-           only, use :func:`WePay.oauth2.token` instead.
-
-        :param str redirect_uri: The same URI specified in the
-            :py:meth:`get_authorization_url` call that preceded this.
-        :param str client_id: The client ID issued by WePay to your app.
-        :param str client_secret: The client secret issued by WePay
-            to your app.
-        :param str code: The code returned by :py:meth:`get_authorization_url`.
-
-        """
-        warnings.warn("'get_token' is deprecated and is here only "
-                      "for compatibility with official Python WePay SDK. "
-                      "Use 'WePay.oauth2.token' instead.", DeprecationWarning)
-        response = self.oauth2.token(*args, **kwargs)
-        self.access_token = response['access_token']
-        return response
-
-
-    def _backwards(self):
-        for cls in self.supported_calls:
-            inst = getattr(self, cls.call_name)
-            for f_name in dir(cls):
-                try:
-                    if not f_name.startswith('_'):
-                        c_name = "%s_%s" % (cls.call_name, f_name)
-                        setattr(self, c_name, getattr(inst, f_name))
-                except AttributeError: pass
-
-
-    def _backward_wepay_warning_getter(self):
-        from wepay.exceptions import WePayWarning
-        warnings.warn(
-            "WePayWarning was moved to wepay.exeptions module.", DeprecationWarning)
-        return WePayWarning
-
-    WePayWarning = property(_backward_wepay_warning_getter)
+        timeout = timeout or self._timeout
+        return self._post(url, params, headers, timeout)

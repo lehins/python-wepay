@@ -37,14 +37,10 @@ class Post(object):
         try:
             response = urllib.request.urlopen(request, timeout=timeout)
         except urllib.error.HTTPError as exc:
-            content = exc.read().decode('utf-8')
             try:
-                kwargs = json.loads(content)
-            except ValueError as e:
-                kwargs = {
-                    'error': "malformed_json_response",
-                    'error_description': content
-                }
+                kwargs = json.loads(exc.read().decode('utf-8'))
+            except ValueError:
+                kwargs = {}
             self._raise_error(exc, exc.code, **kwargs)
         except urllib.error.URLError as exc:
             raise WePayConnectionError(exc)
@@ -60,11 +56,8 @@ class Post(object):
         except requests.exceptions.HTTPError as exc:
             try:
                 kwargs = exc.response.json()
-            except ValueError as e: # JSONDecodeError is a subclass of ValueError
-                kwargs = {
-                    'error': "malformed_json_response",
-                    'error_description': exc.response.text
-                }
+            except ValueError: # JSONDecodeError is a subclass of ValueError
+                kwargs = {}
             self._raise_error(exc, exc.response.status_code, **kwargs)
         except requests.exceptions.RequestException as exc:
             raise WePayConnectionError(exc)
@@ -76,4 +69,30 @@ class Post(object):
             raise WePayServerError(exc, status_code, **kwargs)
         if status_code >= 400:
             raise WePayClientError(exc, status_code, **kwargs)
-        raise WePayError(exc, status_code, **kwargs)
+        # Should never really happen
+        raise WePayHTTPError(exc, status_code, **kwargs)
+
+
+
+class cached_property(object):
+
+    def __init__(self, fget):
+        self.fget = fget
+        self.__doc__ = fget.__doc__
+        self.__name__ = fget.__name__
+        self.__module__ = fget.__module__
+        self._key = "_%s" % fget.__name__
+
+
+    def __get__(self, obj, cls):
+        if obj is None:
+            return self
+        value = getattr(obj, self._key, None)
+        if value is None:
+            value = self.fget(obj)
+            setattr(obj, self._key, value)
+        return value
+
+
+    def __set__(self, obj, value):
+        setattr(obj, self._key, value)
