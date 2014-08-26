@@ -1,5 +1,6 @@
 from wepay.calls.base import Call
 
+
 class Preapproval(Call):
     """ The /preapproval API calls"""
 
@@ -87,8 +88,8 @@ class Preapproval(Call):
         'account_id', 'amount', 'currency', 'short_description', 'period',
         'reference_id', 'app_fee', 'fee_payer', 'redirect_uri', 'callback_uri',
         'fallback_uri', 'require_shipping', 'shipping_fee', 'charge_tax',
-        'payer_email_message','long_description', 'frequency',
-        'start_time','end_time', 'auto_recur', 'mode', 'prefill_info',
+        'payer_email_message', 'long_description', 'frequency',
+        'start_time', 'end_time', 'auto_recur', 'mode', 'prefill_info',
         'funding_sources', 'payment_method_id', 'payment_method_type',
         # for App level preapprovals
         'client_id', 'client_secret'
