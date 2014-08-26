@@ -1,6 +1,6 @@
 
-Python WePay SDK (third party)
-==============================
+python-wepay: Python WePay SDK (third party)
+============================================
 
 .. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
    :target: https://travis-ci.org/lehins/python-wepay
@@ -23,8 +23,12 @@ Features
 .. code-block:: python
 
     >>> api = WePay(production=False, access_token='STAGE_243...')
-    >>> response = api.credit_card.create(client_id, cc_number, ..., original_ip='127...')
-    >>> api.credit_card.authorize(client_id, client_secret, response['credit_card_id'])
+    >>> response = api.account.create("name", "description", type='nonprofit')
+    >>> account_id = response['account_id']
+    >>> callback_uri = "https://example.com/ipn/account/%s" % account_id
+    >>> response = api.account.modify(account_id, callback_uri=callback_uri)
+    >>> api.preapproval.create("short description", "daily", amount=45.5, account_id=account_id)
+    {"preapproval_id":619202, "preapproval_uri":"https://stage.wepay.com/api/preapproval/619202"}
 
 * Validation of all required and optional parameters to each one of the calls.
 * Very easy construction of batch calls, simply by passing ``batch_mode=True`` to
@@ -32,12 +36,9 @@ Features
 
 .. code-block:: python
 
-    >>> calls = []
-    >>> calls.append(api.credit_card.authorize(
-    ...                  client_id, client_secret, response['credit_card_id'],
-    ...                  batch_mode=True, batch_reference_id='ref_id_1234'))
-    >>> # append more calls ...
-    >>> response = api.batch.create(client_id, client_secret, calls)
+    >>> call1 = api.checkout.create(1234, short_description, type, amount, batch_mode=True)
+    >>> call2 = api.withdrawal.find(1235, sort_order='ASC', access_token='access_token_for_other_account', batch_mode=True)
+    >>> response = api.batch.create(client_id, client_secret, [call1, call2])
 
 
 About
