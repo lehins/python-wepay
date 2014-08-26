@@ -6,7 +6,7 @@ try:
 except ImportError:
     HAS_REQUESTS = False
 
-from wepay.exceptions import *
+from wepay.exceptions import WePayClientError, WePayServerError
 
 class Post(object):
     """This is a helper class that uses either `urllib` or `requests` library to
@@ -69,8 +69,6 @@ class Post(object):
             raise WePayServerError(exc, status_code, **kwargs)
         if status_code >= 400:
             raise WePayClientError(exc, status_code, **kwargs)
-        # Should never really happen
-        raise WePayHTTPError(exc, status_code, **kwargs)
 
 
 
