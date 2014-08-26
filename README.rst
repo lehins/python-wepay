@@ -10,10 +10,9 @@ python-wepay: Python WePay SDK (third party)
    :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
    :alt: Tests Coverage
 
-.. image:: https://pypip.in/d/python-wepay/badge.png
-    :target: https://crate.io/packages/python-wepay/
-    :alt: Number of PyPI downloads
-
+.. image:: https://landscape.io/github/lehins/python-wepay/master/landscape.png
+   :target: https://landscape.io/github/lehins/python-wepay/master
+   :alt: Code Health
 
 Features
 --------
@@ -49,9 +48,8 @@ This package started as a part of `Django WePay Application
 useful to other developers in Python community that do not use `Django
 <https://djangoproject.com>`_. Originally it meant to be an extension of an
 official `Python WePay SDK <https://github.com/wepay/Python-SDK>`_, but instead
-it became a replacement with full compatibilty with official WePay version.
-This package is also listed as a `third party Python SDK on WePay
-<https://www.wepay.com/developer/resources/sdks>`_.
+it became a replacement. This package is also listed as a `third party Python
+SDK on WePay <https://www.wepay.com/developer/resources/sdks>`_.
 
 Status
 ------

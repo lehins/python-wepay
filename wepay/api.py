@@ -3,8 +3,6 @@
 .. moduleauthor:: lehins <lehins@yandex.ru>
    :platform: independent
 """
-import warnings
-
 from wepay.calls import *
 from wepay.utils import Post, cached_property
 
@@ -115,8 +113,8 @@ class WePay(object):
 
     @cached_property
     def account(self):
-       """:class:`Account<wepay.calls.account.Account>` call instance"""
-       return Account(self)
+        """:class:`Account<wepay.calls.account.Account>` call instance"""
+        return Account(self)
 
 
     @cached_property
@@ -154,8 +152,8 @@ class WePay(object):
 
     @cached_property
     def subscription(self):
-       """:class:`Subscription<wepay.calls.subscription.Subscription>` call instance"""
-       return Subscription(self)
+        """:class:`Subscription<wepay.calls.subscription.Subscription>` call instance"""
+        return Subscription(self)
 
 
     @cached_property

@@ -1,4 +1,3 @@
-import warnings
 
 __all__ = [
     'WePayWarning', 'WePayError', 'WePayHTTPError', 'WePayClientError',

@@ -7,8 +7,13 @@ class Call(object):
     _api = None
     floating = ['amount', 'app_fee', 'shipping_fee', 'setup_fee']
 
+    @property
+    def call_name(self):
+        raise NotImplementedError("call_name is required")
+
     def __init__(self, api):
         self._api = api
+
 
     def _update_params(self, params, extra_kwargs, control_keywords):
         if control_keywords is None:
@@ -79,11 +84,11 @@ class Call(object):
                 'call': uri
             }
             access_token = control_kwargs.get('access_token', None)
-            if not access_token is None:
+            if access_token is not None:
                 call['authorization'] = access_token
             if params:
                 call['parameters'] = params
-            if not control_kwargs['reference_id'] is None:
+            if control_kwargs.get('reference_id', None) is not None:
                 call['reference_id'] = control_kwargs['reference_id']
             return call
         return self._api.call(uri, params=params, **control_kwargs)
