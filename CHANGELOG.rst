@@ -5,14 +5,14 @@ Changelog
 -----
 
 * Removed backward compatibility with official `Python WePay SDK <https://github.com/wepay/Python-SDK>`_.
-* introduced :exc:`WePayHTTPError<wepay.exceptions.WePayHTTPError>`, which is a base exception for both :exc:`WePayClientError<wepay.exceptions.WePayClientError>` and :exc:`WePayServerError<wepay.exceptions.WePayServerError>`
+* introduced `WePayHTTPError<wepay.exceptions.WePayHTTPError>`, which is a base exception for both `WePayClientError<wepay.exceptions.WePayClientError>` and `WePayServerError<wepay.exceptions.WePayServerError>`
 * added `cached_property` decorator.
 * changed they way calls are initialized. This change doesn't affect the way calls are made.
 
 1.3.5
 -----
 
-* Fixed and improved error handling, new exceptions: :exc:`WePayClientError<wepay.exceptions.WePayClientError>` and :exc:`WePayServerError<wepay.exceptions.WePayServerError>`
+* Fixed and improved error handling, new exceptions: `WePayClientError<wepay.exceptions.WePayClientError>` and `WePayServerError<wepay.exceptions.WePayServerError>`
 
 1.3.4
 -----
