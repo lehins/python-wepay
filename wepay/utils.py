@@ -6,7 +6,8 @@ try:
 except ImportError:
     HAS_REQUESTS = False
 
-from wepay.exceptions import *
+from wepay.exceptions import WePayWarning, WePayClientError, WePayServerError, \
+    WePayConnectionError
 
 class Post(object):
     """This is a helper class that uses either `urllib` or `requests` library to

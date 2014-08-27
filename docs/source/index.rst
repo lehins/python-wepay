@@ -93,6 +93,175 @@ Quick Example
     {u'account_id': 1371765417, u'account_uri': u'https://stage.wepay.com/account/1371765417'}
     >>> api.checkout.create(1371765417, "Short description.....
 
+
+--------------
+Error Handling
+--------------
+
+Whenever you perform an API call and it results in an error, the are two possible
+causes:
+
+* either there is a problem connecting to a WePay server (internet connection is
+  down, WePay server is down, request times out, ssl validation failed, etc) in
+  which case a call will raise
+  :exc:`~wepay.exceptions.WePayConnectionError`. If the cause is
+  timeout, consider increasing ``timeout`` value during :class:`~wepay.api.WePay`
+  initialization or on per call basis, in particular for
+  :meth:`batch.create()<wepay.calls.batch.Batch.create>` call, since it can take a while for
+  WePay to process up to 50 batched calls in one request.
+* or there is a problem processing the actual call due to a `WePay documented
+  <https://www.wepay.com/developer/reference/errors>`_ reason or for some other
+  unknown reason, like an implemetation error on WePay side or a malformed
+  response for instance. In this case either
+  :exc:`~wepay.exceptions.WePayServerError` or
+  :exc:`~wepay.exceptions.WePayClientError` will be raised.
+
+So far, I've noticed that
+:exc:`WePayServerError's<wepay.exceptions.WePayServerError>` happen due to
+incorect usage of API (ex. unrecognized api call) or a problem with WePay, while
+:exc:`WePayClientError's<wepay.exceptions.WePayClientError>` can happen anytime,
+for instance in case of a credit card decline. I would recommend handling them
+in a separate way, but you can also simply catch
+:exc:`~wepay.exceptions.WePayHTTPError` and handle it depending on
+:attr:`~wepay.exceptions.WePayHTTPError.error_code` and
+:attr:`~wepay.exceptions.WePayHTTPError.status_code`. Above mentioned exceptions
+also give you access to the actual HTTP Error:
+:attr:`~wepay.exceptions.WePayHTTPError.http_error` which will carry a response
+body inside, hence can give some more information on the nature of the error. If
+you really don't care about response body or HTTP status code, it is possible to
+just always catch :exc:`~wepay.exceptions.WePayError`, which carries only
+information documented by WePay.
+
+Also note, that depending on the library used for making calls, different types
+of errors will be contained in
+:attr:`~wepay.exceptions.WePayHTTPError.http_error` and
+:attr:`~wepay.exceptions.WePayConnectionError.error`. Refer to their
+documentation to find detailed information: `requests
+<http://docs.python-requests.org/en/latest/>`_ or `urllib
+<https://docs.python.org/3/library/urllib.html#module-urllib>`_
+
+So here is an example:
+
+.. code-block:: python
+
+   from wepay import WePay
+   from wepay.exceptions import WePayClientError, WePayServerError, WePayConnectionError
+
+   def get_withdrawal_uri(account_id, access_token):
+       api = WePay(production=True, access_token=access_token, silent=True)
+       try:
+           response = api.account(account_id)
+           for balance in response['balances']:
+               if balance['currency'] == "USD":
+                   usd_balance = balance['balance']
+                   break
+           if usd_balance > 0:
+               response = api.withdrawal.create(account_id, currency="USD", note="Need Money!")
+               return response['withdrawal_uri']
+       except WePayClientError as exc:
+           if exc.error_code == 3003:
+               print "Sorry, this account was deleted"
+           elif exc.error_code == 3002:
+               print "Dummy, you used a wrong access_token"
+           elif exc.error_code == 6002:
+               print "What are you doing? You are not allowed to get money"
+           else:
+               print exc
+       except WePayServerError as exc:
+           print "Oh oh, something went wrong, please contact api@wepay.com"
+           print exc
+       except WePayConnectionError as exc:
+           print "there was a problem connecting to WePay, please try again later"
+           print exc
+
+So now you could use this function to get a url where to send a user in case
+there is a positive balance. It's kind of useless, since WePay schedules
+Withdrawals automatically and it only supports "USD" currency at the moment,
+moreover it's easier to handle a 3005 ``error_code``, instead of checking a
+balance first, but I hope it's good enough for demonstrating error handling.
+
+.. code-block:: python
+
+    >>> from myapp.settings import WEPAY_ACCOUNT_ID, WEPAY_ACCESS_TOKEN
+    >>> withdrawal_uri = get_withdrawal_uri(WEPAY_ACCOUNT_ID, WEPAY_ACCESS_TOKEN)
+    >>> if withdrawal_uri:
+    >>>     # send user to this uri to finish withdrawal creation process.
+
+
+---------------
+Customizing SDK
+---------------
+
+Let's say you would like default values provided right away, or customize calls
+in some other handy way. For example you would like to supply some default
+values related specifically to your application and turn off objects you will
+never use:
+
+.. code-block:: python
+
+    from wepay import WePay, calls
+    from wepay.utils import cached_property
+
+    from myapp.settings import WEPAY_PRODUCTION, WEPAY_ACCESS_TOKEN, WEPAY_CLIENT_ID, WEPAY_CLIENT_SECRET
+
+
+    class App(calls.App):
+
+        def __call__(self, **kwargs):
+            return super(App, self).__call__(WEPAY_CLIENT_ID, WEPAY_CLIENT_SECRET, **kwargs)
+
+        def modify(self, **kwargs):
+            return super(App, self).modify(WEPAY_CLIENT_ID, WEPAY_CLIENT_SECRET, **kwargs)
+
+
+    class User(calls.User):
+
+        def register(self, *args, **kwargs):
+            return super(User, self).register(
+                WEPAY_CLIENT_ID, WEPAY_CLIENT_SECRET, *args, **kwargs)
+
+
+    class Batch(calls.Batch):
+
+        def create(self, calls, **kwargs):
+            return super(Batch, self).create(
+                WEPAY_CLIENT_ID, WEPAY_CLIENT_SECRET, calls, **kwargs)
+
+
+    class MyWePay(WePay):
+        credit_card = None
+        subscription_plan = None
+        subscription = None
+        subscription_charge = None
+
+        def __init__(self, **kwargs):
+             kwargs.setdefault('production', WEPAY_PRODUCTION)
+             kwargs.setdefault('timeout', 45)
+             kwargs.setdefault('access_token', WEPAY_ACCESS_TOKEN)
+             kwargs['silent'] = True
+             super(MyWePay, self).__init__(**kwargs)
+
+        @cached_property
+        def app(self):
+            return App(self)
+    
+        @cached_property
+        def user(self):
+            return User(self)
+
+        @cached_property
+        def batch(self):
+            return Batch(self)
+
+
+This will effectively supply all of your WePay Application related info, for all
+of the calls you are planning on using, since other objects don't rely on
+``client_id`` or ``client_secret``, with an exception of App level Preapprovals,
+of course. ``cached_property`` decorator alows lazy call initialization and,
+although you could use a regular ``property`` decorator, ``cached_property`` is
+more efficient, since it initializes a call object only once per WePay instance,
+instead of every time a call is performed.
+
 ------------
 Project Info
 ------------

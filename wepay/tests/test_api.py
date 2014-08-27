@@ -2,7 +2,9 @@ import unittest, warnings, requests
 from mock import MagicMock
 from six.moves import urllib
 from wepay import WePay
+from wepay.calls.base import Call
 from wepay.exceptions import *
+from wepay.utils import cached_property
 
 class ApiTestCase(unittest.TestCase):
 
@@ -86,6 +88,7 @@ class ApiTestCase(unittest.TestCase):
             self.assertEqual(e.error, "invalid_request")
             self.assertEqual(e.error_code, 1004)
             self.assertEqual(e.error_description, "client_id parameter is required")
+            self.assertEqual(repr(e), "<WePayClientError> " + str(e))
 
 
     def test_requests_missing(self):
@@ -111,6 +114,7 @@ class ApiTestCase(unittest.TestCase):
         except WePayConnectionError as e:
             self.assertIsInstance(e.error, urllib.error.URLError)
             self.assertEqual(str(e), "URLError - <urlopen error timed out>")
+            self.assertEqual(repr(e), "<WePayConnectionError> " + str(e))
                           
 
     def test_requests_connection_error(self):
@@ -135,3 +139,22 @@ class ApiTestCase(unittest.TestCase):
         api._post.assert_called_once_with(
             'https://stage.wepayapi.com/v2/user', {}, expected_headers, 30)
 
+
+    def test_base_call(self):
+        call = Call(self.api)
+        self.assertRaises(NotImplementedError, lambda: call.call_name)
+
+
+    def test_cached_property(self):
+        class T(object):
+            @cached_property
+            def foo(self):
+                return self.getter()
+        t = T()
+        t.getter = MagicMock(return_value='foo')
+        self.assertEqual(t.foo, 'foo')
+        self.assertEqual(t.foo, 'foo')
+        t.foo = 'bar'
+        self.assertEqual(t.foo, 'bar')
+        self.assertEqual(t.foo, 'bar')
+        t.getter.assert_called_once()

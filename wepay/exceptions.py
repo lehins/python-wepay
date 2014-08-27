@@ -20,10 +20,16 @@ class WePayError(Exception):
         self._error = error
         self._error_code = error_code
         self._error_description = error_description
+        super(WePayError, self).__init__()
 
 
     def __str__(self):
         return "%s (%s): %s" % (self.error, self.error_code, self.error_description)
+
+
+    def __repr__(self):
+        return "<%s> %s" % (self.__class__.__name__, self)
+
 
     @property
     def error(self):
@@ -86,7 +92,7 @@ class WePayHTTPError(WePayError):
 
 class WePayClientError(WePayHTTPError):
     """This is a 4xx type error, which, most of the time, carries important
-    information about the object of interest.
+    error information about the object of interest.
 
     """
 
@@ -111,10 +117,15 @@ class WePayConnectionError(Exception):
 
     def __init__(self, error):
         self._error = error
+        super(WePayConnectionError, self).__init__()        
 
 
     def __str__(self):
         return "%s - %s" % (self.error.__class__.__name__, str(self.error))
+
+
+    def __repr__(self):
+        return "<%s> %s" % (self.__class__.__name__, self)
 
 
     @property
