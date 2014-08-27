@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.4.3
+-----
+
+* improved documentation.
+
 1.4.0
 -----
 

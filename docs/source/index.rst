@@ -259,7 +259,7 @@ of the calls you are planning on using, since other objects don't rely on
 ``client_id`` or ``client_secret``, with an exception of App level Preapprovals,
 of course. ``cached_property`` decorator alows lazy call initialization and,
 although you could use a regular ``property`` decorator, ``cached_property`` is
-more efficient, since it initializes a call object only once per WePay instance,
+more efficient, since it initializes a call object only once per `~wepay.api.WePay` instance,
 instead of every time a call is performed.
 
 ------------
