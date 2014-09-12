@@ -16,7 +16,8 @@ class WithdrawalTestCase(CallBaseTestCase):
         kwargs = {
             'limit': 17,
             'start': 10,
-            'sort_order': 'ASC'
+            'sort_order': 'ASC',
+            'state': 'expired'
         }
         self._test_call('/withdrawal/find', args, kwargs)
 

@@ -54,7 +54,7 @@ class Withdrawal(Call):
             'account_id': account_id
         }
         return self.make_call(self.__find, params, kwargs)
-    __find.allowed_params = ['account_id', 'limit', 'start', 'sort_order']
+    __find.allowed_params = ['account_id', 'limit', 'start', 'sort_order', 'state']
     find = __find
 
 
