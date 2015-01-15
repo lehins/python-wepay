@@ -37,5 +37,5 @@ setup(
     ],
     keywords=["wepay", "payment", "credit card"],
     install_requires=['six'],
-    tests_require=["mock"]    
+    tests_require=['mock', 'requests']
 )

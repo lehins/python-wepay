@@ -65,7 +65,7 @@ Requirements
 
 * Python >= 2.7 or >= 3.2
 * Registered Application with WePay `production <https://wepay.com>`_ site or
-  it's `development <https://stage.wepay>`_ clone.
+  it's `development <https://stage.wepay.com>`_ clone.
 * `six <https://pypi.python.org/pypi/six>`_.
 * `requests <http://docs.python-requests.org/en/latest/>`_ (optional):
 * `mock <https://pypi.python.org/pypi/mock>`_ (optional, for tests only)
