@@ -2,6 +2,10 @@
 python-wepay: Python WePay SDK (third party)
 ============================================
 
+.. image:: https://readthedocs.org/projects/python-wepay/badge/?version=latest
+   :target: https://readthedocs.org/projects/python-wepay/?badge=latest
+   :alt: Documentation Status
+
 .. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
    :target: https://travis-ci.org/lehins/python-wepay
    :alt: Travis-CI
@@ -15,8 +19,8 @@ python-wepay: Python WePay SDK (third party)
    :alt: Code Health
 
 .. image:: https://pypip.in/d/python-wepay/badge.png
-    :target: https://crate.io/packages/python-wepay/
-    :alt: Number of PyPI downloads
+   :target: https://crate.io/packages/python-wepay/
+   :alt: Number of PyPI downloads
 
 Features
 --------
@@ -31,7 +35,7 @@ Features
     >>> callback_uri = "https://example.com/ipn/account/%s" % account_id
     >>> response = api.account.modify(account_id, callback_uri=callback_uri)
     >>> api.preapproval.create("short description", "daily", amount=45.5, account_id=account_id)
-    {"preapproval_id":619202, "preapproval_uri":"https://stage.wepay.com/api/preapproval/619202"}
+    {'preapproval_id': 619202, 'preapproval_uri': 'https://stage.wepay.com/api/preapproval/619202'}
 
 * Validation of all required and optional parameters to each one of the calls.
 * Very easy construction of batch calls, simply by passing ``batch_mode=True`` to
