@@ -18,8 +18,8 @@ python-wepay: Python WePay SDK (third party)
    :target: https://landscape.io/github/lehins/python-wepay/master
    :alt: Code Health
 
-.. image:: https://pypip.in/d/python-wepay/badge.png
-   :target: https://crate.io/packages/python-wepay/
+.. image:: https://pypip.in/download/python-wepay/badge.png
+   :target: https://pypi.python.org/pypi/python-wepay/
    :alt: Number of PyPI downloads
 
 Features

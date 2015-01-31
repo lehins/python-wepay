@@ -123,7 +123,7 @@ incorect usage of API (ex. unrecognized api call) or a problem with WePay, while
 for instance in case of a credit card decline. I would recommend handling them
 in a separate way, but you can also simply catch
 :exc:`~wepay.exceptions.WePayHTTPError` and handle it depending on
-:attr:`~wepay.exceptions.WePayHTTPError.error_code` and
+:attr:`~wepay.exceptions.WePayError.error_code` and
 :attr:`~wepay.exceptions.WePayHTTPError.status_code`. Above mentioned exceptions
 also give you access to the actual HTTP Error:
 :attr:`~wepay.exceptions.WePayHTTPError.http_error` which will carry a response
