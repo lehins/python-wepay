@@ -6,6 +6,10 @@ python-wepay: Python WePay SDK (third party)
    :target: https://readthedocs.org/projects/python-wepay/?badge=latest
    :alt: Documentation Status
 
+.. image:: https://landscape.io/github/lehins/python-wepay/master/landscape.png
+   :target: https://landscape.io/github/lehins/python-wepay/master
+   :alt: Code Health
+
 .. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
    :target: https://travis-ci.org/lehins/python-wepay
    :alt: Travis-CI
@@ -13,10 +17,6 @@ python-wepay: Python WePay SDK (third party)
 .. image:: https://coveralls.io/repos/lehins/python-wepay/badge.png?branch=master 
    :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
    :alt: Tests Coverage
-
-.. image:: https://landscape.io/github/lehins/python-wepay/master/landscape.png
-   :target: https://landscape.io/github/lehins/python-wepay/master
-   :alt: Code Health
 
 .. image:: https://pypip.in/download/python-wepay/badge.png
    :target: https://pypi.python.org/pypi/python-wepay/
