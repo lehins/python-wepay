@@ -32,9 +32,9 @@ class UserTestCase(CallBaseTestCase):
         }
         self._test_call('/user/register', args, kwargs)
 
-    def test_user_resend_confirmation(self):
+    def test_user_send_confirmation(self):
         args = []
         kwargs = {
             'email_message': "Welcome to my <strong>application</strong>"
         }
-        self._test_call('/user/resend_confirmation', args, kwargs)
+        self._test_call('/user/send_confirmation', args, kwargs)

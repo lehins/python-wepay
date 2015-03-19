@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.4.4
+-----
+* renamed ``user.resend_confirmation`` call to ``user.send_confirmation``.
+
 1.4.3
 -----
 

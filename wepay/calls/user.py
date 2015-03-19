@@ -1,3 +1,4 @@
+import warnings
 from wepay.calls.base import Call
 
 class User(Call):
@@ -92,7 +93,7 @@ class User(Call):
     register = __register
 
 
-    def __resend_confirmation(self, **kwargs):
+    def __send_confirmation(self, **kwargs):
         """Call documentation: `/user/resend_confirmation
         <https://www.wepay.com/developer/reference/user#resend_confirmation>`_, plus
         extra keyword parameter:
@@ -111,9 +112,22 @@ class User(Call):
             This call is NOT supported by API versions older then '2014-01-08'.
 
         """
-        return self.make_call(self.__resend_confirmation, {}, kwargs)
-    __resend_confirmation.allowed_params = ['email_message']
-    __resend_confirmation.control_keywords = ['batch_mode']
-    resend_confirmation = __resend_confirmation
+        return self.make_call(self.__send_confirmation, {}, kwargs)
+    __send_confirmation.allowed_params = ['email_message']
+    __send_confirmation.control_keywords = ['batch_mode']
+    send_confirmation = __send_confirmation
 
+    
+    def resend_confirmation(self, *args, **kwargs):
+        """:meth:`User.send_confirmation` should be used instead.
 
+        .. warning ::
+
+            As of 2015-02-25 this is a deprecated call and has been renamed.
+        """
+        warnings.warn(
+            "/user/resend_confirmation API call has been renamed to: "
+            "/user/send_confirmation on 2015-02-25. Will be removed in 1.5 version.",
+            DeprecationWarning
+        )
+        return self.send_confirmation(*args, **kwargs)
