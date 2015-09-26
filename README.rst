@@ -1,6 +1,6 @@
-
-python-wepay: Python WePay SDK (third party)
-============================================
+==============================
+python-wepay: Python WePay SDK
+==============================
 
 .. image:: https://readthedocs.org/projects/python-wepay/badge/?version=latest
    :target: https://readthedocs.org/projects/python-wepay/?badge=latest

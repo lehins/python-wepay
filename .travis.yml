@@ -18,7 +18,7 @@ after_success:
   coveralls
 notifications:
   email:
-    recipients:x
+    recipients:
       - lehins@yandex.ru
     on_success: never
     on_failure: always
