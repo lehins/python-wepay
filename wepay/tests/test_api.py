@@ -157,4 +157,4 @@ class ApiTestCase(unittest.TestCase):
         t.foo = 'bar'
         self.assertEqual(t.foo, 'bar')
         self.assertEqual(t.foo, 'bar')
-        t.getter.assert_called_once()
+        t.getter.assert_called_once_with()

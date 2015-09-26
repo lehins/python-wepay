@@ -1,8 +1,27 @@
 Changelog
 =========
 
+1.5.0
+-----
+
+* added ``/account/membership/`` calls.
+* added ``/user/mfa/`` calls.
+* New API version 2015-09-09 changes are reflected in this SDK version:
+  
+  * ``/withrawal/create`` is deprecated.
+
+* New API version 2015-08-15 changes are reflected in this SDK version:
+  
+  * ``/account/create`` now accepts both old and new style params.
+
+* removed deprecated call ``/user/resend_confirmation``.
+* ``/accout/create`` and ``/account/modify`` now accept ``country_options`` and
+  ``fee_schedule_slot`` params
+* added restricted ``credit_card/transfer`` call.
+  
 1.4.4
 -----
+
 * renamed ``user.resend_confirmation`` call to ``user.send_confirmation``.
 
 1.4.3

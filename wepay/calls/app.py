@@ -28,7 +28,6 @@ class App(Call):
     allowed_params = ['client_id', 'client_secret']
     control_keywords = ['batch_mode']
 
-
     def __modify(self, client_id, client_secret, **kwargs):
         """Call documentation: `/app/modify
         <https://www.wepay.com/developer/reference/app#modify>`_, plus extra

@@ -29,7 +29,6 @@ class CreditCard(Call):
     allowed_params = ['client_id', 'client_secret', 'credit_card_id']
     control_keywords = ['batch_mode']
 
-
     def __create(self, client_id, cc_number, cvv, expiration_month,
                  expiration_year, user_name, email, address, **kwargs):
         """Call documentation: `/credit_card/create
@@ -59,11 +58,11 @@ class CreditCard(Call):
         return self.make_call(self.__create, params, kwargs)
     __create.allowed_params = [
         'client_id', 'cc_number', 'cvv', 'expiration_month', 'expiration_year',
-        'user_name', 'email', 'address', 'original_ip', 'original_device', 'reference_id'
+        'user_name', 'email', 'address', 'original_ip', 'original_device',
+        'reference_id', 'auto_update'
     ]
     __create.control_keywords = ['batch_mode']
     create = __create
-
 
     def __authorize(self, client_id, client_secret, credit_card_id, **kwargs):
         """Call documentation: `/credit_card/authorize
@@ -89,7 +88,6 @@ class CreditCard(Call):
     __authorize.allowed_params = ['client_id', 'client_secret', 'credit_card_id']
     __authorize.control_keywords = ['batch_mode']
     authorize = __authorize
-
 
     def __find(self, client_id, client_secret, **kwargs):
         """Call documentation: `/credit_card/find
@@ -118,7 +116,6 @@ class CreditCard(Call):
     __find.control_keywords = ['batch_mode']
     find = __find
 
-
     def __delete(self, client_id, client_secret, credit_card_id, **kwargs):
         """Call documentation: `/credit_card/delete
         <https://www.wepay.com/developer/reference/credit_card#delete>`_, plus
@@ -143,3 +140,40 @@ class CreditCard(Call):
     __delete.allowed_params = ['client_id', 'client_secret', 'credit_card_id']
     __delete.control_keywords = ['batch_mode']
     delete = __delete
+
+    def __transfer(self, client_id, client_secret, cc_number, expiration_month,
+                   expiration_year, user_name, email, address, **kwargs):
+        """Call documentation: `/credit_card/transfer
+        <https://www.wepay.com/developer/reference/credit_card#transfer>`_, plus
+        extra keyword parameter:
+        
+        :keyword bool batch_mode: turn on/off the batch_mode, see 
+           :class:`wepay.api.WePay`
+
+        :keyword str batch_reference_id: `reference_id` param for batch call,
+           see :class:`wepay.api.WePay`
+
+        :keyword str api_version: WePay API version, see
+           :class:`wepay.api.WePay`
+
+        """
+        params = {
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'cc_number': cc_number, 
+            'expiration_month': expiration_month,
+            'expiration_year': expiration_year,
+            'user_name': user_name,
+            'email': email,
+            'address': address
+        }
+        return self.make_call(self.__transfer, params, kwargs)
+    __transfer.allowed_params = [
+        'client_id', 'client_secret', 'cc_number', 'expiration_month',
+        'expiration_year', 'user_name', 'email', 'address', 'reference_id'
+    ]
+    __transfer.control_keywords = ['batch_mode']
+    transfer = __transfer
+
+
+    

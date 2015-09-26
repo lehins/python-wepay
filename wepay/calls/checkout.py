@@ -30,7 +30,6 @@ class Checkout(Call):
         return self.make_call(self, params, kwargs)
     allowed_params = ['checkout_id']
 
-
     def __find(self, account_id, **kwargs):
         """Call documentation: `/checkout/find
         <https://www.wepay.com/developer/reference/checkout#find>`_, plus extra
@@ -83,19 +82,28 @@ class Checkout(Call):
             'account_id': account_id,
             'short_description': short_description,
             'type': type,
-            'amount': amount
+            'amount': amount,
+            # 'currency': currency # - still optional for backwards compatibility
         }
         return self.make_call(self.__create, params, kwargs)
     __create.allowed_params = [
-        'account_id', 'short_description', 'type', 'currency', 'amount', 
-        'long_description', 'payer_email_message', 'payee_email_message', 'reference_id', 
-        'app_fee', 'fee_payer', 'redirect_uri', 'callback_uri', 'fallback_uri', 
-        'auto_capture', 'require_shipping', 'shipping_fee', 'charge_tax', 'mode', 
-        'preapproval_id', 'prefill_info', 'funding_sources', 'payment_method_id', 
-        'payment_method_type'
+        'account_id', 'short_description', 'type', 'amount', 'currency', 
+        'long_description', 'email_message', 'fee', 'callback_uri',
+        'auto_capture', 'reference_id', 'unique_id', 'hosted_checkout', 
+        'payment_method', 'delivery_type',
+        
+        # deprecated as of API version '2015-08-15', but still supported.
+        # use 'email_message' instead of:
+        'payer_email_message', 'payee_email_message', 
+        # use 'fee' instead of:
+        'app_fee', 'fee_payer', 
+        # use 'payment_method' instead of:
+        'payment_method_id', 'payment_method_type', 'preapproval_id',
+        # use 'hosted_checkout' instead of:
+        'redirect_uri', 'mode', 'fallback_uri', 'shipping_fee',
+        'require_shipping', 'prefill_info', 'funding_sources', 
     ]
     create = __create
-
 
     def __cancel(self, checkout_id, cancel_reason, **kwargs):
         """Call documentation: `/checkout/cancel

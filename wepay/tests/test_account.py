@@ -40,8 +40,12 @@ class AccountTestCase(CallBaseTestCase):
             },
             'mcc': 7372,
             'callback_uri': 'https://example.com/callback',
-            'country': "US",
-            'currencies': ["USD"]
+            'country': "CA",
+            'currencies': ["CAD"],
+            'country_options': {
+                'debit_opt_in': True
+            },
+            'fee_schedule_slot': 9
         }
         self._test_call('/account/create', args, kwargs)
 
@@ -63,6 +67,10 @@ class AccountTestCase(CallBaseTestCase):
                 'button_color': "#FFFFFF"
             },
             'callback_uri': 'https://example.com/callback',
+            'country_options': {
+                'debit_opt_in': True
+            },
+            'fee_schedule_slot': 9
         }
         self._test_call('/account/modify', args, kwargs)
 
@@ -94,6 +102,42 @@ class AccountTestCase(CallBaseTestCase):
         }
         self._test_call('/account/get_reserve_details', args, kwargs)
 
+    def test_account_membership_create(self):
+        args = [
+            ('account_id', 1234),
+            ('member_access_token', 'fake_token')            
+        ]
+        kwargs = {
+            'role': 'admin',
+            'admin_context': {
+                'reason': 'other',
+                'explanation': 'boss'
+            }
+        }
+        self._test_call('/account/membership/create', args, kwargs)
+
+    def test_account_membership_modify(self):
+        args = [
+            ('account_id', 1234),
+            ('user_id', 4321)
+        ]
+        kwargs = {
+            'role': 'admin',
+            'admin_context': {
+                'reason': 'other',
+                'explanation': 'boss'
+            }
+        }
+        self._test_call('/account/membership/modify', args, kwargs)
+
+    def test_account_membership_remove(self):
+        args = [
+            ('account_id', 1234),
+            ('user_id', 4321)
+        ]
+        kwargs = {}
+        self._test_call('/account/membership/remove', args, kwargs)
+
     # deprecated calls:
 
     def test_account_balance(self):
@@ -102,7 +146,6 @@ class AccountTestCase(CallBaseTestCase):
         ]
         kwargs = {}
         self._test_call('/account/balance', args, kwargs, api_version='2011-01-15')
-
 
     def test_account_add_bank(self):
         args = [
@@ -113,7 +156,6 @@ class AccountTestCase(CallBaseTestCase):
             'redirect_uri': "https://example.com/redirect"
         }
         self._test_call('/account/add_bank', args, kwargs, api_version='2011-01-15')
-
 
     def test_account_set_tax(self):
         args = [
@@ -127,10 +169,10 @@ class AccountTestCase(CallBaseTestCase):
         kwargs = {}
         self._test_call('/account/set_tax', args, kwargs, api_version='2011-01-15')
 
-
     def test_account_get_tax(self):
         args = [
             ('account_id', 1234),
         ]
         kwargs = {}
         self._test_call('/account/get_tax', args, kwargs, api_version='2011-01-15')
+        

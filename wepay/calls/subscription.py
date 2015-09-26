@@ -30,7 +30,6 @@ class Subscription(Call):
         return self.make_call(self, params, kwargs)
     allowed_params = ['subscription_id']
 
-
     def __find(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription/find
         <https://www.wepay.com/developer/reference/subscription#find>`_, plus
@@ -59,7 +58,6 @@ class Subscription(Call):
         'state', 'reference_id'
     ]
     find = __find
-        
         
     def __create(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription/create
@@ -91,7 +89,6 @@ class Subscription(Call):
     ]
     create = __create
 
-
     def __cancel(self, subscription_id, **kwargs):
         """Call documentation: `/subscription/cancel
         <https://www.wepay.com/developer/reference/subscription#cancel>`_, plus
@@ -117,7 +114,6 @@ class Subscription(Call):
         return self.make_call(self.__cancel, params, kwargs)
     __cancel.allowed_params = ['subscription_id', 'reason']
     cancel = __cancel
-
 
     def __modify(self, subscription_id, **kwargs):
         """Call documentation: `/subscription/modify

@@ -1,10 +1,17 @@
 from wepay.calls.base import Call
+from wepay.utils import cached_property
 
+       
 class Account(Call):
     """ The /account API calls"""
 
     call_name = 'account'
 
+    @cached_property
+    def membership(self):
+        """:class:`Membership<wepay.calls.account.Membership>` call instance"""
+        return Membership(self._api)
+    
     def __call__(self, account_id, **kwargs):
         """Call documentation: `/account
         <https://www.wepay.com/developer/reference/account#lookup>`_, plus extra
@@ -29,7 +36,6 @@ class Account(Call):
         }
         return self.make_call(self, params, kwargs)
     allowed_params = ['account_id']
-
 
     def __find(self, **kwargs):
         """Call documentation: `/account/find
@@ -81,7 +87,8 @@ class Account(Call):
         return self.make_call(self.__create, params, kwargs)
     __create.allowed_params = [
         'name', 'description', 'reference_id', 'type', 'image_uri', 'gaq_domains', 
-        'theme_object', 'mcc', 'callback_uri', 'country', 'currencies'
+        'theme_object', 'mcc', 'callback_uri', 'country', 'currencies',
+        'country_options', 'fee_schedule_slot'
     ]
     create = __create
 
@@ -110,7 +117,8 @@ class Account(Call):
         return self.make_call(self.__modify, params, kwargs)
     __modify.allowed_params = [
         'account_id', 'name', 'description', 'reference_id', 'image_uri', 
-        'gaq_domains', 'theme_object', 'callback_uri'
+        'gaq_domains', 'theme_object', 'callback_uri', 'country_options',
+        'fee_schedule_slot'
     ]
     modify = __modify
 
@@ -140,7 +148,6 @@ class Account(Call):
     __delete.allowed_params = ['account_id', 'reason']
     delete = __delete
 
-
     def __get_update_uri(self, account_id, **kwargs):
         """Call documentation: `/account/get_update_uri
         <https://www.wepay.com/developer/reference/account#update_uri>`_, plus extra
@@ -167,7 +174,6 @@ class Account(Call):
     __get_update_uri.allowed_params = ['account_id', 'mode', 'redirect_uri']
     get_update_uri = __get_update_uri
     
-
     def __get_reserve_details(self, account_id, **kwargs):
         """Call documentation: `/account/get_reserve_details
         <https://www.wepay.com/developer/reference/account#reserve>`_, plus extra
@@ -194,8 +200,7 @@ class Account(Call):
     __get_reserve_details.allowed_params = ['account_id', 'currency']
     get_reserve_details = __get_reserve_details
 
-
-    # deprecated calls
+    # Deprecated calls
 
     def __balance(self, account_id, **kwargs):
         """Call documentation: `/account/balance
@@ -227,7 +232,6 @@ class Account(Call):
     __balance.allowed_params = ['account_id']
     balance = __balance
 
-        
     def __add_bank(self, account_id, **kwargs):
         """Call documentation: `/account/add_bank
         <https://www.wepay.com/developer/reference/account-2011-01-15#add_bank>`_, plus
@@ -257,7 +261,6 @@ class Account(Call):
         return self.make_call(self.__add_bank, params, kwargs)
     __add_bank.allowed_params = ['account_id', 'mode', 'redirect_uri']
     add_bank = __add_bank
-
         
     def __set_tax(self, account_id, taxes, **kwargs):
         """Call documentation: `/account/set_tax
@@ -290,7 +293,6 @@ class Account(Call):
     __set_tax.allowed_params = ['account_id', 'taxes']
     set_tax = __set_tax
 
-
     def __get_tax(self, account_id, **kwargs):
         """Call documentation: `/account/get_tax
         <https://www.wepay.com/developer/reference/account-2011-01-15#get_tax>`_, 
@@ -320,3 +322,96 @@ class Account(Call):
         return self.make_call(self.__get_tax, params, kwargs)
     __get_tax.allowed_params = ['account_id']
     get_tax = __get_tax
+
+
+class Membership(Call):
+
+    call_name = 'account/membership'
+
+    def __create(self, account_id, member_access_token, **kwargs):
+        """Call documentation: `/account/membership/create
+        <https://www.wepay.com/developer/reference/account-membership#create>`_, plus extra
+        keyword parameters:
+        
+        :keyword str access_token: will be used instead of instance's
+           ``access_token``, with ``batch_mode=True`` will set `authorization`
+           param to it's value.
+
+        :keyword bool batch_mode: turn on/off the batch_mode, see 
+           :class:`wepay.api.WePay`
+
+        :keyword str batch_reference_id: `reference_id` param for batch call,
+           see :class:`wepay.api.WePay`
+
+        :keyword str api_version: WePay API version, see
+           :class:`wepay.api.WePay`
+
+        """
+        params = {
+            'account_id': account_id,
+            'member_access_token': member_access_token
+        }
+        return self.make_call(self.__create, params, kwargs)
+    __create.allowed_params = [
+        'account_id', 'member_access_token', 'role', 'admin_context'
+    ]
+    create = __create
+
+    def __modify(self, account_id, user_id, **kwargs):
+        """Call documentation: `/account/membership/modify
+        <https://www.wepay.com/developer/reference/account-membership#modify>`_, plus extra
+        keyword parameters:
+        
+        :keyword str access_token: will be used instead of instance's
+           ``access_token``, with ``batch_mode=True`` will set `authorization`
+           param to it's value.
+
+        :keyword bool batch_mode: turn on/off the batch_mode, see 
+           :class:`wepay.api.WePay`
+
+        :keyword str batch_reference_id: `reference_id` param for batch call,
+           see :class:`wepay.api.WePay`
+
+        :keyword str api_version: WePay API version, see
+           :class:`wepay.api.WePay`
+
+        """
+        params = {
+            'account_id': account_id,
+            'user_id': user_id
+        }
+        return self.make_call(self.__modify, params, kwargs)
+    __modify.allowed_params = [
+        'account_id', 'user_id', 'role', 'admin_context'
+    ]
+    modify = __modify
+
+    def __remove(self, account_id, user_id, **kwargs):
+        """Call documentation: `/account/membership/remove
+        <https://www.wepay.com/developer/reference/account-membership#remove>`_, plus extra
+        keyword parameters:
+        
+        :keyword str access_token: will be used instead of instance's
+           ``access_token``, with ``batch_mode=True`` will set `authorization`
+           param to it's value.
+
+        :keyword bool batch_mode: turn on/off the batch_mode, see 
+           :class:`wepay.api.WePay`
+
+        :keyword str batch_reference_id: `reference_id` param for batch call,
+           see :class:`wepay.api.WePay`
+
+        :keyword str api_version: WePay API version, see
+           :class:`wepay.api.WePay`
+
+        """
+        params = {
+            'account_id': account_id,
+            'user_id': user_id
+        }
+        return self.make_call(self.__remove, params, kwargs)
+    __remove.allowed_params = [
+        'account_id', 'user_id'
+    ]
+    remove = __remove
+    

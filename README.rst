@@ -6,21 +6,25 @@ python-wepay: Python WePay SDK (third party)
    :target: https://readthedocs.org/projects/python-wepay/?badge=latest
    :alt: Documentation Status
 
-.. image:: https://pypip.in/download/python-wepay/badge.png
+.. image:: https://img.shields.io/pypi/v/python-wepay.svg
+   :target: https://pypi.python.org/pypi/python-wepay/
+   :alt: Latest Version
+
+.. image:: https://img.shields.io/pypi/dm/python-wepay.svg
    :target: https://pypi.python.org/pypi/python-wepay/
    :alt: Number of PyPI downloads
-         
+
 .. image:: https://landscape.io/github/lehins/python-wepay/master/landscape.png
    :target: https://landscape.io/github/lehins/python-wepay/master
    :alt: Code Health
 
+.. image:: https://img.shields.io/coveralls/lehins/python-wepay.svg
+   :target: https://coveralls.io/r/lehins/python-wepay
+   :alt: Tests Coverage
+            
 .. image:: https://travis-ci.org/lehins/python-wepay.svg?branch=master   
    :target: https://travis-ci.org/lehins/python-wepay
    :alt: Travis-CI
-
-.. image:: https://coveralls.io/repos/lehins/python-wepay/badge.png?branch=master 
-   :target: https://coveralls.io/r/lehins/python-wepay?branch=master 
-   :alt: Tests Coverage
 
 
 Features

@@ -30,7 +30,6 @@ class SubscriptionCharge(Call):
         return self.make_call(self, params, kwargs)
     allowed_params = ['subscription_charge_id']
     
-
     def __find(self, subscription_id, **kwargs):
         """Call documentation: `/subscription_charge/find
         <https://www.wepay.com/developer/reference/subscription_charge#find>`_,
@@ -60,7 +59,6 @@ class SubscriptionCharge(Call):
     ]
     find = __find
     
-
     def __refund(self, subscription_charge_id, **kwargs):
         """Call documentation: `/subscription_charge/refund
         <https://www.wepay.com/developer/reference/subscription_charge#refund>`_,

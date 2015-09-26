@@ -91,55 +91,46 @@ class WePay(object):
             self.browser_js = self.browser_uri + "/js/wepay.v2.js"
             self.browser_iframe_js = self.browser_uri + "/js/iframe.wepay.js"
         self.browser_endpoint = self.browser_uri + "/v2"
-
     
     @cached_property
     def oauth2(self):
         """:class:`OAuth2<wepay.calls.oauth2.OAuth2>` call instance."""
         return OAuth2(self)
  
-
     @cached_property
     def app(self):
         """:class:`App<wepay.calls.app.App>` call instance"""
         return App(self)
 
-
     @cached_property
     def user(self):
         """:class:`User<wepay.calls.user.User>` call instance"""
         return User(self)
-        
 
     @cached_property
     def account(self):
         """:class:`Account<wepay.calls.account.Account>` call instance"""
         return Account(self)
 
-
     @cached_property
     def checkout(self):
         """:class:`Checkout<wepay.calls.checkout.Checkout>` call instance"""
         return Checkout(self)
-
 
     @cached_property
     def preapproval(self):
         """:class:`Preapproval<wepay.calls.preapproval.Preapproval>` call instance"""
         return Preapproval(self)
 
-
     @cached_property
     def withdrawal(self):
         """:class:`Withdrawal<wepay.calls.withdrawal.Withdrawal>` call instance"""
         return Withdrawal(self)
 
-
     @cached_property
     def credit_card(self):
         """:class:`CreditCard<wepay.calls.credit_card.CreditCard>` call instance"""
         return CreditCard(self)
-
 
     @cached_property
     def subscription_plan(self):
@@ -149,12 +140,10 @@ class WePay(object):
         """
         return SubscriptionPlan(self)
 
-
     @cached_property
     def subscription(self):
         """:class:`Subscription<wepay.calls.subscription.Subscription>` call instance"""
         return Subscription(self)
-
 
     @cached_property
     def subscription_charge(self):
@@ -164,12 +153,10 @@ class WePay(object):
         """
         return SubscriptionCharge(self)
 
-
     @cached_property
     def batch(self):
         """:class:`Batch<wepay.calls.batch.Batch>` call instance """
         return Batch(self)
-
 
     def call(self, uri, params=None, access_token=None, api_version=None, timeout=None):
         """Calls wepay.com/v2/``uri`` with ``params`` and returns the JSON

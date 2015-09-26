@@ -1,14 +1,11 @@
-
 __all__ = [
     'WePayWarning', 'WePayError', 'WePayHTTPError', 'WePayClientError',
     'WePayServerError', 'WePayConnectionError'
 ]
 
 
-
 class WePayWarning(UserWarning):
     pass
-    
 
 
 class WePayError(Exception):
@@ -22,20 +19,16 @@ class WePayError(Exception):
         self._error_description = error_description
         super(WePayError, self).__init__()
 
-
     def __str__(self):
         return "%s (%s): %s" % (self.error, self.error_code, self.error_description)
 
-
     def __repr__(self):
         return "<%s> %s" % (self.__class__.__name__, self)
-
 
     @property
     def error(self):
         """Generic ``error`` category. Returned by WePay."""
         return self._error
-
 
     @property
     def error_code(self):
@@ -44,7 +37,6 @@ class WePayError(Exception):
 
         """
         return self._error_code
-
 
     @property
     def error_description(self):
@@ -68,17 +60,14 @@ class WePayHTTPError(WePayError):
         error_description = error_description or "Unknown"
         super(WePayHTTPError, self).__init__(error, error_code, error_description)
 
-
     def __str__(self):
         return "HTTP %s - %s" % (
             self.status_code, super(WePayHTTPError, self).__str__())
-
 
     @property
     def status_code(self):
         """Error Code as specified by RFC 2616."""
         return self._status_code
-
 
     @property
     def http_error(self):
@@ -89,15 +78,13 @@ class WePayHTTPError(WePayError):
         return self._http_error
 
 
-
 class WePayClientError(WePayHTTPError):
     """This is a 4xx type error, which, most of the time, carries important
     error information about the object of interest.
 
     """
 
-
-
+    
 class WePayServerError(WePayHTTPError):
     """This is a 5xx type error, which, most of the time, means there is an
     error in implemetation or some unknown WePay Error, in latter case there is
@@ -106,7 +93,6 @@ class WePayServerError(WePayHTTPError):
     separatly in production.
 
     """
-
 
 
 class WePayConnectionError(Exception):
@@ -119,14 +105,11 @@ class WePayConnectionError(Exception):
         self._error = error
         super(WePayConnectionError, self).__init__()        
 
-
     def __str__(self):
         return "%s - %s" % (self.error.__class__.__name__, str(self.error))
 
-
     def __repr__(self):
         return "<%s> %s" % (self.__class__.__name__, self)
-
 
     @property
     def error(self):

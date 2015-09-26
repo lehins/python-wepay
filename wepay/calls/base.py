@@ -5,7 +5,7 @@ class Call(object):
     """ Base class for all API calls """
 
     _api = None
-    floating = ['amount', 'app_fee', 'shipping_fee', 'setup_fee']
+    floating = ('amount', 'app_fee', 'shipping_fee', 'setup_fee')
 
     @property
     def call_name(self):
@@ -13,7 +13,6 @@ class Call(object):
 
     def __init__(self, api):
         self._api = api
-
 
     def _update_params(self, params, extra_kwargs, control_keywords):
         if control_keywords is None:
@@ -32,7 +31,6 @@ class Call(object):
                 "Cannot use '%s' and 'batch_mode' in the same call." % batch_conflict
         params.update(extra_kwargs)
         return control_kwargs
-
 
     def make_call(self, func, params, extra_kwargs):
         """This is a helper function that checks the validity of ``params``

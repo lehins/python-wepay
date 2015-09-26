@@ -31,7 +31,6 @@ class Preapproval(Call):
         return self.make_call(self, params, kwargs)
     allowed_params = ['preapproval_id']
 
-
     def __find(self, **kwargs):
         """Call documentation: `/preapproval/find
         <https://www.wepay.com/developer/reference/preapproval#find>`_, plus
@@ -58,7 +57,6 @@ class Preapproval(Call):
         'last_checkout_id', 'shipping_fee',
     ]
     find = __find
-
 
     def __create(self, short_description, period, **kwargs):
         """Call documentation: `/preapproval/create
@@ -87,15 +85,16 @@ class Preapproval(Call):
     __create.allowed_params = [
         'account_id', 'amount', 'currency', 'short_description', 'period',
         'reference_id', 'app_fee', 'fee_payer', 'redirect_uri', 'callback_uri',
-        'fallback_uri', 'require_shipping', 'shipping_fee', 'charge_tax',
+        'fallback_uri', 'require_shipping', 'shipping_fee', 
         'payer_email_message', 'long_description', 'frequency',
         'start_time', 'end_time', 'auto_recur', 'mode', 'prefill_info',
         'funding_sources', 'payment_method_id', 'payment_method_type',
         # for App level preapprovals
-        'client_id', 'client_secret'
+        'client_id', 'client_secret',
+        # deprecated:
+        'charge_tax',
     ]
     create = __create
-
 
     def __cancel(self, preapproval_id, **kwargs):
         """Call documentation: `/preapproval/cancel
@@ -122,7 +121,6 @@ class Preapproval(Call):
         return self.make_call(self.__cancel, params, kwargs)
     __cancel.allowed_params = ['preapproval_id']
     cancel = __cancel
-
 
     def __modify(self, preapproval_id, **kwargs):
         """Call documentation: `/preapproval/modify

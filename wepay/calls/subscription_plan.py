@@ -30,7 +30,6 @@ class SubscriptionPlan(Call):
         return self.make_call(self, params, kwargs)
     allowed_params = ['subscription_plan_id']
 
-
     def __find(self, **kwargs):
         """Call documentation: `/subscription_plan/find
         <https://www.wepay.com/developer/reference/subscription_plan#find>`_,
@@ -90,7 +89,6 @@ class SubscriptionPlan(Call):
     ]
     create = __create
 
-
     def __delete(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription_plan/delete
         <https://www.wepay.com/developer/reference/subscription_plan#delete>`_,
@@ -116,7 +114,6 @@ class SubscriptionPlan(Call):
         return self.make_call(self.__delete, params, kwargs)
     __delete.allowed_params = ['subscription_plan_id', 'reason']
     delete = __delete
-
 
     def __get_button(self, account_id, button_type, **kwargs):
         """Call documentation: `/subscription_plan/get_button
@@ -147,7 +144,6 @@ class SubscriptionPlan(Call):
         'button_options'
     ]
     get_button = __get_button
-
 
     def __modify(self, subscription_plan_id, **kwargs):
         """Call documentation: `/subscription_plan/modify

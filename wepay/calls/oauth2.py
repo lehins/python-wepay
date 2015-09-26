@@ -30,7 +30,6 @@ class OAuth2(Call):
         return '%s/oauth2/authorize?%s' % (
             self._api.browser_endpoint, urllib.parse.urlencode(query))
 
-
     def __token(self, client_id, redirect_uri, client_secret, code, **kwargs):
         """Call documentation: `/oauth2/token
         <https://www.wepay.com/developer/reference/oauth2#token>`_, plus extra

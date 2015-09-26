@@ -38,7 +38,8 @@ class Credit_CardTestCase(CallBaseTestCase):
             'original_ip': '74.125.224.84',
             'original_device': ("Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6;"
                                 "en-US) AppleWebKit/534.13 (KHTML, like Gecko)"
-                                "Chrome/9.0.597.102 Safari/534.13")
+                                "Chrome/9.0.597.102 Safari/534.13"),
+            'auto_update': True
         }
         self._test_call('/credit_card/create', args, kwargs)
 
@@ -72,3 +73,30 @@ class Credit_CardTestCase(CallBaseTestCase):
         ]
         kwargs = {}
         self._test_call('/credit_card/delete', args, kwargs)
+        
+    def test_credit_card_transfer(self):
+        args = [
+            ('client_id', 54321),
+            ('client_secret', 'secret_54321'),
+            ('cc_number', '4003830171874018'),
+            ('expiration_month', 9),
+            ('expiration_year', 2015),
+            ('user_name', "Joe Blow"),
+            ('email', 'joe@example.com'),
+            ('address', {
+                'name':"Foo Bar",
+                'email': "foo@example.com",
+                'phone_number':'855-469-3729',
+                'address': "123 Main St.",
+                'city': "Albuquerque",
+                'state': "NM",
+                'region': "non-US region, Mexico? :)",
+                'zip': 87102,
+                'postcode': "non-US Postcode",
+                'country': "US"
+            })
+        ]
+        kwargs = {
+            'reference_id': "credit_card_reference_id_765",
+        }
+        self._test_call('/credit_card/transfer', args, kwargs)
