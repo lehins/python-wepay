@@ -2,6 +2,7 @@
 *.pyo
 
 /docs/build
+/build
 /dist
 /python_wepay.egg-info
 
