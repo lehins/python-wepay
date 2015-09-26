@@ -121,6 +121,7 @@ class User(Call):
 
 
 class MFA(Call):
+    """ The /user/mfa API calls"""
 
     call_name = 'user/mfa'
 

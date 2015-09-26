@@ -48,7 +48,7 @@ Features
 
 .. code-block:: python
 
-    >>> call1 = api.checkout.create(1234, short_description, type, amount, batch_mode=True)
+    >>> call1 = api.checkout.create(1234, short_description, type, amount, 'USD', batch_mode=True)
     >>> call2 = api.withdrawal.find(1235, sort_order='ASC', access_token='access_token_for_other_account', batch_mode=True)
     >>> response = api.batch.create(client_id, client_secret, [call1, call2])
 
@@ -77,7 +77,6 @@ Requirements
   it's `development <https://stage.wepay.com>`_ clone.
 * `six <https://pypi.python.org/pypi/six>`_.
 * `requests <http://docs.python-requests.org/en/latest/>`_ (optional):
-* `mock <https://pypi.python.org/pypi/mock>`_ (optional, for tests only)
 
 Installation
 ------------

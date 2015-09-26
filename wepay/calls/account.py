@@ -325,6 +325,7 @@ class Account(Call):
 
 
 class Membership(Call):
+    """ The /account/membership API calls"""
 
     call_name = 'account/membership'
 

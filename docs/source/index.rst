@@ -8,8 +8,6 @@ Welcome to python-wepay's documentation!
 
 **Python WePay SDK (third party)**
 
-Based on official `Python Wepay SDK <https://github.com/wepay/Python-SDK>`_, and designed to be completely compatible with it.
-
 Before using this package get yourself familiar with actual WePay `API Documentation <https://www.wepay.com/developer>`_.
 
 `WePay <https://wepay.com>`_ is a great service, highly recommend it.
@@ -45,12 +43,12 @@ Forkme on Github: `python-wepay <https://github.com/lehins/python-wepay>`_
 Quickstart Guide
 ----------------
 
-This package suppose to make it easier to construct and send API calls in more
-Pythonic way rather than building dictionary with parameters and simply sending
-it to WePay servers.
+This package suppose to make it easier to construct and perform API calls in a
+more Pythonic way rather than building dictionary with parameters and simply
+sending it to WePay servers.
 
 Just like with official SDK the core of this package is :class:`wepay.WePay`
-class, which needs to be instantiated with valid ``access_token`` and
+class, which needs to be instantiated with a valid ``access_token`` and
 ``production`` arguments of your WePay Application, after which API calls can be
 made. All methods within ``WePay`` object mimic API calls from official
 `Documentation <https://www.wepay.com/developer>`_ in the way that normally
@@ -59,15 +57,15 @@ moreover all required parameters are passed to functions as ``args`` and
 optional ones as ``kwargs``.
 
 Methods that can perform calls on behalf of WePay User accept optional keyword
-argument ``access_token``, which will then be used to perform a call instead of
-one the :class:`wepay.WePay` class was instantiated with. Methods that can be
-used in a '/batch/create' call also accept ``batch_mode`` keyword argument,
-which instead of making a call will force it to return a dictionary, that can be
-used later on to perform a :func:`wepay.WePay.batch_create` call. Additionally
-each call accepts ``api_version`` and ``timeout`` keyword arguments, which
-specify a WePay API version and connection timeout respectively. An unrecognized
-keyword passed to those functions will produce a warning and an actuall error
-from WePay, if it is in fact an unrecognized parameter.
+argument ``access_token``, which will then be used instead of the one
+:class:`wepay.WePay` class was instantiated with. Methods that can be used in a
+``/batch/create`` call also accept ``batch_mode`` keyword argument, which
+instead of making a call will force it to return a dictionary, that can be used
+later to perform a :func:`wepay.WePay.batch_create` call. Additionally each call
+accepts ``api_version`` and ``timeout`` keyword arguments, which specify a WePay
+API version and connection timeout respectively. An unrecognized keyword passed
+to those functions will produce a warning and an actuall error from WePay, if it
+is in fact an unrecognized parameter.
 
 Quick Example
 
@@ -93,7 +91,6 @@ Quick Example
     {u'account_id': 1371765417, u'account_uri': u'https://stage.wepay.com/account/1371765417'}
     >>> api.checkout.create(1371765417, "Short description.....
 
-
 --------------
 Error Handling
 --------------
@@ -102,7 +99,7 @@ Whenever you perform an API call and it results in an error, the are two possibl
 causes:
 
 * either there is a problem connecting to a WePay server (internet connection is
-  down, WePay server is down, request times out, ssl validation failed, etc) in
+  down, WePay server is down, request times out, ssl validation failed, etc.) in
   which case a call will raise
   :exc:`~wepay.exceptions.WePayConnectionError`. If the cause is
   timeout, consider increasing ``timeout`` value during :class:`~wepay.api.WePay`
@@ -129,7 +126,7 @@ also give you access to the actual HTTP Error:
 :attr:`~wepay.exceptions.WePayHTTPError.http_error` which will carry a response
 body inside, hence can give some more information on the nature of the error. If
 you really don't care about response body or HTTP status code, it is possible to
-just always catch :exc:`~wepay.exceptions.WePayError`, which carries only
+just catch :exc:`~wepay.exceptions.WePayError`, which carries only
 information documented by WePay.
 
 Also note, that depending on the library used for making calls, different types
@@ -147,45 +144,29 @@ So here is an example:
    from wepay import WePay
    from wepay.exceptions import WePayClientError, WePayServerError, WePayConnectionError
 
-   def get_withdrawal_uri(account_id, access_token):
+   def new_preapproval_uri(account_id, access_token):
        api = WePay(production=True, access_token=access_token, silent=True)
        try:
-           response = api.account(account_id)
-           for balance in response['balances']:
-               if balance['currency'] == "USD":
-                   usd_balance = balance['balance']
-                   break
-           if usd_balance > 0:
-               response = api.withdrawal.create(account_id, currency="USD", note="Need Money!")
-               return response['withdrawal_uri']
+           response = api.preapproval.create("Good samaritan donation", 'monthly',
+                                             account_id=account_id, amount=50.00)
+           return response['preapproval_uri']
        except WePayClientError as exc:
-           if exc.error_code == 3003:
-               print "Sorry, this account was deleted"
-           elif exc.error_code == 3002:
-               print "Dummy, you used a wrong access_token"
-           elif exc.error_code == 6002:
-               print "What are you doing? You are not allowed to get money"
-           else:
-               print exc
+           if exc.error_code == 5002:
+               print "You have no permission to do that."
        except WePayServerError as exc:
            print "Oh oh, something went wrong, please contact api@wepay.com"
-           print exc
        except WePayConnectionError as exc:
-           print "there was a problem connecting to WePay, please try again later"
-           print exc
+           print "There was a problem connecting to WePay, please try again later."
 
-So now you could use this function to get a url where to send a user in case
-there is a positive balance. It's kind of useless, since WePay schedules
-Withdrawals automatically and it only supports "USD" currency at the moment,
-moreover it's easier to handle a 3005 ``error_code``, instead of checking a
-balance first, but I hope it's good enough for demonstrating error handling.
+So now you could use this function to create a checkout and send a user to the
+url to supply payment information.
 
 .. code-block:: python
 
     >>> from myapp.settings import WEPAY_ACCOUNT_ID, WEPAY_ACCESS_TOKEN
-    >>> withdrawal_uri = get_withdrawal_uri(WEPAY_ACCOUNT_ID, WEPAY_ACCESS_TOKEN)
-    >>> if withdrawal_uri:
-    >>>     # send user to this uri to finish withdrawal creation process.
+    >>> preapproval_uri = new_preapproval_uri(WEPAY_ACCOUNT_ID, WEPAY_ACCESS_TOKEN)
+    >>> if preapproval_uri:
+    >>>     # send user to this uri to finish preapproval creation process.
 
 
 ---------------
