@@ -15,9 +15,9 @@ Changelog
   * ``/account/create`` now accepts both old and new style params.
 
 * removed deprecated call ``/user/resend_confirmation``.
-* ``/accout/create`` and ``/account/modify`` now accept ``country_options`` and
+* ``/account/create`` and ``/account/modify`` now accept ``country_options`` and
   ``fee_schedule_slot`` params
-* added restricted ``credit_card/transfer`` call.
+* added restricted ``/credit_card/transfer`` call.
   
 1.4.4
 -----
